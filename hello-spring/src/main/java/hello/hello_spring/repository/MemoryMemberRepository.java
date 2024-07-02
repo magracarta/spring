@@ -2,8 +2,11 @@ package hello.hello_spring.repository;
 
 // 필요한 클래스들을 import합니다.
 import hello.hello_spring.domain.Member;
+import org.springframework.stereotype.Repository;
+
 import java.util.*;
 
+@Repository
 public class MemoryMemberRepository implements MemberRepository {
     // 회원 정보를 저장할 Map 객체와 회원 ID를 생성하기 위한 시퀀스를 정의합니다.
     private static Map<Long, Member> store = new HashMap<>();
@@ -43,5 +46,9 @@ public class MemoryMemberRepository implements MemberRepository {
     public List<Member> findAll() {
         // store(Map)에 저장된 모든 회원 정보를 새로운 ArrayList로 변환하여 반환합니다.
         return new ArrayList<>(store.values());
+    }
+
+    public void clearStore(){
+        store.clear();
     }
 }
