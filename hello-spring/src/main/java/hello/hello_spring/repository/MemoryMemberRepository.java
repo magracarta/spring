@@ -6,14 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
 public class MemoryMemberRepository implements MemberRepository {
     // 회원 정보를 저장할 Map 객체와 회원 ID를 생성하기 위한 시퀀스를 정의합니다.
     private static Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;
 
     // 회원 정보를 저장하는 메소드입니다.
-    @Override
     public Member save(Member member) {
         // 회원 ID를 생성하고, member 객체에 설정합니다.
         member.setId(++sequence);

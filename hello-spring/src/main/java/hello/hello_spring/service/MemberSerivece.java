@@ -3,15 +3,14 @@ package hello.hello_spring.service;
 import hello.hello_spring.domain.Member;
 import hello.hello_spring.repository.MemberRepository;
 import hello.hello_spring.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public class MemberSerivece {
     private final MemberRepository memberRepository;
-
 
     public MemberSerivece(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
@@ -20,7 +19,7 @@ public class MemberSerivece {
     /*
     * 회원 가입
     * */
-    public  Long join(Member member){
+    public Long join(Member member){
         //같은 이름이 있는 중복 회원 X
         validateDuplicateMember(member); //중복 회원 검증
         memberRepository.save(member);
