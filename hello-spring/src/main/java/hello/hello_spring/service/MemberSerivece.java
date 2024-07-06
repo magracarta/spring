@@ -45,4 +45,7 @@ public class MemberSerivece {
         return memberRepository.findById(MemberId);
     }
 
+    public Optional<Member> findId(String name){
+        return memberRepository.findByName(name);
+    }
 }
