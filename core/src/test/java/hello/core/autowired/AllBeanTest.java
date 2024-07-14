@@ -4,6 +4,7 @@ import hello.core.AutoConfig;
 import hello.core.Member.Grade;
 import hello.core.Member.Member;
 import hello.core.discount.DiscountPolicy;
+import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +32,21 @@ public class AllBeanTest {
         assertThat(rateDisocuntPrice).isEqualTo(2000);
     }
 
+    @RequiredArgsConstructor
     static class DiscountService{
         private final Map<String , DiscountPolicy> policyMap;
         private final List<DiscountPolicy> policies;
 
-        @Autowired
-        public DiscountService(Map<String , DiscountPolicy> policyMap, List<DiscountPolicy> policies) {
-            this.policyMap = policyMap;
-            this.policies = policies;
-            System.out.println("policyMap = " + policyMap);
-            System.out.println("policies = " + policies);
-        }
+//        @Autowired
+//        public DiscountService(Map<String , DiscountPolicy> policyMap, List<DiscountPolicy> policies) {
+//            this.policyMap = policyMap;
+//            this.policies = policies;
+//
+//        }
 
         public int discount(Member member, int price, String discountCode) {
+            System.out.println("policyMap = " + policyMap);
+            System.out.println("policies = " + policies);
             DiscountPolicy discountPolicy = policyMap.get(discountCode);
             return  discountPolicy.discount(member,price);
         }
