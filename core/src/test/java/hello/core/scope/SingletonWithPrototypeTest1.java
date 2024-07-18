@@ -4,8 +4,11 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
+
+import javax.inject.Provider;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -31,15 +34,18 @@ public class SingletonWithPrototypeTest1 {
         ClinetBean clientBean2 = ac.getBean(ClinetBean.class);
         int count2 = clientBean2.login();
 
-        assertThat(count2).isEqualTo(2);
+        assertThat(count2).isEqualTo(1);
     }
 
     @Scope("singleton")
     @RequiredArgsConstructor
     static  class ClinetBean{
-        private  final  PrototypeBean prototypeBean; //생성 시점에 주입
+        private final Provider<PrototypeBean> prototypeBeanProvider;
+
+        //private  final  PrototypeBean prototypeBean; //생성 시점에 주입
 
         public int login(){
+            PrototypeBean prototypeBean = prototypeBeanProvider.get();
             prototypeBean.addCount();
             return prototypeBean.getCount();
         }
