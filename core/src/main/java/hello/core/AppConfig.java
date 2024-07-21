@@ -11,6 +11,7 @@ import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class AppConfig {
@@ -30,7 +31,7 @@ public class AppConfig {
         return  new OrderServiceImpl(memberRepository(), discountPolicy());
 //        return  new OrderServiceImpl();
     }
-
+    @Primary
     @Bean
     public MemberRepository memberRepository() {
         System.out.println("call AppConfig.memberRepository");
