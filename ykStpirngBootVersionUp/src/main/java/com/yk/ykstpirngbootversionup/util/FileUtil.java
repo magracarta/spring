@@ -525,6 +525,7 @@ public class FileUtil {
             FileUtils.copyURLToFile(downUrl, file);
 
             // File to MultipartFile
+
             //DiskFileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false, fileName, (int) file.length(), file.getParentFile());
             //InputStream input = new FileInputStream(file);
             //OutputStream os = fileItem.getOutputStream();
