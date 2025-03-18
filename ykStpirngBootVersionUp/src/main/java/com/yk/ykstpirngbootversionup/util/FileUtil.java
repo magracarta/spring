@@ -1,18 +1,7 @@
 package com.yk.ykstpirngbootversionup.util;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
@@ -31,7 +20,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
@@ -525,16 +515,7 @@ public class FileUtil {
             FileUtils.copyURLToFile(downUrl, file);
 
             // File to MultipartFile
-
-            //DiskFileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false, fileName, (int) file.length(), file.getParentFile());
-            //InputStream input = new FileInputStream(file);
-            //OutputStream os = fileItem.getOutputStream();
-            //IOUtils.copy(input, os);
-
-            FileInputStream input = new FileInputStream(file);
-            MultipartFile multiFile = new MockMultipartFile( fileName ,null ,Files.probeContentType(file.toPath()), input);
-
-
+            MultipartFile multiFile = FileToMultipartFile.convertFileToMultipartFile(file, fileName);
 
             beanUploadFile.setFileName(multiFile.getOriginalFilename());
             beanUploadFile.setFileSize(multiFile.getSize());
