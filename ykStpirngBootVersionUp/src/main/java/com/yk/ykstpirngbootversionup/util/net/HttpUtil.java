@@ -11,11 +11,20 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.config.ConnectionConfig;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
+import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
+import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
+
+import org.apache.hc.core5.ssl.SSLContexts;
+import org.apache.hc.core5.ssl.TrustStrategy;
+import org.apache.hc.core5.util.Timeout;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.http.*;
@@ -36,6 +45,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <pre>
@@ -98,7 +108,6 @@ public class HttpUtil {
             if (nTotalCnt < 512) {
                 return false;
             }
-
         } catch (Exception ex) {
             System.out.println("HTTP ==> " + ex.getMessage());
             return false;
@@ -291,6 +300,7 @@ public class HttpUtil {
     public static Map<String, Object>  sendRest(String fullUrl, HttpMethod httpMethod, HttpHeaders headers, Map<String, Object> param, String bodyType, String... noEncoding) {
         bodyType = StringUtils.defaultIfBlank(bodyType, BODY_TYPE_Query);
 
+
         ResponseEntity<String> respEntity = sendRestString(fullUrl, httpMethod, headers, param, bodyType, noEncoding);
 
         Gson gson = new Gson();
@@ -373,8 +383,8 @@ public class HttpUtil {
 
         SSLContext sslContext = null;
         try {
-            sslContext = org.apache.http.ssl.SSLContexts.custom()
-                    .loadTrustMaterial(null, acceptingTrustStrategy)
+            sslContext = SSLContexts.custom()
+                    .loadTrustMaterial(null,acceptingTrustStrategy)
                     .build();
         } catch (Exception e) {
             logger.warn("", e);
@@ -382,16 +392,27 @@ public class HttpUtil {
 
         SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
 
-        CloseableHttpClient httpClient = HttpClients.custom()
+        PoolingHttpClientConnectionManager connManager = PoolingHttpClientConnectionManagerBuilder.create()
                 .setSSLSocketFactory(csf)
+                .setDefaultConnectionConfig(ConnectionConfig.custom()
+                        .setSocketTimeout(Timeout.ofSeconds(timeOutSecond))
+                        .setConnectTimeout(Timeout.ofSeconds(timeOutSecond)).build() //연결 타임아웃
+                ).build();
+
+
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setConnectionManager(connManager)
+                .evictExpiredConnections() // 만료된 연결 정리
+                .evictIdleConnections(Timeout.ofMinutes(1)) // 유휴 연결 정리
                 .build();
 
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-        requestFactory.setHttpClient(httpClient);
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
 
-        requestFactory.setConnectTimeout(timeOutSecond * 1000);
 
-        requestFactory.setReadTimeout(timeOutSecond * 1000);
+//        requestFactory.setHttpClient(httpClient);
+//        requestFactory.setConnectTimeout(timeOutSecond * 1000);
+//        requestFactory.setReadTimeout(timeOutSecond * 1000);
 
         return new RestTemplate(requestFactory);
     }
@@ -447,6 +468,7 @@ public class HttpUtil {
                 if (param != null) {
                     Map<String, String> strMap = CollectionUtil.toStringMap(param);
                     for (String item : strMap.keySet()) {
+
                         if(ArrayUtils.contains(noEncoding, item) == false) {
                             mvm.add(item, urlEncode(strMap.get(item)));
                         } else {
@@ -464,7 +486,6 @@ public class HttpUtil {
         }
 
         ResponseEntity<String> result = restTemplate.exchange(fullUrl, httpMethod, httpEntity, String.class);
-
         return result;
     }
 

@@ -59,8 +59,6 @@ public class TestExcelBuilder {
         // 엑셀 문서 생성
         excelBuilder.buildExcelDocument(model, workbook, request, response);
 
-
-        
         //Then
         //엑셀 파일 응답 확인
         assertEquals("application/vnd.ms-excel", response.getContentType());
@@ -78,7 +76,6 @@ public class TestExcelBuilder {
         }
 
         workbook.close();
-
     }
 
 

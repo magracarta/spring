@@ -78,9 +78,11 @@ public class FileUtil {
         FileChannel fcout = null;
 
         try {
+
             // 스트림 생성
             inputStream = new FileInputStream(sourceFile);
             outputStream = new FileOutputStream(target);
+
             // 채널 생성
             fcin = inputStream.getChannel();
             fcout = outputStream.getChannel();
