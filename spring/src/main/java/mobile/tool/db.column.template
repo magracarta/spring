@@ -1,0 +1,4 @@
+/* 이파일은 자동생성되니 편집하지 마세요!!! */
+var column_size={<% def idx = 0; colSizeKey.each { %><%= it %>:<%= colSizeMap[it] %><%= ++idx != colSizeKey.size() ? "," : "" %><% } %>};
+var column_type={<% idx = 0; colTypeKey.each { %><%= it %>:"<%= colTypeMap[it] %>"<%= ++idx != colTypeKey.size() ? "," : "" %><% } %>};
+var column_comment={<% idx = 0; colCommentKey.each { %><%= it %>:"<%= colCommentMap[it] %>"<%= ++idx != colCommentKey.size() ? "," : "" %><% } %>};

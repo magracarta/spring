@@ -1,0 +1,71 @@
+package <%= controllerPackagePath %>;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.context.WebApplicationContext;
+
+import mobile.factory.util.UnitTestUtil;
+import <%= servicePackagePath %>.<%= serviceName %>;
+
+/**
+ * <pre>
+ * 이클래스는 <%= menuDepthName %> 를 테스트하는 Controller
+ * </pre>
+ *
+ * @author 담당자이름을 넣어주세요.
+ * @date <%= date %> 
+ * @time <%= time %>
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class <%= testControllerName %> {
+	@Autowired
+	private WebApplicationContext webApplicationContext;
+	
+	@Autowired
+	<%= serviceName %> <%= serviceMemberName %>;
+
+	private MockMvc mockMvc;
+
+	@Before
+	public void setUp() throws Exception {
+	    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+	}
+	<% methodList.each { String methodName = it.substring(0,1).toUpperCase() + it.substring(1) %>
+	//@Test
+	public void test<%= methodName %>() throws Exception {
+		// Param 가공(페이지에서 넘어오는 형태)
+		Map<String, Object> map = new HashMap<>();
+		map.put("key1", "value1");
+		map.put("key2", new String[] { "12", "34", "56", "78" });
+		
+		MultiValueMap<String, String> params = UnitTestUtil.toParam(map);
+		
+		// 호출 get,post,put 메소드를 처리하는 컨트롤러에 맞게 수정하세요.
+		// 호출결과는 console에 출력
+		mockMvc.perform( 
+			get("<%= rootUrl %><%= subUrl %>/<%= it %>").params(params)
+		).andDo(print());
+	} 
+	<% } %>
+}
+// :)--

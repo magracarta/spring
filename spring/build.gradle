@@ -1,0 +1,87 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.6'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-groovy-templates'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation 'org.springframework.session:spring-session-core'
+
+    //dao, jdbc | 추가하면 db 설정해줘야함
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.session:spring-session-jdbc'
+
+    compileOnly files ('src/main/webapp/WEB-INF/lib/ojdbc8.jar')
+
+    //PageNavigation.java | lombok
+    implementation 'org.projectlombok:lombok'
+
+    // JdbcDBtable.java | security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    //maven repository
+    //https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+
+    //beanutil.java
+    implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+    //MofacBeanProcessor.java
+    implementation group: 'commons-dbutils', name: 'commons-dbutils', version: '1.7'
+
+    //requestDataset.java
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.9'
+
+    //httpUtil.java
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.4.1'
+    implementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.14'
+    implementation ('org.json:json:20231013')
+
+    //ExcelBuilder.java
+    implementation group: 'org.apache.poi', name: 'poi', version: '4.1.1'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.1'
+
+    //jsp
+//    implementation 'jakarta.servlet:jakarta.servlet-api'
+//    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
+//    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
+//    implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
+
+    //JSP
+    implementation group: 'org.glassfish.web', name: 'jakarta.servlet.jsp.jstl', version: '2.0.0'
+    implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
+
+    //test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testImplementation 'org.springframework.security:spring-security-test'
+    //junit 5 이상 사용하기 위한 종속성
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

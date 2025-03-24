@@ -1,0 +1,18 @@
+package <%= codePackageName %>;
+
+/**
+ * <pre>
+ * 이 파일은 자동생성 CodeMaker로 자동 생성되니 편집하시 마세요!!!
+ * </pre>
+ *
+ * @author CodeMaker
+ *
+ **/
+public class CodeDefine {  
+	<% list.each { isGroup = "---".equals(it.CODE_VALUE); prefix = isGroup ? "GP_" : "CD_"; postfix = isGroup ? "" : "_" + it.CODE_VALUE; codeValue = isGroup ? it.CODE_TYPE : it.CODE_VALUE;  %>
+	/**
+	 * <%= it.CODE_NAME %>
+	 */
+	public static final String <%= prefix %><%= it.CODE_TYPE %><%= postfix %> = "<%= codeValue %>";
+	<% } %>	
+}//:)--

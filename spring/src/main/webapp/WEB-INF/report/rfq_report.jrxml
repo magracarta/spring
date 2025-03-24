@@ -1,0 +1,1972 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rfq_report" pageWidth="595" pageHeight="842" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="dc0fb2ab-b076-4525-a6d5-89bb74d7550b">
+	<property name="com.jaspersoft.studio.unit.topMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#D6D6D6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_CH" mode="Opaque" backcolor="#F0F0F0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 3_CH" mode="Opaque" backcolor="#F0F0F0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 3_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 4_CH" mode="Opaque" backcolor="#F0F0F0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 4_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="선택사항" uuid="8656efe7-d4af-4b91-bdbb-a1b9ec159ae1">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+		<parameter name="rfq_no" class="java.lang.String">
+			<defaultValueExpression><![CDATA["RQ2023-02799-01"]]></defaultValueExpression>
+		</parameter>
+		<queryString language="SQL">
+			<![CDATA[select rfq_no, machine_plant_seq, opt_code,
+		 qty,
+		 part_no,
+		 (select part_name from t_part where part_no = a.part_no) as part_name,
+		 rownum
+from t_rfq_machine_opt_dtl a
+where 1=1
+ AND a.rfq_no  =   $P{rfq_no}
+order by a.part_no]]>
+		</queryString>
+		<field name="RFQ_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="RFQ_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="RFQ_NO"/>
+		</field>
+		<field name="MACHINE_PLANT_SEQ" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="MACHINE_PLANT_SEQ"/>
+			<property name="com.jaspersoft.studio.field.label" value="MACHINE_PLANT_SEQ"/>
+		</field>
+		<field name="OPT_CODE" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="OPT_CODE"/>
+			<property name="com.jaspersoft.studio.field.label" value="OPT_CODE"/>
+		</field>
+		<field name="QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="QTY"/>
+		</field>
+		<field name="PART_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PART_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="PART_NO"/>
+		</field>
+		<field name="PART_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PART_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="PART_NAME"/>
+		</field>
+		<field name="ROWNUM" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ROWNUM"/>
+			<property name="com.jaspersoft.studio.field.label" value="ROWNUM"/>
+		</field>
+	</subDataset>
+	<subDataset name="어테치먼트" uuid="714c03a3-072a-44a8-977c-258a08b6dfab">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+		<parameter name="rfq_no" class="java.lang.String">
+			<defaultValueExpression><![CDATA["RQ2023-02799-01"]]></defaultValueExpression>
+		</parameter>
+		<queryString language="SQL">
+			<![CDATA[select case when ra.base_yn = 'Y' then '기본' else '옵션' end as attach_base_yn,     
+		 mp.machine_name as attach_machine_name,  
+		 mp.machine_plant_seq as attach_machine_plant_seq,  
+ 		 ra.part_no as attach_part_no,     
+	 	 d.part_name as attach_part_name,               
+		 ra.check_yn as attach_check_yn,  
+		 1  as attach_qty,           
+ 		 --case when ra.base_yn = 'Y' then '-' else to_char(ra.unit_price) end as attach_part_amt,
+  		 case when ra.base_yn = 'Y' then null else ra.unit_price end as attach_part_amt,
+ 		 rownum
+	from t_rfq_machine_attach ra 
+	inner join t_machine_plant mp on mp.machine_plant_seq = ra.machine_plant_seq  
+	inner join t_part d on ra.part_no = d.part_no  
+	where ra.rfq_no =  $P{rfq_no}
+order by base_yn desc, d.part_no]]>
+		</queryString>
+		<field name="ATTACH_BASE_YN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ATTACH_BASE_YN"/>
+			<property name="com.jaspersoft.studio.field.label" value="ATTACH_BASE_YN"/>
+		</field>
+		<field name="ATTACH_MACHINE_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ATTACH_MACHINE_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="ATTACH_MACHINE_NAME"/>
+		</field>
+		<field name="ATTACH_MACHINE_PLANT_SEQ" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ATTACH_MACHINE_PLANT_SEQ"/>
+			<property name="com.jaspersoft.studio.field.label" value="ATTACH_MACHINE_PLANT_SEQ"/>
+		</field>
+		<field name="ATTACH_PART_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ATTACH_PART_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="ATTACH_PART_NO"/>
+		</field>
+		<field name="ATTACH_PART_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ATTACH_PART_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="ATTACH_PART_NAME"/>
+		</field>
+		<field name="ATTACH_CHECK_YN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ATTACH_CHECK_YN"/>
+			<property name="com.jaspersoft.studio.field.label" value="ATTACH_CHECK_YN"/>
+		</field>
+		<field name="ATTACH_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ATTACH_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="ATTACH_QTY"/>
+		</field>
+		<field name="ATTACH_PART_AMT" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ATTACH_PART_AMT"/>
+			<property name="com.jaspersoft.studio.field.label" value="ATTACH_PART_AMT"/>
+		</field>
+		<field name="ROWNUM" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ROWNUM"/>
+			<property name="com.jaspersoft.studio.field.label" value="ROWNUM"/>
+		</field>
+	</subDataset>
+	<subDataset name="유상" uuid="a92a5c7f-cfea-4506-b100-42a5ab68da33">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+		<parameter name="rfq_no" class="java.lang.String">
+			<defaultValueExpression><![CDATA["RQ2023-02799-01"]]></defaultValueExpression>
+		</parameter>
+		<queryString language="SQL">
+			<![CDATA[select ra.rfq_no as paid_rfq_no,
+		 ra.seq_no as paid_seq_no,
+		 ra.machine_basic_part_seq as paid_machine_basic_part_seq,
+		 ra.part_no as paid_part_no,
+		 part.unit as paid_unit,
+		 nvl(ra.part_name, d.part_name) as paid_part_name,
+       d.part_name_change_yn as paid_part_name_change_yn,
+		 ra.free_yn as paid_free_yn,
+		 ra.default_qty as paid_default_qty,
+		 ra.add_qty as paid_add_qty,
+		 ra.unit_price as paid_unit_price,
+       ra.total_amt as paid_total_amt,
+       rownum
+from  t_rfq_machine_part ra
+left outer join t_machine_basic_part part on ra.machine_basic_part_seq = part.machine_basic_part_seq
+left outer join t_part d on ra.part_no = d.part_no 
+where ra.use_yn = 'Y' 
+and ra.free_yn <> 'Y'
+and ra.rfq_no =  $P{rfq_no}]]>
+		</queryString>
+		<field name="PAID_RFQ_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_RFQ_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_RFQ_NO"/>
+		</field>
+		<field name="PAID_SEQ_NO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_SEQ_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_SEQ_NO"/>
+		</field>
+		<field name="PAID_MACHINE_BASIC_PART_SEQ" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_MACHINE_BASIC_PART_SEQ"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_MACHINE_BASIC_PART_SEQ"/>
+		</field>
+		<field name="PAID_PART_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_PART_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_PART_NO"/>
+		</field>
+		<field name="PAID_UNIT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_UNIT"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_UNIT"/>
+		</field>
+		<field name="PAID_PART_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_PART_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_PART_NAME"/>
+		</field>
+		<field name="PAID_PART_NAME_CHANGE_YN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_PART_NAME_CHANGE_YN"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_PART_NAME_CHANGE_YN"/>
+		</field>
+		<field name="PAID_FREE_YN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_FREE_YN"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_FREE_YN"/>
+		</field>
+		<field name="PAID_DEFAULT_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_DEFAULT_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_DEFAULT_QTY"/>
+		</field>
+		<field name="PAID_ADD_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_ADD_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_ADD_QTY"/>
+		</field>
+		<field name="PAID_UNIT_PRICE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_UNIT_PRICE"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_UNIT_PRICE"/>
+		</field>
+		<field name="PAID_TOTAL_AMT" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PAID_TOTAL_AMT"/>
+			<property name="com.jaspersoft.studio.field.label" value="PAID_TOTAL_AMT"/>
+		</field>
+		<field name="ROWNUM" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ROWNUM"/>
+			<property name="com.jaspersoft.studio.field.label" value="ROWNUM"/>
+		</field>
+	</subDataset>
+	<parameter name="logo_image" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/Users/82107/JaspersoftWorkspace/MyReports/image/YK_logo.png"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rfq_no" class="java.lang.String">
+		<defaultValueExpression><![CDATA["RQ2023-02799-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="stamp_image" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/Users/82107/JaspersoftWorkspace/MyReports/image/yk도장.png"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+   r.rfq_no as rfq_no,
+   r.cust_no,
+   (select nvl(ed_misu_amt,0) from t_cust_deal_amt cda where cda.cust_no = r.cust_no and cda.deal_mon =  '202310' /**P*/) as misu_amt,
+   to_char(to_date(rfq_dt, 'yyyymmdd'), 'yyyy-mm-dd') as rfq_dt,
+   rfq_type_cd,
+   to_char(to_date(expire_dt, 'yyyymmdd'), 'yyyy-mm-dd') as expire_dt,
+   cust_name,
+   case when hp_no is not null then substr(hp_no, 0, 3) || '-' || substr(hp_no, 4, 4) || '-' || substr(hp_no, 8, 4) end as hp_no,
+   case when tel_no is not null then substr(tel_no, 0, 3) || '-' || substr(tel_no, 4, 3) || '-' || substr(tel_no, 7, 4) end as tel_no,
+   case when fax_no is not null then substr(fax_no, 0, 3) || '-' || substr(fax_no, 4, 3) || '-' || substr(fax_no, 7, 4) end as fax_no,
+   email,
+   post_no,
+   addr1,
+   addr2,
+   addr1 || addr2 as addr,
+   breg_seq,
+   breg_name,
+   breg_no,
+   breg_rep_name,
+   rfq_org_code,
+   (select org_kor_name from t_org where org_code = r.rfq_org_code) as rfq_org_name,
+   rfq_mem_no,
+   (select kor_name from t_mem where mem_no = r.rfq_mem_no) as rfq_mem_name,
+   office_post_no,
+   office_addr1,
+   office_addr2,
+   office_tel_no,
+   office_fax_no,
+   memo,
+   total_amt,
+   total_amt * 0.1 as vat_amt,
+   total_amt * 1.1 as rfq_amt,
+   '(' || total_amt_str || ' 원정)' as total_amt_str,
+   '(' || vat_amt_str || ' 원정)' as vat_amt_str,
+   '(' || rfq_amt_str || ' 원정)' as rfq_amt_str,
+   discount_rate,
+   discount_amt,
+   rfq_amt,
+   plant.machine_name,
+   plant.machine_plant_seq,
+   plant.maker_cd,
+   (select code_name from t_code where group_code =  'MAKER' /**P*/ and code = plant.maker_cd) as maker_name, 
+   plant.machine_type_cd,
+   plant.machine_sub_type_cd,
+   (select code_name from t_code where group_code =  'MACHINE_TYPE' /**P*/ and code = plant.machine_type_cd) as machine_type_name,
+   agency_price,
+   write_price,
+   review_price,
+   agree_price,
+   max_dc_price,
+   fee_price,
+   sale_price,
+   part_free_amt,
+   part_cost_amt,
+   attach_amt,
+   show_yn,
+   tcmr.c_mch_request_seq,
+   tcmr.request_dt,
+   to_char(tcmr.reg_date, 'yyyy-mm-dd hh24:mi') as request_date,
+   tcmr.request_text,
+   r.rfq_send_yn,
+   (select sale_area_code from v_cust where cust_no = r.cust_no) as sale_area_code,
+   decode(tcmr.c_mch_request_seq, null, decode(r.data_source_cd,  'ERP_WEB' , 'Y', 'N'), 'Y') as send_rfq_btn_show_yn,
+	 decode(r.data_source_cd,  'ERP_WEB' , 'ERP', '고객앱') as request_source,
+	 yk_breg_no,
+	 yk_breg_name,
+	 yk_breg_cor_type,
+	 yk_breg_cor_part,
+	 yk_tel_no,
+	 yk_fax_no,
+	 yk_addr,
+     yk_addr1,
+	 yk_addr2,
+	 yk_breg_rep_name || '       (인)' as yk_breg_rep_name
+from t_rfq r
+left outer join t_rfq_machine m on r.rfq_no = m.rfq_no
+left outer join t_machine_plant plant on plant.machine_plant_seq = m.machine_plant_seq
+left outer join t_c_mch_request tcmr on tcmr.c_mch_request_seq = m.c_mch_request_seq
+left outer join (
+	select translate 
+	     ( substr(total_amt, 1,1)||decode(substr(total_amt, 1,1),0,'','천') 
+	    || substr(total_amt, 2,1)||decode(substr(total_amt, 2,1),0,'','백') 
+	    || substr(total_amt, 3,1)||decode(substr(total_amt, 3,1),0,'','십') 
+	    || substr(total_amt, 4,1)||decode(substr(total_amt, 1,4),0,'','조') 
+	    || substr(total_amt, 5,1)||decode(substr(total_amt, 5,1),0,'','천') 
+	    || substr(total_amt, 6,1)||decode(substr(total_amt, 6,1),0,'','백') 
+	    || substr(total_amt, 7,1)||decode(substr(total_amt, 7,1),0,'','십') 
+	    || substr(total_amt, 8,1)||decode(substr(total_amt, 5,4),0,'','억') 
+	    || substr(total_amt, 9,1)||decode(substr(total_amt, 9,1),0,'','천') 
+	    || substr(total_amt,10,1)||decode(substr(total_amt,10,1),0,'','백') 
+	    || substr(total_amt,11,1)||decode(substr(total_amt,11,1),0,'','십') 
+	    || substr(total_amt,12,1)||decode(substr(total_amt, 9,4),0,'','만') 
+	    || substr(total_amt,13,1)||decode(substr(total_amt,13,1),0,'','천') 
+	    || substr(total_amt,14,1)||decode(substr(total_amt,14,1),0,'','백') 
+	    || substr(total_amt,15,1)||decode(substr(total_amt,15,1),0,'','십') 
+	    || substr(total_amt,16,1) , '1234567890', '일이삼사오육칠팔구') total_amt_str
+	    ,translate 
+	     ( substr(vat_amt, 1,1)||decode(substr(vat_amt, 1,1),0,'','천') 
+	    || substr(vat_amt, 2,1)||decode(substr(vat_amt, 2,1),0,'','백') 
+	    || substr(vat_amt, 3,1)||decode(substr(vat_amt, 3,1),0,'','십') 
+	    || substr(vat_amt, 4,1)||decode(substr(vat_amt, 1,4),0,'','조') 
+	    || substr(vat_amt, 5,1)||decode(substr(vat_amt, 5,1),0,'','천') 
+	    || substr(vat_amt, 6,1)||decode(substr(vat_amt, 6,1),0,'','백') 
+	    || substr(vat_amt, 7,1)||decode(substr(vat_amt, 7,1),0,'','십') 
+	    || substr(vat_amt, 8,1)||decode(substr(vat_amt, 5,4),0,'','억') 
+	    || substr(vat_amt, 9,1)||decode(substr(vat_amt, 9,1),0,'','천') 
+	    || substr(vat_amt,10,1)||decode(substr(vat_amt,10,1),0,'','백') 
+	    || substr(vat_amt,11,1)||decode(substr(vat_amt,11,1),0,'','십') 
+	    || substr(vat_amt,12,1)||decode(substr(vat_amt, 9,4),0,'','만') 
+	    || substr(vat_amt,13,1)||decode(substr(vat_amt,13,1),0,'','천') 
+	    || substr(vat_amt,14,1)||decode(substr(vat_amt,14,1),0,'','백') 
+	    || substr(vat_amt,15,1)||decode(substr(vat_amt,15,1),0,'','십') 
+	    || substr(vat_amt,16,1) , '1234567890', '일이삼사오육칠팔구') vat_amt_str
+	    ,translate 
+	     ( substr(rfq_amt, 1,1)||decode(substr(rfq_amt, 1,1),0,'','천') 
+	    || substr(rfq_amt, 2,1)||decode(substr(rfq_amt, 2,1),0,'','백') 
+	    || substr(rfq_amt, 3,1)||decode(substr(rfq_amt, 3,1),0,'','십') 
+	    || substr(rfq_amt, 4,1)||decode(substr(rfq_amt, 1,4),0,'','조') 
+	    || substr(rfq_amt, 5,1)||decode(substr(rfq_amt, 5,1),0,'','천') 
+	    || substr(rfq_amt, 6,1)||decode(substr(rfq_amt, 6,1),0,'','백') 
+	    || substr(rfq_amt, 7,1)||decode(substr(rfq_amt, 7,1),0,'','십') 
+	    || substr(rfq_amt, 8,1)||decode(substr(rfq_amt, 5,4),0,'','억') 
+	    || substr(rfq_amt, 9,1)||decode(substr(rfq_amt, 9,1),0,'','천') 
+	    || substr(rfq_amt,10,1)||decode(substr(rfq_amt,10,1),0,'','백') 
+	    || substr(rfq_amt,11,1)||decode(substr(rfq_amt,11,1),0,'','십') 
+	    || substr(rfq_amt,12,1)||decode(substr(rfq_amt, 9,4),0,'','만') 
+	    || substr(rfq_amt,13,1)||decode(substr(rfq_amt,13,1),0,'','천') 
+	    || substr(rfq_amt,14,1)||decode(substr(rfq_amt,14,1),0,'','백') 
+	    || substr(rfq_amt,15,1)||decode(substr(rfq_amt,15,1),0,'','십') 
+	    || substr(rfq_amt,16,1) , '1234567890', '일이삼사오육칠팔구') rfq_amt_str
+	    , rfq_no
+	from (select rfq_no
+				, lpad(total_amt,16 ,'0') as total_amt
+				, lpad(total_amt * 0.1,16 ,'0') as vat_amt
+				, lpad(total_amt * 1.1,16 ,'0') as rfq_amt
+		  from t_rfq r 
+		  where 1=1
+	)  
+) amt on amt.rfq_no = r.rfq_no
+left outer join (
+select 
+	  a.cust_no           as yk_cust_no      
+ 	, a.cust_name         as yk_cust_name    
+ 	, a.tel_no            as yk_tel_no       
+ 	, a.fax_no            as yk_fax_no       
+ 	, a.email 			  as yk_email        
+ 	, a.hp_no 			  as yk_hp_no        
+ 	, a.post_no           as yk_post_no      
+ 	, a.addr1 			  as yk_addr1        
+ 	, a.addr2 			  as yk_addr2        
+ 	, a.addr1 || ' ' || a.addr2 as yk_addr 
+ 	, c.breg_name         as yk_breg_name    
+ 	, substr(c.breg_no, 1, 3) || '-' || substr(c.breg_no, 4, 2) || '-' || substr(c.breg_no, 6, 5)            as yk_breg_no      
+ 	, c.breg_rep_name     as yk_breg_rep_name
+ 	, c.breg_cor_type     as yk_breg_cor_type
+ 	, c.breg_cor_part     as yk_breg_cor_part
+ 	, c.biz_post_no       as yk_biz_post_no  
+ 	, c.biz_addr1         as yk_biz_addr1    
+ 	, c.biz_addr2         as yk_biz_addr2    
+ 	, c.biz_addr1 || ' ' || c.biz_addr2 as yk_biz_addr  
+ from t_cust a 
+ inner join t_cust_breg b on a.cust_no  = b.cust_no and b.use_yn = 'Y' 
+ inner join v_breg c on b.breg_seq  = c.breg_seq  and c.use_yn  = 'Y' 
+ where 1=1 
+ and a.cust_no =  '20060727140532287' 
+ and c.breg_type_cd  =  'COR' 
+) yk on 1=1
+where r.rfq_no =  $P{rfq_no}]]>
+	</queryString>
+	<field name="RFQ_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_NO"/>
+	</field>
+	<field name="CUST_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUST_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUST_NO"/>
+	</field>
+	<field name="MISU_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MISU_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="MISU_AMT"/>
+	</field>
+	<field name="RFQ_DT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_DT"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_DT"/>
+	</field>
+	<field name="RFQ_TYPE_CD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_TYPE_CD"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_TYPE_CD"/>
+	</field>
+	<field name="EXPIRE_DT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="EXPIRE_DT"/>
+		<property name="com.jaspersoft.studio.field.label" value="EXPIRE_DT"/>
+	</field>
+	<field name="CUST_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUST_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUST_NAME"/>
+	</field>
+	<field name="HP_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="HP_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="HP_NO"/>
+	</field>
+	<field name="TEL_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TEL_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="TEL_NO"/>
+	</field>
+	<field name="FAX_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FAX_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="FAX_NO"/>
+	</field>
+	<field name="EMAIL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="EMAIL"/>
+		<property name="com.jaspersoft.studio.field.label" value="EMAIL"/>
+	</field>
+	<field name="POST_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="POST_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="POST_NO"/>
+	</field>
+	<field name="ADDR1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ADDR1"/>
+		<property name="com.jaspersoft.studio.field.label" value="ADDR1"/>
+	</field>
+	<field name="ADDR2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ADDR2"/>
+		<property name="com.jaspersoft.studio.field.label" value="ADDR2"/>
+	</field>
+	<field name="ADDR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ADDR"/>
+		<property name="com.jaspersoft.studio.field.label" value="ADDR"/>
+	</field>
+	<field name="BREG_SEQ" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="BREG_SEQ"/>
+		<property name="com.jaspersoft.studio.field.label" value="BREG_SEQ"/>
+	</field>
+	<field name="BREG_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BREG_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="BREG_NAME"/>
+	</field>
+	<field name="BREG_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BREG_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="BREG_NO"/>
+	</field>
+	<field name="BREG_REP_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BREG_REP_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="BREG_REP_NAME"/>
+	</field>
+	<field name="RFQ_ORG_CODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_ORG_CODE"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_ORG_CODE"/>
+	</field>
+	<field name="RFQ_ORG_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_ORG_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_ORG_NAME"/>
+	</field>
+	<field name="RFQ_MEM_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_MEM_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_MEM_NO"/>
+	</field>
+	<field name="RFQ_MEM_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_MEM_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_MEM_NAME"/>
+	</field>
+	<field name="OFFICE_POST_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="OFFICE_POST_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="OFFICE_POST_NO"/>
+	</field>
+	<field name="OFFICE_ADDR1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="OFFICE_ADDR1"/>
+		<property name="com.jaspersoft.studio.field.label" value="OFFICE_ADDR1"/>
+	</field>
+	<field name="OFFICE_ADDR2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="OFFICE_ADDR2"/>
+		<property name="com.jaspersoft.studio.field.label" value="OFFICE_ADDR2"/>
+	</field>
+	<field name="OFFICE_TEL_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="OFFICE_TEL_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="OFFICE_TEL_NO"/>
+	</field>
+	<field name="OFFICE_FAX_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="OFFICE_FAX_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="OFFICE_FAX_NO"/>
+	</field>
+	<field name="MEMO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MEMO"/>
+		<property name="com.jaspersoft.studio.field.label" value="MEMO"/>
+	</field>
+	<field name="TOTAL_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_AMT"/>
+	</field>
+	<field name="VAT_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT"/>
+	</field>
+	<field name="RFQ_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_AMT"/>
+	</field>
+	<field name="TOTAL_AMT_STR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL_AMT_STR"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_AMT_STR"/>
+	</field>
+	<field name="VAT_AMT_STR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_STR"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_STR"/>
+	</field>
+	<field name="RFQ_AMT_STR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_AMT_STR"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_AMT_STR"/>
+	</field>
+	<field name="DISCOUNT_RATE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="DISCOUNT_RATE"/>
+		<property name="com.jaspersoft.studio.field.label" value="DISCOUNT_RATE"/>
+	</field>
+	<field name="DISCOUNT_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="DISCOUNT_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="DISCOUNT_AMT"/>
+	</field>
+	<field name="COLUMN_38" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_AMT"/>
+	</field>
+	<field name="MACHINE_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MACHINE_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="MACHINE_NAME"/>
+	</field>
+	<field name="MACHINE_PLANT_SEQ" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MACHINE_PLANT_SEQ"/>
+		<property name="com.jaspersoft.studio.field.label" value="MACHINE_PLANT_SEQ"/>
+	</field>
+	<field name="MAKER_CD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MAKER_CD"/>
+		<property name="com.jaspersoft.studio.field.label" value="MAKER_CD"/>
+	</field>
+	<field name="MAKER_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MAKER_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="MAKER_NAME"/>
+	</field>
+	<field name="MACHINE_TYPE_CD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MACHINE_TYPE_CD"/>
+		<property name="com.jaspersoft.studio.field.label" value="MACHINE_TYPE_CD"/>
+	</field>
+	<field name="MACHINE_SUB_TYPE_CD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MACHINE_SUB_TYPE_CD"/>
+		<property name="com.jaspersoft.studio.field.label" value="MACHINE_SUB_TYPE_CD"/>
+	</field>
+	<field name="MACHINE_TYPE_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MACHINE_TYPE_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="MACHINE_TYPE_NAME"/>
+	</field>
+	<field name="AGENCY_PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="AGENCY_PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="AGENCY_PRICE"/>
+	</field>
+	<field name="WRITE_PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="WRITE_PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="WRITE_PRICE"/>
+	</field>
+	<field name="REVIEW_PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="REVIEW_PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="REVIEW_PRICE"/>
+	</field>
+	<field name="AGREE_PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="AGREE_PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="AGREE_PRICE"/>
+	</field>
+	<field name="MAX_DC_PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MAX_DC_PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="MAX_DC_PRICE"/>
+	</field>
+	<field name="FEE_PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="FEE_PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="FEE_PRICE"/>
+	</field>
+	<field name="SALE_PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SALE_PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALE_PRICE"/>
+	</field>
+	<field name="PART_FREE_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PART_FREE_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="PART_FREE_AMT"/>
+	</field>
+	<field name="PART_COST_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PART_COST_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="PART_COST_AMT"/>
+	</field>
+	<field name="ATTACH_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ATTACH_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="ATTACH_AMT"/>
+	</field>
+	<field name="SHOW_YN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SHOW_YN"/>
+		<property name="com.jaspersoft.studio.field.label" value="SHOW_YN"/>
+	</field>
+	<field name="C_MCH_REQUEST_SEQ" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="C_MCH_REQUEST_SEQ"/>
+		<property name="com.jaspersoft.studio.field.label" value="C_MCH_REQUEST_SEQ"/>
+	</field>
+	<field name="REQUEST_DT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="REQUEST_DT"/>
+		<property name="com.jaspersoft.studio.field.label" value="REQUEST_DT"/>
+	</field>
+	<field name="REQUEST_DATE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="REQUEST_DATE"/>
+		<property name="com.jaspersoft.studio.field.label" value="REQUEST_DATE"/>
+	</field>
+	<field name="REQUEST_TEXT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="REQUEST_TEXT"/>
+		<property name="com.jaspersoft.studio.field.label" value="REQUEST_TEXT"/>
+	</field>
+	<field name="RFQ_SEND_YN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFQ_SEND_YN"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFQ_SEND_YN"/>
+	</field>
+	<field name="SALE_AREA_CODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SALE_AREA_CODE"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALE_AREA_CODE"/>
+	</field>
+	<field name="SEND_RFQ_BTN_SHOW_YN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SEND_RFQ_BTN_SHOW_YN"/>
+		<property name="com.jaspersoft.studio.field.label" value="SEND_RFQ_BTN_SHOW_YN"/>
+	</field>
+	<field name="REQUEST_SOURCE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="REQUEST_SOURCE"/>
+		<property name="com.jaspersoft.studio.field.label" value="REQUEST_SOURCE"/>
+	</field>
+	<field name="YK_BREG_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_BREG_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_BREG_NO"/>
+	</field>
+	<field name="YK_BREG_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_BREG_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_BREG_NAME"/>
+	</field>
+	<field name="YK_BREG_COR_TYPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_BREG_COR_TYPE"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_BREG_COR_TYPE"/>
+	</field>
+	<field name="YK_BREG_COR_PART" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_BREG_COR_PART"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_BREG_COR_PART"/>
+	</field>
+	<field name="YK_TEL_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_TEL_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_TEL_NO"/>
+	</field>
+	<field name="YK_FAX_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_FAX_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_FAX_NO"/>
+	</field>
+	<field name="YK_ADDR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_ADDR"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_ADDR"/>
+	</field>
+	<field name="YK_ADDR1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_ADDR1"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_ADDR1"/>
+	</field>
+	<field name="YK_ADDR2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_ADDR2"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_ADDR2"/>
+	</field>
+	<field name="YK_BREG_REP_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_BREG_REP_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_BREG_REP_NAME"/>
+	</field>
+	<title>
+		<band height="293" splitType="Stretch">
+			<staticText>
+				<reportElement x="120" y="-2" width="330" height="48" uuid="e9c0db98-29f6-40e3-a02d-76f6478e967c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[장비견적서]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="52" width="94" height="15" uuid="cfb3cff2-f692-46ea-b00e-511dff84fffe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="8"/>
+				</textElement>
+				<text><![CDATA[다음과 같이 견적합니다.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="47" width="37" height="20" uuid="d5d17288-8987-4657-9436-060330c76db6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="8"/>
+				</textElement>
+				<text><![CDATA[견적번호 :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="463" y="47" width="87" height="20" uuid="65d49e7c-7c81-4927-9496-49bd8d32a974">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RFQ_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="248" width="37" height="14" uuid="43c9c2a1-edad-4912-a2dc-c6ac954dc600"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="8"/>
+				</textElement>
+				<text><![CDATA[장비사항]]></text>
+			</staticText>
+			<image>
+				<reportElement x="20" y="12" width="90" height="27" uuid="dd469bef-fcbd-4fb0-b27c-94b9d631252d"/>
+				<imageExpression><![CDATA[$P{logo_image}]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement x="15" y="67" width="262" height="124" uuid="8fee3185-b28b-40cd-89d4-fbba1f3886fa"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="48" height="22" backcolor="#F0F0F0" uuid="faba0d8f-0d96-435e-a737-e7101676b86d"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[고객명]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="126" y="22" width="61" height="18" uuid="3d9906d8-b77d-4132-8d0d-17eff41eed0e"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[팩스번호]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="48" y="0" width="214" height="22" uuid="6f2ea5f8-13bb-426b-bcdd-eef8e2a64048">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="48" y="22" width="78" height="18" uuid="7e6743fa-6895-4c37-98c1-ad5c058bb33e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{HP_NO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="40" width="48" height="16" backcolor="#F0F0F0" uuid="22f34bda-fd4e-4b19-a9ae-cd27bbe44718"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[견적일자]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="56" width="48" height="23" backcolor="#F0F0F0" uuid="d3b48b53-d17b-4c90-b122-1ce0e8550442"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[금액]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="22" width="48" height="18" backcolor="#F0F0F0" uuid="388d6dfa-fa99-4683-b06a-4afed77f92a2"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[전화번호]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="79" width="48" height="22" backcolor="#F0F0F0" uuid="271cd3df-174d-4d3a-9ce0-8c4b45265a69"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[부가세]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="101" width="48" height="23" backcolor="#F0F0F0" uuid="826d0fd5-2b6b-41f2-a1e9-bbf1d6662af8"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[견적금액]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="187" y="22" width="75" height="18" uuid="c5d2f7f8-01b1-42ba-864d-507e799c2147">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FAX_NO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="yyyy-mm-dd" isBlankWhenNull="true">
+					<reportElement x="48" y="40" width="78" height="16" uuid="84459491-c977-4755-9d1e-5a6623860a5b">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{RFQ_DT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="126" y="40" width="61" height="16" uuid="7f64a0f2-1462-4461-b45e-44e394bb4cee"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[견적서 유효일]]></text>
+				</staticText>
+				<textField pattern="yyyy-mm-dd" isBlankWhenNull="true">
+					<reportElement x="187" y="40" width="75" height="16" uuid="be78dee8-de1d-478a-ba6b-423c9905cd00">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{EXPIRE_DT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0" isBlankWhenNull="true">
+					<reportElement x="48" y="56" width="107" height="23" uuid="224ea437-1c5c-494b-9e6a-cf24ce101edf">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TOTAL_AMT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0" isBlankWhenNull="true">
+					<reportElement x="48" y="79" width="107" height="22" uuid="ca7f9177-53bb-46c7-8b29-3fd084c7ce28">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VAT_AMT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0" isBlankWhenNull="true">
+					<reportElement x="48" y="101" width="107" height="23" uuid="f1b2e4cd-c94b-4492-aab0-9736e7403605">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{RFQ_AMT}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement x="155" y="56" width="107" height="23" uuid="458cd175-3d69-4919-a478-ff6257530446">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TOTAL_AMT_STR}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement x="155" y="79" width="107" height="22" uuid="838c14bc-3775-43c8-b08a-f89d824ff1d8">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VAT_AMT_STR}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement x="155" y="101" width="107" height="23" uuid="d1f152a8-a23f-4153-80fc-579eac130b8e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{RFQ_AMT_STR}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="282" y="67" width="276" height="101" uuid="ce9189f4-c7dd-49b2-b056-6af6396dc7a8"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="21" width="50" height="20" backcolor="#F0F0F0" uuid="bf42dab0-0ce3-4307-ab57-5d56fd38fa99"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[상호]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="41" width="50" height="20" backcolor="#F0F0F0" uuid="bc1dd338-9667-4e2f-88b2-7a00030998e1"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[업태]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="61" width="50" height="20" backcolor="#F0F0F0" uuid="b178c66b-cefa-4913-9333-45905397bd43"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[대표전화]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="81" width="50" height="20" backcolor="#F0F0F0" uuid="045bb93f-4b0c-42fa-8318-a25644a074c5"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[주소]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="50" y="21" width="84" height="20" uuid="e880d183-f345-4830-8d62-de42473c60c8">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_BREG_NAME}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="50" y="41" width="84" height="20" uuid="e0536cbb-05cd-48b0-ad6d-4a98e12cfb75">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_BREG_COR_TYPE}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="50" y="61" width="84" height="20" uuid="fb7a47ee-b072-4680-af32-562a67b5c9ff">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_TEL_NO}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="50" y="81" width="218" height="20" uuid="c16f3f1d-3983-4453-8938-51e40486f051">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_ADDR}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="134" y="21" width="54" height="20" backcolor="#F0F0F0" uuid="3d29ee00-29fc-4e0c-9d8c-7c790912654d"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[대표자]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="188" y="21" width="80" height="20" uuid="8ee82ad8-72d4-475f-b57a-67592d7a9287">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_BREG_REP_NAME}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="188" y="41" width="80" height="20" uuid="92413c83-a4e3-4f3c-b689-b9108671a3b9">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_BREG_COR_PART}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="134" y="41" width="54" height="20" backcolor="#F0F0F0" uuid="b281c4c6-7655-4dc8-9440-b345daf7fca6"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[업종]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="134" y="61" width="54" height="20" backcolor="#F0F0F0" uuid="f99fc81f-2f3b-4ecb-8520-aecd33119485"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[팩스]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="188" y="61" width="80" height="20" uuid="fbadde5f-95ec-4b59-aa46-9057dea94bee">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_FAX_NO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="134" y="0" width="54" height="21" backcolor="#F0F0F0" uuid="47dbaf17-a3c7-43fc-9ca5-81eeb006c9b8"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[사업자번호]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="188" y="0" width="80" height="21" uuid="0bc6af3d-fd90-4f17-acf1-78736274fd6c">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_BREG_NO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="134" height="21" backcolor="rgba(252, 212, 169, 0.50980395)" uuid="28894656-9ef5-4dca-9cb7-c98831a9ad16"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[공급자]]></text>
+				</staticText>
+				<image>
+					<reportElement x="216" y="9" width="56" height="48" uuid="aed17557-4e66-4a8a-904b-172d6f15b0e6"/>
+					<imageExpression><![CDATA[$P{stamp_image}]]></imageExpression>
+				</image>
+			</frame>
+			<frame>
+				<reportElement x="15" y="197" width="535" height="45" uuid="fb7449eb-797c-4674-bd05-755a3c96b1ee"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="127" height="17" backcolor="rgba(252, 212, 169, 0.50980395)" uuid="6ee9c467-1eba-49c5-b322-ec451bad93bd"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[견적사업장]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="127" y="0" width="42" height="17" backcolor="#F0F0F0" uuid="284bb1be-5865-4121-85cb-a07f00d6f443"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[부서]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="169" y="0" width="84" height="17" uuid="976cf343-2693-4a1c-a954-469478c41592">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{RFQ_ORG_NAME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="253" y="0" width="71" height="17" backcolor="#F0F0F0" uuid="c691a82e-3659-4e00-bf30-9b4424d027c5"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[견적자]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="324" y="0" width="211" height="17" uuid="267850d8-b913-4495-a788-7d6e529a5c3d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{RFQ_MEM_NAME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="17" width="56" height="28" backcolor="#F0F0F0" uuid="6e5392ed-721f-405d-871c-0e59e96a47a3"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[전화]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="56" y="17" width="197" height="28" uuid="ee8afb91-bf73-4152-8fe9-83fc64f12820">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{OFFICE_TEL_NO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="253" y="17" width="71" height="28" backcolor="#F0F0F0" uuid="4ad6fd76-fbe7-46d2-8aa3-5c419940d84a"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[주소]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="324" y="17" width="211" height="28" uuid="38a18f4e-89f6-47b2-9253-fedc67201c78">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_ADDR}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="15" y="262" width="535" height="31" uuid="d723e327-dca7-43c2-94bd-7a70146b2b85"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="30" height="15" backcolor="#F0F0F0" uuid="f89d33eb-bc3c-4a2d-8119-f8bd9cdb28ea">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="30" y="0" width="83" height="15" backcolor="#F0F0F0" uuid="7a07bb1b-b86b-4cdd-b141-2b09820252de"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[메이커]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="113" y="0" width="140" height="15" backcolor="#F0F0F0" uuid="11f80e4a-8c2c-44fe-89c5-956102a42b6c"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[모델명]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="253" y="0" width="99" height="15" backcolor="#F0F0F0" uuid="57d4db14-064f-4d2b-bfa8-1cf512302f90"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[기종]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="352" y="0" width="28" height="15" backcolor="#F0F0F0" uuid="1fc5eb17-3491-480f-8323-9503ff13dea2"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[수량]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="380" y="0" width="70" height="15" backcolor="#F0F0F0" uuid="50d1915a-34e7-4cd2-b7ee-08c031a2af8c"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[단가]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="450" y="0" width="85" height="15" backcolor="#F0F0F0" uuid="3a210f3a-b33f-49ab-86c8-0b72f3d24569"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[금액]]></text>
+				</staticText>
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement x="30" y="15" width="83" height="16" uuid="ade54320-bb1b-4b49-be4c-d183343378de">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MAKER_NAME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="15" width="30" height="16" uuid="565f062d-9434-47f4-ac62-53234726aa30">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1]]></text>
+				</staticText>
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement x="113" y="15" width="140" height="16" uuid="3ef100f9-65fd-43b2-88bb-7cca48e6d709">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MACHINE_NAME}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement x="253" y="15" width="99" height="16" uuid="8c5aabac-73ea-4586-9761-2aeee586ab30">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MACHINE_TYPE_NAME}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont" pattern="#,##0" isBlankWhenNull="true">
+					<reportElement x="380" y="15" width="70" height="16" uuid="dd487319-941a-410f-bcd9-8a69e003f09c">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SALE_PRICE}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont" pattern="#,##0" isBlankWhenNull="true">
+					<reportElement x="450" y="15" width="85" height="16" uuid="3e6010fa-6c10-4c0e-a0c0-1318d8fdb257">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="3">
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SALE_PRICE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="352" y="15" width="28" height="16" uuid="71c32e73-59d0-4411-8d9a-8f49332689d6"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<detail>
+		<band height="47" splitType="Stretch">
+			<componentElement>
+				<reportElement x="15" y="17" width="535" height="30" uuid="4f4c6ed7-726c-48e6-be09-e1a12b2569fd">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 2_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 2_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table 2_TD"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="선택사항" uuid="4f87b19b-890f-4128-af50-fdbc6f5c54b7">
+						<datasetParameter name="rfq_no">
+							<datasetParameterExpression><![CDATA[$P{rfq_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="30" uuid="d0c72941-0e48-46c2-aee5-794a98efde74">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table 2_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="15" backcolor="#F0F0F0" uuid="7d575bc8-cd80-4529-bf18-a4cfc5799e91"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[No.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 2_TD" height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="30" height="15" uuid="5709c67b-648f-49d2-8bd3-a57bddae86b3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ROWNUM}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="442" uuid="f3441c40-a6cd-4f4c-b1c1-ce5963806c9f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table 2_CH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="442" height="15" backcolor="#F0F0F0" uuid="f4a6a32f-1fe0-4167-b98a-d6fda93e40ef">
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8" isBold="false"/>
+								</textElement>
+								<text><![CDATA[부품명]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 2_TD" height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="442" height="15" uuid="2408c418-c25d-4f03-b8f1-7f987dc30516">
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+									<paragraph firstLineIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PART_NAME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="63" uuid="416ef2af-f694-47e7-bf03-b93b3f859665">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table 2_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="63" height="15" backcolor="#F0F0F0" uuid="f2bfb22f-f2e3-4ade-9806-9471236e440a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[구성수량]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 2_TD" height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="63" height="15" uuid="aae74045-51ab-4193-a5ee-55fdaaf38eb9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="15" y="3" width="37" height="14" uuid="9e45a79f-3466-4a94-a676-2f457b42558a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="8"/>
+				</textElement>
+				<text><![CDATA[선택사항]]></text>
+			</staticText>
+		</band>
+		<band height="45">
+			<componentElement>
+				<reportElement x="15" y="15" width="535" height="30" uuid="a9b2982a-a5fa-45ea-9431-836a71e840ee">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 3_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 3_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table 3_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="어테치먼트" uuid="3b7541c0-8119-4031-ad8b-3bf0495e834d">
+						<datasetParameter name="rfq_no">
+							<datasetParameterExpression><![CDATA[$P{rfq_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="30" uuid="7a65139a-39e7-4747-9505-47c4752a8b3b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table 3_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="15" uuid="3c90d713-a00e-4e85-8468-6099ea474b30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[NO.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 3_TD" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="30" height="15" uuid="1e61f029-adc0-480c-bd43-5fb8a952a0bd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ROWNUM}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="ceacc643-a7d7-41bb-b682-56612f14caa1">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table 3_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="15" uuid="68936265-8e91-4062-97c6-8fdabd9bf1d2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[구분]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 3_TD" height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="15" uuid="bfa0a879-3a91-4e95-9317-020dd17a052f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ATTACH_BASE_YN}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="330" uuid="66a58569-ce47-4889-9fd3-34364c4c8acd">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table 3_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="330" height="15" uuid="317adf34-d30a-4a7e-8512-8d11e5591888"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[부품명]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 3_TD" height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="330" height="15" uuid="4b99bc07-0c0e-49e3-90d4-94c2cfd151bd">
+									<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+									<paragraph firstLineIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ATTACH_PART_NAME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="d9cc31bf-0af4-4f36-bd16-43319b80714e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table 3_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="15" uuid="cf2047a0-995f-44c0-a82f-ec09816e4dcc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[수량]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 3_TD" height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="40" height="15" uuid="26574318-33cd-4fbd-a065-f5676a56ffa5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ATTACH_QTY}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="75" uuid="61484576-3f30-4111-a206-ac03961070eb">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table 3_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="75" height="15" uuid="a6a178d8-2fc7-4ddd-9f3a-a7e69f72e422"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[단가]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 3_TD" height="15">
+							<textField pattern="#,###" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="75" height="15" uuid="a796529b-a064-41f1-ba0e-b51aed9b8d86">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ATTACH_PART_AMT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="15" y="1" width="48" height="14" uuid="db170d58-ca8e-4e4f-882d-a8acb4f0e7dc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="8"/>
+				</textElement>
+				<text><![CDATA[어테치먼트]]></text>
+			</staticText>
+		</band>
+		<band height="45">
+			<componentElement>
+				<reportElement x="15" y="15" width="535" height="30" uuid="8f7d3c7c-75f7-4d6d-a173-71758fe6d81b">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 4_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 4_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table 4_TD"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="유상" uuid="e70dbd6c-c0b3-40a8-955f-ce1f641e7007">
+						<datasetParameter name="rfq_no">
+							<datasetParameterExpression><![CDATA[$P{rfq_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="30" uuid="95bc0b46-236b-466b-adc3-1e65d88ea647">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table 4_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="15" uuid="04417163-3983-471c-b241-f4355479571e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[NO.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 4_TD" height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="30" height="15" uuid="de5f84dd-dacc-4934-98cf-e2f6f4cf5d50"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ROWNUM}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="275" uuid="0ef31eb0-cdda-47d0-af86-6448c325acbb">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table 4_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="275" height="15" uuid="5284892d-6392-4fa1-bfb9-bd49d2142c6f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[부품명]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 4_TD" height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="275" height="15" uuid="49637e48-02be-4453-a44c-6a2014470a05">
+									<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+									<paragraph firstLineIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PAID_PART_NAME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="51" uuid="26483230-b07f-4b31-bccb-38b089a5cac1">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table 4_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="51" height="15" uuid="f0621252-71cc-42b0-866a-873d8529e327"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[단위]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 4_TD" height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="51" height="15" uuid="6093fcb8-d712-4a9c-870a-ab41d99e56a3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PAID_UNIT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="49" uuid="3359fc57-78f2-4dea-9617-48e27c18b505">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table 4_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="49" height="15" uuid="b9bb0cb2-c442-41f5-a091-9eb5887200be"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[수량]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 4_TD" height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="49" height="15" uuid="a8e4966f-cc66-4281-a5f1-26cee2014322"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PAID_ADD_QTY}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="51" uuid="13d03bdf-480d-460a-8bef-6d8f7ed5017b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table 4_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="51" height="15" uuid="c8af43c6-a7b1-4506-868d-e77632a6f9da"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[단가]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 4_TD" height="15">
+							<textField pattern="#,##0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="51" height="15" uuid="e22983f1-8186-4b42-9be2-4327bc1b0e4f">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PAID_UNIT_PRICE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="79" uuid="6dbd94e2-191b-47df-a0ed-86be6383adc7">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table 4_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="15" uuid="6731fcd0-aec4-40b2-92a1-8ad84ee89625"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+								</textElement>
+								<text><![CDATA[금액]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 4_TD" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField pattern="#,##0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="79" height="15" uuid="e685b827-97ce-4e52-9063-581aeca2477c">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="나눔고딕" size="8"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PAID_TOTAL_AMT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="15" y="1" width="48" height="14" uuid="dcf6be5c-33ed-4a75-a7b7-d6c857322ddf"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="8"/>
+				</textElement>
+				<text><![CDATA[유상]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<summary>
+		<band height="132" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="19" width="535" height="70" uuid="363bbedc-1b3f-4421-bb1e-9203824373df">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="NanumGothic" size="8"/>
+					<paragraph lineSpacingSize="1.0" firstLineIndent="0" leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[
+1. 무상 A/S는 1년 혹은 2000시간 선도래 분으로 한다.
+2. 기본부품은 필터 1SET, 공구 1SET 지급.
+3. 장비구매 후 반납/교환/환불은 불가합니다.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="5" width="48" height="14" uuid="1f7e90b9-0b04-4ca4-bbcf-36480b4dbb12"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="8"/>
+				</textElement>
+				<text><![CDATA[특이사항]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="15" y="101" width="535" height="30" backcolor="#D6D6D6" uuid="62b41baf-2cd4-49f1-b72a-bc91ee2c5f60">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="12" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["입 금 계 좌 : 기업은행 : 가상계좌 / 예금주: "+$F{CUST_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,84 @@
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><jsp:include page="/WEB-INF/jsp/common/commonForAll.jsp"/>
+&lt;%------------------------------------------------------------------------------------------------------------------
+-- 업   무 : <%= menuDepthName %>
+-- 작성자 : 담당자 이름을 넣어주세요.
+-- 최초 작성일 : <%= date %> <%= time %>
+------------------------------------------------------------------------------------------------------------------%>
+<!DOCTYPE html>
+<html>
+<head>
+	<jsp:include page="/WEB-INF/jsp/common/header.jsp"/>
+	<script type="text/javascript"><% jsMethodList.each { %>
+		function <%= it %>() {
+			alert('<%= it %> 함수를 구현하세요.');
+			// :TODO ...
+		} 
+		<% } %>
+	</script>
+</head>
+<body>
+<form id="main_form" name="main_form">
+<div id="sub" style="padding-left: 5px;"> <!-- 메뉴 열렸을 때 padding-left: 210px; / 메뉴 닫았을 때 padding-left: 44px; -->
+	<div class="Contents_Area">
+	
+		<!-- 페이지 제목 -->
+		<div class="page_title clearfix">
+			<jsp:include page="/WEB-INF/jsp/common/menuNavi.jsp"/>
+		</div>
+		<!-- // 페이지 제목 -->
+		
+		<!-- 버튼 그룹 -->&lt;%-- 버튼위치는 pos param에 따라 나옴  --%>
+		<div class="btn_group">
+			<div class="btn_right">&lt;%-- 버튼위치는 pos param 에 따라 나옴 (없으면 기본 상단나옴) T_CODE.CODE_VALUE='BTN_POS' 참고 --%>
+				<jsp:include page="/WEB-INF/jsp/common/buttonAuth.jsp"><jsp:param name="pos" value="BASE_R"/></jsp:include>
+			</div>
+		</div>	
+		<!-- // 버튼 그룹 -->
+		
+		<!-- 검색 조건 -->&lt;%-- 검색이 아닌 페이지에서는 검색 영역 삭제요망 --%>
+		<div class="search_box">
+			<table cellpadding="0" cellspacing="2" class="search_option">
+				<colgroup>
+					<col width="10%" />
+					<col width="23%" />
+					<col width="10%" />
+					<col width="23%" />
+					<col width="10%" />
+					<col width="" />
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>Text</th>
+						<td><input class="textbox-re" style="width:100%;"></td>
+						<th>Text</th>
+						<td>
+							<div>
+								<select style="width: 100%; ">
+									<option value="aa">옵션</option>
+								</select>
+							</div>
+						</td>
+						<th>Text</th>
+						<td>
+							<div>
+								<select style="width: 100%; ">
+									<option value="aa">옵션</option>
+								</select>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- // 검색 조건 -->
+
+		<div class="row">
+		<!-- Body 컨텐츠가 들어가는 영역 -->
+		여기에 컨텐츠가 들어가니 적절하게 레이아웃을 구성하세요.
+		<!-- // Body 컨텐츠가 들어가는 영역 -->
+		</div>
+	</div>
+</div>
+</form>
+</body>
+</html> 

@@ -1,0 +1,36 @@
+package <%= daoPackageName %>;
+
+import javax.sql.DataSource;
+
+import <%= beanPackageName %>.*;
+import mobile.factory.db.dao.DBTableDao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * <pre>
+ * 이 파일은 자동생성 BeanMaker로 자동 생성되니 편집하시 마세요!!!
+ * </pre>
+ *
+ * @author BeanMaker
+ *
+ **/
+@Configuration
+public class BeanDaoConfig {
+
+	@Autowired
+	@Qualifier("dataSource")
+	private DataSource dataSource;
+	<% bean.each { daoName = mobile.tool.MakeUtil.makeDaoName(it); fileName = it.replaceAll('VBean', 'vbean'); fileName = fileName.replaceAll('Bean', 'bean') %>
+	@Bean(name = "<%= daoName %>")
+	public DBTableDao <%= daoName %>() {
+		mobile.factory.db.dao.JdbcDBTable <%= daoName %> = new <%= vendorClassName %>();
+		<%= daoName %>.setTableInfo(new <%= it %>());
+		<%= daoName %>.setDataSource(dataSource);
+		return <%= daoName %>;
+	}
+	<% } %>	
+}//:)--

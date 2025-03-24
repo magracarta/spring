@@ -1,0 +1,26 @@
+package <%= servicePackagePath %>;
+
+import java.util.List;
+import java.util.Map;
+
+import mobile.factory.db.dao.BeanObject;
+import mobile.factory.db.dao.PageNavigation;
+
+/**
+ * <pre>
+ * 이클래스는 <%= menuDepthName %> Service
+ * </pre>
+ *
+ * @author 담당자이름을 넣어주세요.
+ * @date <%= date %> 
+ * @time <%= time %>
+ */
+public interface <%= serviceName %> {
+	/**
+	 * 조회 
+	 * @param pageNavi 페이징
+	 * @param param
+	 * @return
+	 */
+	public List<Map<String, Object>> selectXXXList(PageNavigation pageNavi, Map<String, String> param);
+} //:)--

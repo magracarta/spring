@@ -1,0 +1,36 @@
+package <%= servicePackagePath %>;
+
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import sunnyyk.erp.common.service.DefaultService;
+import mobile.factory.db.dao.BeanObject;
+import mobile.factory.db.dao.PageNavigation;
+import mobile.factory.db.dao.PreparedWhereMaker;
+
+/**
+ * <pre>
+ * 이클래스는 <%= menuDepthName %> Service 
+ * <%= serviceName %> 구현클래스
+ * </pre>
+ *
+ * @author 담당자이름을 넣어주세요.
+ * @date <%= date %> 
+ * @time <%= time %>
+ */
+@Service(value = "<%= serviceMemberName  %>")
+public class <%= serviceName %>Impl extends DefaultService implements <%= serviceName %> {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Override
+	public List<Map<String, Object>> selectXXXList(PageNavigation pageNavi, Map<String, String> param) {
+		PreparedWhereMaker pwm = makePrepareWhereMaker(false);
+
+		
+		return entityDao.select(pwm);
+	}
+} //:)--

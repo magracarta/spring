@@ -1,0 +1,28 @@
+package <%= menuPackageName %>;
+
+/**
+ * <pre>
+ * 이 파일은 자동생성 CodeMaker로 자동 생성되니 편집하지 마세요!!!
+ * </pre>
+ *
+ * @author MenuMaker
+ *
+ **/
+public class MenuDefine { <% list.each { %>
+	/**
+	 * <%= it.PATH_MENU_NAME %>
+	 */
+	public static final String SEQ_<%= it.MENU_SEQ %>_URL = "<%= it.MENU_URL %>";
+	/**
+	 * <%= it.PATH_MENU_NAME %>
+	 */
+	public static final int SEQ_<%= it.MENU_SEQ %>_SEQ = <%= it.MENU_SEQ %>;
+	/**
+	 * <%= it.PATH_MENU_NAME %>
+	 */
+	public static final String URL_<%= it.MENU_UPPER_URL %>_URL = "<%= it.MENU_URL %>";
+	/**
+	 * <%= it.PATH_MENU_NAME %>
+	 */
+	public static final int URL_<%= it.MENU_UPPER_URL %>_SEQ = <%= it.MENU_SEQ %>;   <% } %>
+}//:)--

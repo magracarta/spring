@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="100 seconds">
+	<property resource="config/application-dev.properties"/>
+	<include resource="logback/base.xml" />
+
+	<logger name="mobile" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="sunnyyk.erp.web.core.spring" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="sunnyyk.erp.web.core.spring.DefaultServlet" level="INFO" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<!-- 
+	<logger name="org.springframework.web.servlet.mvc.method" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	-->
+	<logger name="org.springframework.boot" level="INFO" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<!-- 
+  	<logger name="org.springframework.security" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger> 
+ -->
+  	<logger name="org.springframework.jdbc" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger> 
+  	<logger name="core.log.jdbc.driver" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger> 
+  
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+	</root>
+</configuration>

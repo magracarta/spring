@@ -1,0 +1,20 @@
+package <%= daoPackageName %>;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import mobile.factory.db.dao.DBTableDao;
+
+/**
+ * <pre>
+ * 이 파일은 자동생성 BeanMaker로 자동 생성되니 편집하시 마세요!!!
+ * </pre>
+ *
+ * @author BeanMaker
+ *
+ **/
+public abstract class DaoConfigService extends mobile.factory.db.ControlService {
+	<% bean.each { daoName = mobile.tool.MakeUtil.makeDaoName(it); fileName = it.replaceAll('VBean', 'vbean'); fileName = fileName.replaceAll('Bean', 'bean') %>
+	@Autowired
+	protected DBTableDao <%= daoName %>;
+	<% } %>	
+}//:)--

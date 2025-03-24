@@ -1,0 +1,480 @@
+<%@ page contentType="text/html;charset=utf-8" language="java"%><jsp:include page="/WEB-INF/jsp/common/commonForAll.jsp"/><%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %><%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %><%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%------------------------------------------------------------------------------------------------------------------
+-- 업   무 : 공통 > 기준정보 > 버튼관리 > null > null
+-- 작성자 : 김태훈
+-- 최초 작성일 : 2019-12-19 14:23:48
+------------------------------------------------------------------------------------------------------------------%>
+<!DOCTYPE html>
+<html>
+<head>
+	<jsp:include page="/WEB-INF/jsp/common/auiHeader.jsp"/>
+	<script type="text/javascript">
+	
+		var auiGrid;
+		var page = 1;
+		var moreFlag = "N";
+		
+		$(document).ready(function() {
+			createAUIGrid();
+			fnNew();
+			$( ".iclassYn" ).change(function() {
+				fnStateChange(this.value);
+			});
+		});	
+		
+		function fnSearch(successFunc) {
+			var param = {
+					"s_btn_name" : $M.getValue("s_btn_name"),
+					"s_js_name" : $M.getValue("s_js_name"),
+					"s_use_yn" : $M.getValue("s_use_yn"),
+					"page" : page,
+					"rows" : s_rows
+			}
+			$M.goNextPageAjax(this_page + '/search', $M.toGetParam(param), {method : 'get'},
+				function(result) {
+					if(result.success) {
+						successFunc(result);
+					};
+				}
+			);
+		}
+		
+		// 조회
+		function goSearch(isNew) { 
+			page = 1;
+			moreFlag = "N";
+			if (isNew != undefined) {
+				fnNew();				
+			}
+			fnSearch(function(result){
+				AUIGrid.setGridData(auiGrid, result.list);
+				$("#total_cnt").html(result.total_cnt);
+				if (result.more_yn == 'Y') {
+					moreFlag = "Y";
+					page++;
+				};
+			});
+		}
+		
+		function enter(fieldObj) {
+			var field = [ "s_btn_name", "s_js_name" ];
+			$.each(field, function() {
+				if (fieldObj.name == this) {
+					goSearch();
+				};
+			});
+		}
+		
+		// 미리보기
+		function fnPreview() {
+			var htmlArr = []; // pre, post fix
+			var btn = "<button type='button' id='_"+$M.getValue("js_name")+"' class='"+$M.getValue("btn_class")+"' #javascript#>";
+			if ($M.getValue("i_class") != "" && $M.getValue("icon_btn_yn") == "Y"){
+				btn = btn + "<i class='"+$M.getValue("i_class")+"'></i>"
+			};
+			// 미리보기 자바스크립트 실행 막기
+			$("#preview").html(btn+$M.getValue("btn_name")+"</button>");
+			btn = btn.replace("#javascript#", "onclick='javascript:"+$M.getValue("js_name")+"();'");
+			htmlArr.push(btn); // pre
+			htmlArr.push("</button>"); // post
+			return htmlArr;
+		}
+		
+		// 아이콘버튼 N일 경우 아이콘클래스 입력 막기
+		function fnStateChange(value) {
+			if (value == 'Y'){
+				$('#i_class').prop('disabled', false);
+			} else {
+				$M.setValue("i_class", "");
+				$('#i_class').prop('disabled', 'disabled');
+			};
+		}
+		
+		// 신규
+		function fnNew() {
+			var frm = document.main_form;
+			
+			var param = {
+					cmd : "C",
+					btn_name : "",
+					i_class : "",
+					btn_class : "",
+					js_name : "",
+					use_yn : "Y",
+					remark : "",
+					icon_btn_yn : "N",
+					appr_yn : "N",
+					btn_seq : ""
+			}
+			$M.setValue(param);
+			$("#btn_name").focus();
+			fnStateChange($M.getValue("icon_btn_yn"));
+			$("#preview").html("");
+		}
+		
+		// 저장
+		function goSave() {
+			var frm = document.main_form;
+			if($M.validation(document.main_form, {field:['btn_name', 'btn_class', 'js_name', 'icon_btn_yn', 'use_yn']}) == false) {
+				return;
+			}
+			if ($M.getValue("icon_btn_yn") == "Y" && $M.getValue("i_class") == ""){
+				alert("아이콘버튼을 사용할 경우, 아이콘 클래스를 지정하세요.");
+				return;
+			}
+			$M.setValue("html_prefix",fnPreview()[0]);
+			$M.setValue("html_postfix",fnPreview()[1]);
+			// cmd가 C일 경우 등록
+			if ($M.getValue(frm, "cmd") == "C"){
+				$M.goNextPageAjaxSave(this_page, frm , { method : 'POST'},
+					function(result) {
+						if(result.success) {
+							AUIGrid.setGridData(auiGrid, result.list);		
+							//fnNew();
+							goSearch();
+						};
+					}
+				);
+			// cmd가 C가 아니면 수정
+			} else {
+				goUpdate(frm);
+			};
+		}
+		
+		// 수정
+		function goUpdate(frm) {
+			$M.goNextPageAjaxSave(this_page+"/"+$M.getValue("btn_seq"), frm , { method : 'POST'},
+				function(result) {
+					if(result.success) {
+						AUIGrid.setGridData(auiGrid, result.list);		
+						//fnNew();
+						goSearch();
+					};
+				}
+			);
+		}
+		
+		// 메인그리드
+		function createAUIGrid() {
+			var gridPros = {
+				// rowIdField 설정
+				rowIdField: "btn_seq",
+				// rowIdField가 unique 임을 보장
+				rowIdTrustMode: true,
+				// rowNumber 
+				showRowNumColumn: true,
+				// 칼럼 끝에서 오른쪽 이동 시 다음 행, 처음 칼럼으로 이동할지 여부
+				wrapSelectionMove : false,
+				height : "420"
+			};
+			var columnLayout = [
+				{ 
+					headerText : "버튼명", 
+					dataField : "btn_name", 
+					width : "25%", 
+					style : "aui-left aui-link",
+					editable : false
+				}, 
+				{ 
+					headerText : "아이콘유무", 
+					dataField : "icon_btn_yn", 
+					width : "10%", 
+					style : "aui-center",
+					editable : false
+				}, 
+				{ 
+					headerText : "js 명령어", 
+					dataField : "js_name", 
+					width : "20%", 
+					style : "aui-left",
+					editable : false
+				}, 
+				{ 
+					headerText : "사용여부", 
+					dataField : "use_yn", 
+					width : "10%", 
+					style : "aui-center",
+					editable : false
+				}, 
+				{ 
+					headerText : "사용 메뉴수", 
+					dataField : "menu_cnt", 
+					width : "15%", 
+					style : "aui-right",
+					editable : false
+				}, 
+				{ 
+					headerText : "비고", 
+					dataField : "remark", 
+					style : "aui-left",
+					editable : false
+				}
+			];
+			// 실제로 #grid_wrap 에 그리드 생성
+			auiGrid = AUIGrid.create("#auiGrid", columnLayout, gridPros);
+			// 그리드 갱신
+			AUIGrid.setGridData(auiGrid, []);
+			AUIGrid.bind(auiGrid, "cellClick", function(event){
+				var frm = document.main_form;
+				$M.setValue(frm, "cmd", "U");
+				var param = {
+					"btn_seq" : event.item["btn_seq"]
+				}
+				goSearchDetail(param);          
+			});
+			AUIGrid.bind(auiGrid, "vScrollChange", fnScollChangeHandelr);
+		}
+		
+		function fnScollChangeHandelr(event) {
+			// 스크롤 위치가 마지막과 일치한다면 추가 데이터 요청함
+			if(event.position == event.maxPosition && moreFlag == "Y") {
+				goMoreData();
+			};
+		}
+		
+		function goMoreData() {
+			fnSearch(function(result){
+				result.more_yn == "N" ? moreFlag = "N" : page++;  
+				if (result.list.length > 0) {
+					console.log(result.list);
+					AUIGrid.appendData("#auiGrid", result.list);								
+				};
+			});
+		}
+		
+		// 상세 조회		
+		function goSearchDetail(param) {
+			console.log(param);
+			//param값 없으면 return
+			if(param ==null) {
+				return;
+			};
+			$M.goNextPageAjax(this_page + "/" + param.btn_seq, '', '',
+				function(result) {
+					if(result.success) {
+						var row = result.detail;
+						$M.setValue(row);
+						fnStateChange(row.icon_btn_yn);
+						fnPreview();
+					};
+				}
+			);
+		}
+	
+	</script>
+</head>
+<body>
+<form id="main_form" name="main_form">
+<div class="layout-box">
+<!-- contents 전체 영역 -->
+	<div class="content-wrap">
+			<div class="content-box">
+<!-- 메인 타이틀 -->
+				<div class="main-title">
+					<jsp:include page="/WEB-INF/jsp/common/menuNavi.jsp"/>
+				</div>
+<!-- /메인 타이틀 -->
+				<div class="contents">
+<!-- 검색영역 -->					
+					<div class="search-wrap">
+						<table class="table">
+							<colgroup>
+								<col width="70px">
+								<col width="130px">
+								<col width="70px">
+								<col width="130px">
+								<col width="70px">
+								<col width="130px">
+								<col width="*">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>버튼명</th>
+									<td>
+										<input type="text" class="form-control" id="s_btn_name" name="s_btn_name">
+									</td>							
+									<th>JS명령어</th>
+									<td>
+										<input type="text" class="form-control" id="s_js_name" name="s_js_name">
+									</td>	
+									<th>사용여부</th>
+									<td>
+										<select class="form-control" id="s_use_yn" name="s_use_yn">
+											<option value="">- 전체 -</option>
+											<option value="Y">사용</option>
+											<option value="N">미사용</option>
+										</select>
+									</td>
+									<td class="">
+										<button type="button" class="btn btn-important" style="width: 50px;" onclick="javascript:goSearch('new');">조회</button>
+									</td>
+								</tr>								
+							</tbody>
+						</table>
+					</div>
+					<!-- /검색영역 -->	
+					<div class="row">
+						<!-- 버튼목록 -->
+						<div class="col-6">
+							<div class="title-wrap mt10">
+								<h4>버튼목록</h4>		
+							</div>
+							<div style="margin-top: 5px;" id="auiGrid"></div>
+							<!-- 그리드 서머리, 컨트롤 영역 -->
+							<div class="btn-group mt5">
+								<div class="left">
+									총 <strong class="text-primary" id="total_cnt">0</strong>건 
+								</div>						
+							</div>
+						<!-- /그리드 서머리, 컨트롤 영역 -->
+						</div>
+						<!-- /버튼목록 -->						
+						<div class="col-6">
+							<div class="row">
+								<!-- 버튼정보 -->								
+								<div class="col-12" style="padding-left : 10px;">
+									<div class="title-wrap mt10">
+										<h4>버튼정보</h4>					
+									</div>							
+									<!-- 폼테이블 -->	
+									<div>
+										<table class="table-border mt5">
+											<colgroup>
+												<col width="100px">
+												<col width="">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th class="text-right essential-item">버튼명</th>
+													<td>
+														<input type="text" class="form-control essential-bg" id="btn_name" name="btn_name" alt="버튼명">
+													</td>
+												</tr>
+												<tr>
+													<th class="text-right essential-item">아이콘버튼</th>
+													<td>
+														<div class="form-check form-check-inline">
+															<input class="form-check-input iclassYn" type="radio" name="icon_btn_yn" value="Y">
+															<label class="form-check-label">Y</label>
+														</div>
+														<div class="form-check form-check-inline">
+															<input class="form-check-input iclassYn" type="radio" name="icon_btn_yn" value="N">
+															<label class="form-check-label">N</label>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<th class="text-right essential-item">아이콘 클래스</th>
+													<td>
+														<!-- <input type="text" class="form-control essential-bg" id="i_class" name="i_class"> -->
+														<select class="form-control essential-bg" id="i_class" name="i_class" alt="아이콘 클래스">
+															<option value="">- 선택 -</option>
+															<option value="material-iconsadd text-default">material-iconsadd text-default</option>
+															<option value="material-iconsremove text-default">material-iconsremove text-default</option>
+															<option value="material-iconsplaylist_add text-default">material-iconsplaylist_add text-default</option>
+															<option value="material-iconsfile_copy text-default">material-iconsfile_copy text-default</option>
+															<option value="material-iconsarrow_upward text-default">material-iconsarrow_upward text-default</option>
+															<option value="material-iconsarrow_downward text-default">material-iconsarrow_downward text-default</option>
+															<option value="material-iconssettings text-primary">material-iconssettings text-primary</option>
+															<option value="material-iconsprint text-default">material-iconsprint text-default</option>
+															<option value="material-iconscomment text-default">material-iconscomment text-default</option>
+															<option value="material-iconsmail_outline text-default">material-iconsmail_outline text-default</option>
+															<option value="material-iconsbuild text-default">material-iconsbuild text-default</option>
+															<option value="icon-btn-excel inline-btn">icon-btn-excel inline-btn</option>
+															<option value="material-iconsemail text-primary">material-iconsemail text-primary</option>
+															<option value="material-iconsprint text-primary">material-iconsprint print primary</option>
+															<option value="material-iconsdone text-default">material-iconsdone text-default</option>
+															<option value="material-iconsclose text-default">material-iconsclose text-default</option>
+															<option value="material-iconsclose text-default">material-iconsclose text-default</option>
+															<option value="material-iconssave_alt text-default">material-iconssave_alt text-default</option>
+															<option value="material-iconschevron_left text-default">material-iconssave_alt text-default</option>
+															<option value="material-iconsbar_chart text-default">material-iconsbar_chart text-default</option>
+															<option value="icon-btn-rank inline-btn">icon-btn-rank inline-btn</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<th class="text-right essential-item">버튼 클래스</th>
+													<td>
+														<select class="form-control essential-bg" id="btn_class" name="btn_class" alt="버튼 클래스">
+															<option value="">- 선택 -</option>
+															<option value="btn btn-default">기본버튼에 검은색 글씨</option>
+															<option value="btn btn-primary-gra">기본버튼에 파란색 글씨</option>
+															<option value="btn btn-success">초록색 배경에 흰색 글씨</option>
+															<option value="btn btn-info">파란색 배경에 흰색 글씨</option>
+															<option value="btn btn-md btn-rounded btn-outline-primary">둥그런 파란 테두리 흰색글씨</option>
+															<option value="btn btn-danger">빨간색 배경에 흰색 글씨</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<th class="text-right essential-item">JS명령어</th>
+													<td>
+														<input type="text" class="form-control essential-bg" id="js_name" name="js_name" alt="JS명령어">
+													</td>
+												</tr>
+												<tr>
+													<th class="text-right">비고</th>
+													<td>
+														<textarea class="form-control" style="height: 50px;" id="remark" name="remark"></textarea>
+													</td>
+												</tr>
+												<tr>
+													<th class="text-right essential-item">사용여부</th>
+													<td>
+														<div class="form-check form-check-inline">
+															<input class="form-check-input" type="radio" name="use_yn" value="Y" alt="사용여부">
+															<label class="form-check-label">Y</label>
+														</div>
+														<div class="form-check form-check-inline">
+															<input class="form-check-input" type="radio" name="use_yn" value="N">
+															<label class="form-check-label">N</label>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<th class="text-right essential-item">결재관련여부</th>
+													<td>
+														<div class="form-check form-check-inline">
+															<input class="form-check-input" type="radio" name="appr_yn" value="Y" alt="결재관련여부 ">
+															<label class="form-check-label">Y</label>
+														</div>
+														<div class="form-check form-check-inline">
+															<input class="form-check-input" type="radio" name="appr_yn" value="N">
+															<label class="form-check-label">N</label>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<th class="text-right"><a href="javascript:void(0)" class="btn btn-default" style="vertical-align: middle;" onclick="javascript:fnPreview();">미리보기</a></th>
+													<td>
+														<div id="preview"></div>
+													</td>
+												</tr>											
+											</tbody>
+										</table>
+									</div>
+									<!-- /폼테이블 -->
+									<!-- 그리드 서머리, 컨트롤 영역 -->
+									<div class="btn-group mt5">					
+										<div class="right">
+											<jsp:include page="/WEB-INF/jsp/common/buttonAuth.jsp"><jsp:param name="pos" value="BOM_R"/></jsp:include>
+										</div>
+									</div>
+									<!-- /그리드 서머리, 컨트롤 영역 -->
+								</div>
+								<!-- /버튼정보 -->									
+							</div>					
+						</div>
+					</div>
+				</div>
+			</div>
+			<jsp:include page="/WEB-INF/jsp/common/footer.jsp"/>		
+		</div>
+<!-- /contents 전체 영역 -->	
+</div>
+<input type="hidden" id="display_prefix" name="display_prefix">
+<input type="hidden" id="display_postfix" name="display_postfix">	
+</form>
+</body>
+</html>

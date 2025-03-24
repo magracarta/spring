@@ -1,0 +1,18 @@
+package <%= jsPackageName %>;
+
+/**
+ * <pre>
+ * 이 파일은 자동생성 CodeMaker로 자동 생성되니 편집하시 마세요!!!
+ * </pre>
+ *
+ * @author JSButtonMaker
+ *
+ **/
+public class JSButtonDefine {  
+	<% list.each { %>
+	/**
+	 * <%= it.btn_name %>(<%= it.use_yn %>)
+	 */
+	public static final String JS_<%= it.js_name %> = "<%= it.js_name %>";
+	<% } %>	
+}//:)--

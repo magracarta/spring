@@ -1,0 +1,165 @@
+package <%= packageName %>;
+import java.text.NumberFormat;
+import java.util.*;
+/**
+ * <pre>
+ * 이 파일은 자동생성 BeanMaker로 자동 생성되니 편집하시 마세요!!!
+ * </pre>
+ *
+ * @author BeanMaker
+ *
+ **/
+public class <%= javaName %> extends mobile.factory.db.dao.BeanObject {
+
+	// PK list.
+	public List<String> pkList = new ArrayList<String>()
+	{{ <% if(tableName.equals("T_ALL_TABLE") == false) { %> <% pkList.each { %>
+		add("<%= it %>"); <% } %> <% } %>
+	}};
+
+	// Column array
+	public final String[] colNameArray = { <% colList.each { %>
+		"<%= it %>", <% } %>
+	};
+
+	// Type list.
+	protected Map<String, String> typeMap = new HashMap<String, String>()
+	{{ <% colList.each { %>
+		put("<%= it %>", "<%= typeMap[it] %>"); <% } %>
+	}};
+	
+	// 숫자타입에 소수점 자리수 
+	protected Map<String, Integer> scaleMap = new HashMap<String, Integer>() 
+	{{ <% if(tableName.equals("T_ALL_TABLE") == false) { %> <% colList.each { %>
+		put("<%= it %>", <%= scaleMap[it] %>); <% } %> <% } %>
+	}};
+
+	// Size list.
+	protected Map<String, Integer> sizeMap = new HashMap<String, Integer>()
+	{{ <% if(tableName.equals("T_ALL_TABLE") == false) { %> <% colList.each { %>
+		put("<%= it %>", <%= sizeMap[it] %>); <% } %> <% } %>
+	}};
+	
+	// Comment list
+	protected Map<String, String> commentMap = new HashMap<String, String>()
+	{{ <% if(tableName.equals("T_ALL_TABLE") == false) { %> <% colList.each { %>
+		put("<%= it %>", "<%= commentMap[it] %>"); <% } %> <% } %>
+	}};<% if(tableName.equals("T_ALL_TABLE") == false) { %>
+	<% def idx = 0 %><% colList.each { %>
+	public final int <%= it.toUpperCase() %> = <%= idx++ %>; <% } %><% } %>
+
+	// 
+	private boolean[] setFlags= new boolean[colNameArray.length];
+	// 암호화 컬럼대상여부
+	private boolean[] encryptionFlags= new boolean[] { <% if(tableName.equals("T_ALL_TABLE") == false) { %> <% colList.each { %>
+		<%= encryptColumnList.contains(tableName +"."+ it.toUpperCase()) ? "true," : "false," %> <% } %> <% } %>
+	};
+	//
+
+	<% if(tableName.equals("T_ALL_TABLE") == false) { %>  <% colList.each { def javaType = javaColTypeMap[it] %>
+	private <%= javaType %> <%= it %> = <%= javaType == "String" ? "\"" + defaultMap.get(it) + "\"" : javaType == "int" || javaType == "long" || javaType == "double" || javaType == "float"? "0" : "null"  %>; <% } %> <% } %>
+	<%
+	   def constParam = ""   
+	   pkList.each {
+			constParam += javaColTypeMap[it] + ' ' + it + ','
+	   }
+	   constParam = constParam.size() > 0 ? constParam.substring(0, constParam.size() - 1) : ''
+	%>
+	<% if(tableName.equals("T_ALL_TABLE") == false) { %> 
+// ############# Constructor ############# 
+	public <%= javaName %>() {}
+	<% if(pkList.size() > 0) { %>
+	public <%= javaName %>(<%=constParam%>) { <% pkList.each { %>
+		setFlags[<%= it.toUpperCase() %>] = true;
+		this.<%= it %> = <%= it %>;<% } %>
+	} <% } %>
+// ############# START of getter & setter ############# 
+	<% colList.each { %>
+	/**
+	 * <%= commentMap[it] %>
+	 * @return
+	 */
+	public <%= javaColTypeMap[it] %> get<%= mobile.tool.MakeUtil.toFirstUpper(it, false) %>() {
+		return <%= it %>;
+	}
+
+	/**
+	 * <%= commentMap[it] %>
+	 * @param <%= it %>
+	 */
+	public void set<%= mobile.tool.MakeUtil.toFirstUpper(it, false) %>(<%= javaColTypeMap[it] %> <%= it %>) {
+		setFlags[<%= it.toUpperCase() %>] = true;
+		super.inputParam.put("<%= it %>", <%= it %> + "");
+		this.<%= it %> = <%= it %>;
+	}
+	<% } %>
+// ############# END of getter & setter ############# 
+	<% } %>
+	@Override
+	public String[] getFieldArray() {
+		return colNameArray;
+	}
+	@Override
+	public Set<String> getFieldSet() {
+		return typeMap.keySet();
+	}
+	@Override
+	public String getTableName() {
+		return "<%= tableName %>";
+	}
+	@Override
+	public boolean isEncryptionField(int i) {
+		return encryptionFlags[i];
+	}
+	@Override
+	public boolean isSetField(int i) {
+		return setFlags[i];
+	}
+	@Override
+	public boolean isPrimaryKey(int i) {
+		return isPrimaryKey(colNameArray[i]);
+	}
+	@Override
+	public boolean isPrimaryKey(String col) {
+		return pkList.contains(col);
+	}
+	@Override
+	public List<String> getPrimaryKeyList() {
+		return pkList;
+	}
+	@Override
+	public String getDBColumnType(int i) {
+		return getDBColumnType(colNameArray[i]);
+	}
+	@Override
+	public String getDBColumnType(String col) {
+		return (String)typeMap.get(col);
+	}
+	@Override
+	public int getDBColumnSize(String col) {
+		return sizeMap.get(col);
+	}
+	@Override
+	public String getDBColumnComment(String col) {
+		return commentMap.get(col);
+	}
+	@Override
+	public int getDBColumnIndex(String colName) {
+		int idx = -1;
+		for (int i = 0, n = getFieldArray().length; i < n; i++) {
+			if (getFieldArray()[i].equals(colName)) {
+				idx = i;
+				break;
+			}
+		}
+		return idx;
+	}
+	@Override
+	public void clearSetField(int idx) {
+		setFlags[idx] = false;
+	}
+	@Override
+	public void clearSetField(String colName) {
+		clearSetField(getDBColumnIndex(colName));
+	}
+}//:)--

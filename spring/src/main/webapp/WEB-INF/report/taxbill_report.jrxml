@@ -1,0 +1,2295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="taxBill_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dde5772b-a219-420a-b2ae-abfa96502f56">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="part_sale_yn">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{INOUT_DOC_TYPE_CD}.equals("05") == false]]></conditionExpression>
+			<style mode="Opaque" forecolor="#FFFFFF" backcolor="#FFFFFF" fontName="NanumGothic" fontSize="10"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="부품수주" uuid="3365fd1c-2c02-42ea-b205-d6eeaf94afb9">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="inout_doc_no" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[  select 
+  inout_doc_no             
+, seq_no                   
+, item_id		-- 부품번호    
+, item_name		-- 부품명     
+, qty 			-- 수량      
+, qty as old_qty -- 수량     
+, unit_price	-- 단가      
+, amt
+, unit			-- 단위      
+, stock_qty		-- 현재고     
+, storage_name
+, dtl_desc_text
+, sale_mi_qty	-- 미처리량    
+, rownum
+from (
+  select 
+  	  dtl.inout_doc_no 
+ 	, dtl.seq_no 
+ 	, dtl.item_id		-- 부품번호 
+ 	, dtl.item_name		-- 부품명 
+ 	, dtl.qty 			-- 수량 
+ 	, dtl.qty as old_qty -- 수량 
+ 	, dtl.unit_price	-- 단가 
+ 	, dtl.qty * dtl.unit_price as amt
+ 	, dtl.unit			-- 단위 
+ 	, dtl.stock_qty		-- 현재고 
+ 	, case when (dtl.inout_org_code =  '5110' )
+ 	    then (select storage_name from t_part_stock_stat where stock_year = to_char(sysdate, 'YYYY') and part_no = dtl.item_id and warehouse_cd =  '6000' ) 
+ 	    else dtl.storage_name end as storage_name -- 저장위치 
+ 	, nvl(dtl.desc_text, part.remark) as dtl_desc_text		-- 비고 
+ 	, part.sale_mi_qty	-- 미처리량 
+  from v_inout_doc_dtl dtl 
+  	left join t_part_sale_dtl part on dtl.part_sale_no = part.part_sale_no and dtl.item_id = part.part_no and dtl.seq_no = part.seq_no and part.use_yn = 'Y' 
+  where 1=1 
+  and dtl.use_yn = 'Y' 
+  and dtl.inout_doc_no =  $P{inout_doc_no} 
+  and dtl.inout_doc_type_cd = '05'
+  order by storage_name
+  ) ]]>
+		</queryString>
+		<field name="INOUT_DOC_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="INOUT_DOC_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="INOUT_DOC_NO"/>
+		</field>
+		<field name="SEQ_NO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SEQ_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="SEQ_NO"/>
+		</field>
+		<field name="ITEM_ID" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ITEM_ID"/>
+			<property name="com.jaspersoft.studio.field.label" value="ITEM_ID"/>
+		</field>
+		<field name="ITEM_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ITEM_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="ITEM_NAME"/>
+		</field>
+		<field name="QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="QTY"/>
+		</field>
+		<field name="OLD_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="OLD_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="OLD_QTY"/>
+		</field>
+		<field name="UNIT_PRICE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="UNIT_PRICE"/>
+			<property name="com.jaspersoft.studio.field.label" value="UNIT_PRICE"/>
+		</field>
+		<field name="AMT" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="AMT"/>
+			<property name="com.jaspersoft.studio.field.label" value="AMT"/>
+		</field>
+		<field name="UNIT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="UNIT"/>
+			<property name="com.jaspersoft.studio.field.label" value="UNIT"/>
+		</field>
+		<field name="STOCK_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="STOCK_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="STOCK_QTY"/>
+		</field>
+		<field name="STORAGE_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="STORAGE_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="STORAGE_NAME"/>
+		</field>
+		<field name="DTL_DESC_TEXT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="DTL_DESC_TEXT"/>
+			<property name="com.jaspersoft.studio.field.label" value="DTL_DESC_TEXT"/>
+		</field>
+		<field name="SALE_MI_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SALE_MI_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="SALE_MI_QTY"/>
+		</field>
+		<field name="ROWNUM" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ROWNUM"/>
+			<property name="com.jaspersoft.studio.field.label" value="ROWNUM"/>
+		</field>
+		<variable name="sum_amt" class="java.math.BigDecimal" calculation="Sum">
+			<variableExpression><![CDATA[SUM($F{AMT})]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="출하" uuid="8bdeca7f-4b1c-4078-99b6-cf4d23ed520d">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="inout_doc_no" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select 
+	dtl.inout_doc_no 
+, dtl.seq_no 
+, dtl.item_id		-- 부품번호 
+, dtl.item_name		-- 부품명 
+, dtl.qty 			-- 수량 
+, dtl.qty as old_qty -- 수량 
+, dtl.unit_price	-- 단가 
+, dtl.unit			-- 단위 
+ 	, dtl.qty * dtl.unit_price as amt
+, dtl.stock_qty		-- 현재고 
+   ,	(
+   		select storage_name from t_part_stock_stat
+   		where 1=1
+   		and stock_year = to_char(sysdate, 'YYYY') and part_no = dtl.item_id
+   		and warehouse_cd = case when (dtl.inout_org_code = '5110') then '6000' else dtl.inout_org_code end
+   	) as storage_name -- 저장위치
+, dtl.desc_text as dtl_desc_text		-- 비고 
+, '' as sale_mi_qty	-- 미처리량 
+ 	, rownum
+from v_inout_doc_dtl dtl 
+where 1=1 
+and dtl.use_yn = 'Y' 
+and dtl.inout_doc_no =  $P{inout_doc_no} 
+and dtl.inout_doc_type_cd = '08'
+order by dtl.seq_no asc]]>
+		</queryString>
+		<field name="INOUT_DOC_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="INOUT_DOC_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="INOUT_DOC_NO"/>
+		</field>
+		<field name="SEQ_NO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SEQ_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="SEQ_NO"/>
+		</field>
+		<field name="ITEM_ID" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ITEM_ID"/>
+			<property name="com.jaspersoft.studio.field.label" value="ITEM_ID"/>
+		</field>
+		<field name="ITEM_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ITEM_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="ITEM_NAME"/>
+		</field>
+		<field name="QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="QTY"/>
+		</field>
+		<field name="OLD_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="OLD_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="OLD_QTY"/>
+		</field>
+		<field name="UNIT_PRICE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="UNIT_PRICE"/>
+			<property name="com.jaspersoft.studio.field.label" value="UNIT_PRICE"/>
+		</field>
+		<field name="UNIT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="UNIT"/>
+			<property name="com.jaspersoft.studio.field.label" value="UNIT"/>
+		</field>
+		<field name="AMT" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="AMT"/>
+			<property name="com.jaspersoft.studio.field.label" value="AMT"/>
+		</field>
+		<field name="STOCK_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="STOCK_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="STOCK_QTY"/>
+		</field>
+		<field name="STORAGE_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="STORAGE_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="STORAGE_NAME"/>
+		</field>
+		<field name="DTL_DESC_TEXT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="DTL_DESC_TEXT"/>
+			<property name="com.jaspersoft.studio.field.label" value="DTL_DESC_TEXT"/>
+		</field>
+		<field name="SALE_MI_QTY" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="SALE_MI_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="SALE_MI_QTY"/>
+		</field>
+		<field name="ROWNUM" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ROWNUM"/>
+			<property name="com.jaspersoft.studio.field.label" value="ROWNUM"/>
+		</field>
+		<variable name="sum_amt" class="java.math.BigDecimal" calculation="Sum">
+			<variableExpression><![CDATA[SUM($F{AMT})]]></variableExpression>
+		</variable>
+		<group name="Group1"/>
+	</subDataset>
+	<subDataset name="정비" uuid="c98b04ab-0229-47a0-912a-b5293e0274b4">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+		<parameter name="inout_doc_no" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[select  
+	dtl.inout_doc_no  
+, dtl.seq_no  
+, dtl.item_id		-- 부품번호  
+, dtl.item_name		-- 부품명  
+, dtl.qty 			-- 수량  
+, dtl.qty as old_qty -- 수량  
+, dtl.unit_price	-- 단가  
+, dtl.unit			-- 단위  
+ 	, dtl.qty * dtl.unit_price as amt
+, dtl.stock_qty		-- 현재고  
+, case when (dtl.inout_org_code = '5110')
+   	then (select storage_name from t_part_stock_stat where stock_year = to_char(sysdate, 'YYYY') and part_no = dtl.item_id and warehouse_cd = '6000') 
+   	else dtl.storage_name end as storage_name -- 저장위치 
+, dtl.desc_text as dtl_desc_text		-- 비고  
+, '' as sale_mi_qty	-- 미처리량  
+ 	, rownum
+from v_inout_doc_dtl dtl  
+where 1=1  
+and dtl.use_yn = 'Y'  
+and dtl.inout_doc_no =  $P{inout_doc_no} 
+and dtl.inout_doc_type_cd = '07'
+order by dtl.seq_no asc]]>
+		</queryString>
+		<field name="INOUT_DOC_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="INOUT_DOC_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="INOUT_DOC_NO"/>
+		</field>
+		<field name="SEQ_NO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SEQ_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="SEQ_NO"/>
+		</field>
+		<field name="ITEM_ID" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ITEM_ID"/>
+			<property name="com.jaspersoft.studio.field.label" value="ITEM_ID"/>
+		</field>
+		<field name="ITEM_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ITEM_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="ITEM_NAME"/>
+		</field>
+		<field name="QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="QTY"/>
+		</field>
+		<field name="OLD_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="OLD_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="OLD_QTY"/>
+		</field>
+		<field name="UNIT_PRICE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="UNIT_PRICE"/>
+			<property name="com.jaspersoft.studio.field.label" value="UNIT_PRICE"/>
+		</field>
+		<field name="UNIT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="UNIT"/>
+			<property name="com.jaspersoft.studio.field.label" value="UNIT"/>
+		</field>
+		<field name="AMT" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="AMT"/>
+			<property name="com.jaspersoft.studio.field.label" value="AMT"/>
+		</field>
+		<field name="STOCK_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="STOCK_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="STOCK_QTY"/>
+		</field>
+		<field name="STORAGE_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="STORAGE_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="STORAGE_NAME"/>
+		</field>
+		<field name="DTL_DESC_TEXT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="DTL_DESC_TEXT"/>
+			<property name="com.jaspersoft.studio.field.label" value="DTL_DESC_TEXT"/>
+		</field>
+		<field name="SALE_MI_QTY" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="SALE_MI_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="SALE_MI_QTY"/>
+		</field>
+		<field name="ROWNUM" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ROWNUM"/>
+			<property name="com.jaspersoft.studio.field.label" value="ROWNUM"/>
+		</field>
+		<variable name="sum_amt" class="java.math.BigDecimal" calculation="Sum">
+			<variableExpression><![CDATA[SUM($F{AMT})]]></variableExpression>
+		</variable>
+		<group name="Group1"/>
+	</subDataset>
+	<subDataset name="렌탈" uuid="ac7f54a2-41a4-498f-8c09-8c20df120aed">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+		<parameter name="inout_doc_no" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[select  
+	dtl.inout_doc_no  
+, dtl.seq_no  
+, dtl.item_id		-- 부품번호  
+, dtl.item_name		-- 부품명  
+, dtl.qty 			-- 수량  
+, dtl.qty as old_qty -- 수량  
+, dtl.unit_price	-- 단가  
+, dtl.unit			-- 단위  
+, dtl.qty * dtl.unit_price as amt
+, dtl.stock_qty		-- 현재고  
+, case when (dtl.inout_org_code = '5110')
+   	then (select storage_name from t_part_stock_stat where stock_year = to_char(sysdate, 'YYYY') and part_no = dtl.item_id and warehouse_cd = '6000') 
+   	else dtl.storage_name end as storage_name -- 저장위치 
+, dtl.desc_text as dtl_desc_text		-- 비고  
+, '' as sale_mi_qty	-- 미처리량  
+, rownum
+from v_inout_doc_dtl dtl  
+where 1=1  
+and dtl.use_yn = 'Y'  
+and dtl.inout_doc_no =   $P{inout_doc_no} 
+and dtl.inout_doc_type_cd = '11'
+order by dtl.seq_no asc]]>
+		</queryString>
+		<field name="INOUT_DOC_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="INOUT_DOC_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="INOUT_DOC_NO"/>
+		</field>
+		<field name="SEQ_NO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SEQ_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="SEQ_NO"/>
+		</field>
+		<field name="ITEM_ID" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ITEM_ID"/>
+			<property name="com.jaspersoft.studio.field.label" value="ITEM_ID"/>
+		</field>
+		<field name="ITEM_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ITEM_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="ITEM_NAME"/>
+		</field>
+		<field name="QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="QTY"/>
+		</field>
+		<field name="OLD_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="OLD_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="OLD_QTY"/>
+		</field>
+		<field name="UNIT_PRICE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="UNIT_PRICE"/>
+			<property name="com.jaspersoft.studio.field.label" value="UNIT_PRICE"/>
+		</field>
+		<field name="UNIT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="UNIT"/>
+			<property name="com.jaspersoft.studio.field.label" value="UNIT"/>
+		</field>
+		<field name="AMT" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="AMT"/>
+			<property name="com.jaspersoft.studio.field.label" value="AMT"/>
+		</field>
+		<field name="STOCK_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="STOCK_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="STOCK_QTY"/>
+		</field>
+		<field name="STORAGE_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="STORAGE_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="STORAGE_NAME"/>
+		</field>
+		<field name="DTL_DESC_TEXT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="DTL_DESC_TEXT"/>
+			<property name="com.jaspersoft.studio.field.label" value="DTL_DESC_TEXT"/>
+		</field>
+		<field name="SALE_MI_QTY" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="SALE_MI_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="SALE_MI_QTY"/>
+		</field>
+		<field name="ROWNUM" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="ROWNUM"/>
+			<property name="com.jaspersoft.studio.field.label" value="ROWNUM"/>
+		</field>
+		<variable name="sum_amt" class="java.math.BigDecimal" calculation="Sum">
+			<variableExpression><![CDATA[SUM($F{AMT})]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="stamp_image" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/Users/82107/JaspersoftWorkspace/MyReports/image/yk도장.png"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="yk_logo_image" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/Users/82107/JaspersoftWorkspace/MyReports/image/favicon.png"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo_image" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/Users/82107/JaspersoftWorkspace/MyReports/image/yk_logo.png"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="inout_doc_no" class="java.lang.String">
+		<defaultValueExpression><![CDATA["IN20230913-003"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select  
+ 		case when (tax.taxbill_no is not null) then tax.taxbill_no 
+ 		else doc.acnt_taxbill_no end as taxbill 
+ 		,  case when (com_name_print_cd = '0') then doc.cust_name 
+ 			 	when (com_name_print_cd = '1') then doc.breg_name 
+ 			 	when (com_name_print_cd = '2') then doc.breg_rep_name 
+ 		   else doc.cust_name 
+ 		   end as cust_name_print 
+ 		, (select kor_name from t_mem where doc.mem_no = mem_no) as mem_name 
+ 		, doc.acnt_taxbill_no 
+ 		, case when (tax.taxbill_no is not null) then  
+ 		 			'* 계산서 안내 *'||chr(13)||chr(10)|| 
+ 		 			'전자세금계산서 발급번호: '||substr(tax.taxbill_no, 1, 10)||'-'||substr(tax.taxbill_no, 12)||'-'||tax.taxbill_control_no||chr(13)||chr(10)|| 
+ 					'YK건기 홈페이지 www.sunnyyk.co.kr에서 조회 및 인쇄가 가능합니다.' 
+ 		 			else '' end as bigo_text 
+ 		, tax.taxbill_control_no 
+ 		, tax.taxbill_send_cd 
+ 		, doc.inout_doc_type_cd	 
+ 		, to_char(to_date(doc.inout_dt), 'yyyy.MM.dd') as inout_dt			-- 전표일자
+ 		, doc.inout_doc_no 		-- 전표번호 
+ 		, doc.doc_amt				-- 물품대 
+ 		, doc.discount_amt			-- 할인(쿠폰사용) 
+ 		, doc.use_mile_amt			-- 할인(마일리지사용) 
+ 		, cust.coupon_amt as coupon_balance_amt			-- 쿠폰잔액   
+ 		, doc.vat_amt				-- 부가세 
+ 		, doc.total_amt				-- 합계금액 
+ 		, case when (doc.doc_amt < 0)
+ 			   then doc.doc_amt - doc.discount_amt -- 반품 또는 조기회수 건일 때는 할인금액(쿠폰) 뺀 가격 
+ 			   else doc.doc_amt - doc.discount_amt - doc.use_mile_amt -- 일반 매출일 때는 할인금액(쿠폰+마일리지) 뺀 가격 
+ 			   end as apply_discount_amt 
+ 		, doc.desc_text				-- 비고 
+		, case when (doc.cust_hp_no is not null) then substr(replace(doc.cust_hp_no, '-', ''), 0, 3) || '-' || substr(replace(doc.cust_hp_no, '-', ''), 4, 4) || '-' || substr(replace(doc.cust_hp_no, '-', ''), 8, 4) end as cust_hp_no
+   		, case when (doc.cust_fax_no is not null) then substr(replace(doc.cust_fax_no, '-', ''), 0, 3) || '-' || substr(replace(doc.cust_fax_no, '-', ''), 4, 3) || '-' || substr(replace(doc.cust_fax_no, '-', ''), 7, 4) end as cust_fax_no
+   		, case when (cust.tel_no is not null) then substr(replace(cust.tel_no, '-', ''), 0, 3) || '-' || substr(replace(cust.tel_no, '-', ''), 4, 3) || '-' || substr(replace(cust.tel_no, '-', ''), 7, 4) end as tel_no
+ 		, doc.cust_no				-- 고객번호 
+		, doc.doc_barcode_no 
+ 		, amt.ed_misu_amt as misu_amt	-- 현미수금 
+  	, doc.vip_yn	-- VIP여부 
+  	, case when (doc.vip_yn = 'Y') then  '[VIP고객] VIP가 적용'  else  '[일반고객] 일반가 적용'  end as vip_msg -- VIP메세지(리포트) 
+	, yk_breg_no
+	, yk_breg_name
+	, yk_breg_cor_type
+	, yk_breg_cor_part
+	, yk_tel_no
+	, yk_fax_no
+	, yk_addr
+	, yk_breg_rep_name || '       (인)' as yk_breg_rep_name
+ from v_inout_doc doc 
+ join v_cust cust on doc.cust_no = cust.cust_no  
+ left join t_cust_deal_amt amt on amt.cust_no = doc.cust_no and amt.deal_mon = to_char(sysdate, 'yyyymm') 
+ left join v_taxbill tax on tax.taxbill_no = doc.taxbill_no 
+ left join (
+		select 
+			  a.cust_no           as yk_cust_no      
+		 	, a.cust_name         as yk_cust_name    
+		 	, a.tel_no            as yk_tel_no       
+		 	, a.fax_no            as yk_fax_no       
+		 	, a.email 			  as yk_email        
+		 	, a.hp_no 			  as yk_hp_no        
+		 	, a.post_no           as yk_post_no      
+		 	, a.addr1 			  as yk_addr1        
+		 	, a.addr2 			  as yk_addr2        
+		 	, a.addr1 || ' ' || a.addr2 as yk_addr 
+		 	, c.breg_name         as yk_breg_name    
+		 	, substr(c.breg_no, 1, 3) || '-' || substr(c.breg_no, 4, 2) || '-' || substr(c.breg_no, 6, 5)            as yk_breg_no      
+		 	, c.breg_rep_name     as yk_breg_rep_name
+		 	, c.breg_cor_type     as yk_breg_cor_type
+		 	, c.breg_cor_part     as yk_breg_cor_part
+		 	, c.biz_post_no       as yk_biz_post_no  
+		 	, c.biz_addr1         as yk_biz_addr1    
+		 	, c.biz_addr2         as yk_biz_addr2    
+		 	, c.biz_addr1 || ' ' || c.biz_addr2 as yk_biz_addr  
+		 from t_cust a 
+		 inner join t_cust_breg b on a.cust_no  = b.cust_no and b.use_yn = 'Y' 
+		 inner join v_breg c on b.breg_seq  = c.breg_seq  and c.use_yn  = 'Y' 
+		 where 1=1 
+		 and a.cust_no =  '20060727140532287' 
+		 and c.breg_type_cd  =  'COR' 
+		) yk on 1=1 																													  
+ where 1=1 
+ and doc.use_yn = 'Y' 
+ and doc.inout_doc_no =  $P{inout_doc_no}]]>
+	</queryString>
+	<field name="TAXBILL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL"/>
+	</field>
+	<field name="CUST_NAME_PRINT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUST_NAME_PRINT"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUST_NAME_PRINT"/>
+	</field>
+	<field name="MEM_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MEM_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="MEM_NAME"/>
+	</field>
+	<field name="ACNT_TAXBILL_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ACNT_TAXBILL_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="ACNT_TAXBILL_NO"/>
+	</field>
+	<field name="BIGO_TEXT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BIGO_TEXT"/>
+		<property name="com.jaspersoft.studio.field.label" value="BIGO_TEXT"/>
+	</field>
+	<field name="TAXBILL_CONTROL_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL_CONTROL_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL_CONTROL_NO"/>
+	</field>
+	<field name="TAXBILL_SEND_CD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL_SEND_CD"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL_SEND_CD"/>
+	</field>
+	<field name="INOUT_DOC_TYPE_CD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="INOUT_DOC_TYPE_CD"/>
+		<property name="com.jaspersoft.studio.field.label" value="INOUT_DOC_TYPE_CD"/>
+	</field>
+	<field name="INOUT_DT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="INOUT_DT"/>
+		<property name="com.jaspersoft.studio.field.label" value="INOUT_DT"/>
+	</field>
+	<field name="INOUT_DOC_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="INOUT_DOC_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="INOUT_DOC_NO"/>
+	</field>
+	<field name="DOC_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="DOC_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="DOC_AMT"/>
+	</field>
+	<field name="DISCOUNT_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="DISCOUNT_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="DISCOUNT_AMT"/>
+	</field>
+	<field name="USE_MILE_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="USE_MILE_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="USE_MILE_AMT"/>
+	</field>
+	<field name="COUPON_BALANCE_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="COUPON_BALANCE_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="COUPON_BALANCE_AMT"/>
+	</field>
+	<field name="VAT_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT"/>
+	</field>
+	<field name="TOTAL_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_AMT"/>
+	</field>
+	<field name="APPLY_DISCOUNT_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="APPLY_DISCOUNT_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="APPLY_DISCOUNT_AMT"/>
+	</field>
+	<field name="DESC_TEXT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESC_TEXT"/>
+		<property name="com.jaspersoft.studio.field.label" value="DESC_TEXT"/>
+	</field>
+	<field name="CUST_HP_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUST_HP_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUST_HP_NO"/>
+	</field>
+	<field name="CUST_FAX_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUST_FAX_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUST_FAX_NO"/>
+	</field>
+	<field name="TEL_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TEL_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="TEL_NO"/>
+	</field>
+	<field name="CUST_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUST_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUST_NO"/>
+	</field>
+	<field name="DOC_BARCODE_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DOC_BARCODE_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="DOC_BARCODE_NO"/>
+	</field>
+	<field name="MISU_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MISU_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="MISU_AMT"/>
+	</field>
+	<field name="VIP_YN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VIP_YN"/>
+		<property name="com.jaspersoft.studio.field.label" value="VIP_YN"/>
+	</field>
+	<field name="VIP_MSG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VIP_MSG"/>
+		<property name="com.jaspersoft.studio.field.label" value="VIP_MSG"/>
+	</field>
+	<field name="YK_BREG_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_BREG_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_BREG_NO"/>
+	</field>
+	<field name="YK_BREG_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_BREG_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_BREG_NAME"/>
+	</field>
+	<field name="YK_BREG_COR_TYPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_BREG_COR_TYPE"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_BREG_COR_TYPE"/>
+	</field>
+	<field name="YK_BREG_COR_PART" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_BREG_COR_PART"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_BREG_COR_PART"/>
+	</field>
+	<field name="YK_TEL_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_TEL_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_TEL_NO"/>
+	</field>
+	<field name="YK_FAX_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_FAX_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_FAX_NO"/>
+	</field>
+	<field name="YK_ADDR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_ADDR"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_ADDR"/>
+	</field>
+	<field name="YK_BREG_REP_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YK_BREG_REP_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="YK_BREG_REP_NAME"/>
+	</field>
+	<title>
+		<band height="182" splitType="Stretch">
+			<frame>
+				<reportElement x="10" y="12" width="533" height="56" uuid="93e96fa1-2ae2-4093-9fba-f8ad49dd22df"/>
+				<staticText>
+					<reportElement x="286" y="34" width="112" height="22" uuid="529bb7aa-328b-4042-b2aa-7bb3e7692b09">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="286" y="0" width="112" height="17" uuid="2627cd2a-d1b5-4358-8ee9-f98bd7b160c9">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{INOUT_DOC_NO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="51" y="0" width="154" height="34" uuid="4eb11bca-1801-4002-976f-8c2417979f1a"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="14"/>
+					</textElement>
+					<text><![CDATA[거래명세표]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="51" y="34" width="154" height="16" uuid="3245f62c-3169-469b-87ef-9a2c65e8a382"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[(주)와이케이건기]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="230" y="0" width="56" height="17" uuid="222ba66b-e30d-4f1e-9fef-a3bbb338eae0">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[전표번호]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="230" y="17" width="56" height="17" uuid="08f5cd51-1a8c-4490-b447-620c68dc87c8">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[전표일자]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="230" y="34" width="56" height="22" uuid="7f422f46-94d6-4308-b7bc-84323ba1e371">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[바코드]]></text>
+				</staticText>
+				<textField pattern="yyyy.MM.dd">
+					<reportElement x="286" y="17" width="112" height="17" uuid="c9f9941f-c94c-486c-9c1b-d7bb8fe84af8">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{INOUT_DT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="415" y="0" width="59" height="17" uuid="dd54616d-706b-4f19-a1ea-50a09b511b91">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[담당]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="474" y="0" width="59" height="17" uuid="d9da507f-f004-48c2-9246-292ef383bb90">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[결재]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="415" y="17" width="59" height="34" uuid="32f5f6af-8113-4160-8ea5-46c585d5b25b">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MEM_NAME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="474" y="17" width="59" height="34" uuid="cde81770-d0cc-4e22-8cfc-e9cfecebad04">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement x="287" y="35" width="110" height="20" uuid="cbc749c5-fc98-4b3a-8ba9-1de44529fda9">
+						<property name="com.jaspersoft.studio.unit.barWidth" value="px"/>
+						<property name="com.jaspersoft.studio.unit.barHeight" value="px"/>
+					</reportElement>
+					<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="2" barHeight="50">
+						<jr:codeExpression><![CDATA[$F{DOC_BARCODE_NO}]]></jr:codeExpression>
+					</jr:barbecue>
+				</componentElement>
+				<image>
+					<reportElement x="1" y="0" width="50" height="50" uuid="c032d0b9-e3ef-4031-bf47-76598bf92a1e"/>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<imageExpression><![CDATA[$P{yk_logo_image}]]></imageExpression>
+				</image>
+			</frame>
+			<frame>
+				<reportElement x="10" y="72" width="206" height="107" uuid="0de9ebf5-ce6e-446f-9219-3fa4c3018583"/>
+				<staticText>
+					<reportElement x="0" y="0" width="206" height="30" uuid="7fe57fc3-c09a-4529-bab0-4b078bf6a1b5">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="NanumGothic"/>
+						<paragraph rightIndent="10"/>
+					</textElement>
+					<text><![CDATA[귀 중]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="206" height="30" uuid="dd4fb736-fa8d-4ac8-947a-52e4a7b648e7">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[다음과 같이 계산합니다.]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="0" width="206" height="30" uuid="81552488-e10f-4a37-8579-48f8e1c224b6">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.tabStopWidth" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="NanumGothic" size="14" isBold="false"/>
+						<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="40" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CUST_NAME_PRINT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="36" width="206" height="30" uuid="31596045-cb8f-414b-bc26-b769e67e3861">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="NanumGothic"/>
+						<paragraph rightIndent="10"/>
+					</textElement>
+					<text><![CDATA[원 정]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="36" width="206" height="30" uuid="ddcd29b8-652a-40e8-a109-babf39bac00b">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[합계금액 :]]></text>
+				</staticText>
+				<textField pattern="#,##0">
+					<reportElement x="0" y="36" width="206" height="30" uuid="c6c7a1b8-6a85-4c94-a3dd-9b9265d17dfc">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+						<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.tabStopWidth" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="NanumGothic" size="10" isBold="false"/>
+						<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="40" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TOTAL_AMT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="73" width="14" height="17" uuid="bf9b0e89-db07-4e17-8308-6cc3d816ba36">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[H)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="90" width="14" height="17" uuid="80acb068-5c4e-45a2-889f-2d52136390a3">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[T)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="103" y="73" width="14" height="17" uuid="deb41bc1-84f4-4281-8f42-765c0967c31a">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[F)]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="14" y="73" width="89" height="17" uuid="aa61780e-77bb-499b-9976-2ced8948550b"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CUST_HP_NO}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="117" y="73" width="89" height="17" uuid="a3955722-e302-4538-88d5-d6693a35db97"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CUST_FAX_NO}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="14" y="90" width="89" height="17" uuid="b00a0270-ce21-4fcb-92cd-97ec115636d9"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TEL_NO}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="223" y="74" width="320" height="101" uuid="193bd97f-59c0-4d3b-a31e-26336172fb27"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="15" height="101" uuid="5be369ee-6c59-4ff2-98dc-622ba0e08ea0">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" isBold="false"/>
+					</textElement>
+					<text><![CDATA[공
+급
+자]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="0" width="59" height="18" uuid="cde94872-30b3-47a3-ab3d-949ecc37ac50">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="12"/>
+					</textElement>
+					<text><![CDATA[등록번호명]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="18" width="59" height="16" uuid="aea2cb9a-842d-46fb-8a5c-e0d8a6e7fb50">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[상호 (법인명)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="34" width="59" height="17" uuid="0da70931-c13b-4ec8-ba5e-f489e783bdea">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[사업장]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="51" width="59" height="17" uuid="f1e2e518-f9fa-48a7-8a75-f1da5734cb14">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[업태]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="68" width="59" height="33" uuid="fa6b66ab-70dc-4aa3-a6ac-c3fc4c6e675d">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[대표
+연락처]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="74" y="0" width="246" height="18" uuid="8c0fef09-7f68-45b2-b4aa-55991dd37310">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_BREG_NO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="74" y="18" width="87" height="16" uuid="81a7d0ca-63d0-48fb-8c78-3bf8cd0021af">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_BREG_NAME}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="74" y="34" width="246" height="17" uuid="8b69f6d3-8dfd-4daf-875d-c900ec375026">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_ADDR}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="74" y="51" width="87" height="17" uuid="3828d0f4-6330-4a21-bc14-223cb31b980c">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_BREG_COR_TYPE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="74" y="68" width="246" height="17" uuid="b75ad9f6-fa34-482d-bf9a-88f3def971b2">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA["대표전화 : " + $F{YK_TEL_NO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="74" y="85" width="246" height="16" uuid="ba5d67c0-2d74-45bc-b2d7-def012ce14e8">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA["FAX : " + $F{YK_FAX_NO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="219" y="18" width="101" height="16" uuid="909b909f-908d-4469-bfa4-a859abc3dc0d">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_BREG_REP_NAME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="161" y="18" width="58" height="16" uuid="eb223a94-5e1d-4e34-921e-473f750c525c">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[대표자]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="161" y="51" width="58" height="17" uuid="ffa6e8d7-4e20-46d3-9f81-5ae80d216f2f">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[업종]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="219" y="51" width="101" height="17" uuid="93437a10-cb2b-4408-9407-4b9ebe6fba0e">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{YK_BREG_COR_PART}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="270" y="4" width="50" height="50" uuid="c3d90399-405f-45a8-8b9e-cec37ea2653c"/>
+					<imageExpression><![CDATA[$P{stamp_image}]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<detail>
+		<band height="69" splitType="Stretch">
+			<componentElement>
+				<reportElement x="10" y="19" width="533" height="45" uuid="d1813b1b-5044-4bf1-a4e6-83813f07abd3">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="부품수주" uuid="46156449-53ca-4204-8322-30f37a73d127">
+						<datasetParameter name="inout_doc_no">
+							<datasetParameterExpression><![CDATA[$P{inout_doc_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="390" uuid="01be55cf-2b85-47b8-b4cb-8947fce955f3">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [5]"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="390" height="15" uuid="0fef93fe-543c-4a45-9988-2d2ddc9ae795"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic"/>
+								</textElement>
+								<text><![CDATA[합    계]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:column width="29" uuid="63bf21f8-cb64-4327-b512-d8a20c65be9e">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="29" height="15" uuid="6ef0bdc9-6539-4f37-ab5b-c6f92bf3cf8d">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[NO.]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="29" height="15" uuid="365636ad-72ff-4feb-b67f-96304018164d">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ROWNUM}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="111" uuid="55f64ace-b1e8-4e7f-9a4c-b96005952d04">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="111" height="15" uuid="14d52029-13be-4adc-947c-eb2bad8076a0"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[부품번호]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="111" height="15" uuid="9f78807e-2fed-4a9e-abf4-4421c9402e5c"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ITEM_ID}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="160" uuid="3eb729ea-e416-47f3-86d7-336192f0df63">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="160" height="15" uuid="750b5e78-ec42-475d-b469-ba8d5d9a30dd"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[부품명]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="160" height="15" uuid="d12d6d76-0850-44fd-8b72-fb32ef945020"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ITEM_NAME}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="29" uuid="4e737ca6-fcaa-4437-986d-e39395639c45">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="29" height="15" uuid="4e9992e6-1700-4245-8a2c-0899a2962cf8"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[수량]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="29" height="15" uuid="421be790-060d-4354-aa38-16b98b55987c"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="61" uuid="fbd94c66-8826-4882-9342-bcc93cfa109f">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="61" height="15" uuid="6a97d846-b595-4609-9e2a-ee02a0c2a66b"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[단가]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" pattern="#,##0" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="61" height="15" uuid="73ed5b0c-53fd-4fc0-9250-674f21123b65">
+										<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{UNIT_PRICE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:column width="69" uuid="997abfe9-d2a6-4a5f-a2ba-26861d48b15f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="2">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField pattern="#,##0">
+								<reportElement x="0" y="0" width="69" height="15" uuid="f1353441-2400-4b26-a349-d3bf4c1d3433">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{sum_amt}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="69" height="15" uuid="935902a7-d725-4b8a-bd2f-ca27588aaf30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<text><![CDATA[금액]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField textAdjust="ScaleFont" pattern="#,##0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="69" height="15" uuid="b0d32e9c-edae-4965-a42b-5d148b51e88a">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{AMT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="76" uuid="7a261d7c-f683-4c27-9b70-34abd18e3e38">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="2"/>
+						<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="76" height="15" uuid="6cd015db-c663-4d7f-a759-ff76af9efb9d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<text><![CDATA[저장위치]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="76" height="15" uuid="dd89c98c-8f01-40f5-a0dc-4df97b8c3afa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{STORAGE_NAME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement x="10" y="19" width="533" height="45" uuid="cb61226e-0dc6-42d0-9814-cb22dd5ff125">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="출하" uuid="90114085-afcb-437e-9fb4-fd7403bf5873">
+						<datasetParameter name="inout_doc_no">
+							<datasetParameterExpression><![CDATA[$P{inout_doc_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="390" uuid="079d3e60-42a2-4bda-a9a4-dc2e0a30bf8c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [5]"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="390" height="15" uuid="b2788ac2-5319-4f94-87c4-bbbf16e3f7c3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic"/>
+								</textElement>
+								<text><![CDATA[합    계]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:column width="29" uuid="66b9a654-bce0-4723-9aac-b56420ad597d">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="29" height="15" uuid="42eb1580-bd0d-4fa0-b88e-74b6814cd1a7">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[NO.]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="29" height="15" uuid="aa302f60-16e2-432a-8430-e1a2c2ccb958">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ROWNUM}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="111" uuid="de40a18a-efb2-42b4-9b5c-5f1a3572322f">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="111" height="15" uuid="5ba714e9-aa0f-4db8-bef0-aa96c4feb4f5"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[부품번호]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="111" height="15" uuid="62d94065-978e-48bc-a1cb-44e297796727"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ITEM_ID}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="160" uuid="17428b6e-d2a4-4452-bb4c-6bdd78115f62">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="160" height="15" uuid="685f9588-1a59-4803-9a6a-bef28351f9f4"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[부품명]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="160" height="15" uuid="415f977e-6b5a-42cf-a41c-3b7da3c37633"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ITEM_NAME}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="29" uuid="c86b5e1c-fb65-407e-b1ea-10a0de029904">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="29" height="15" uuid="0d77177f-4b35-46d6-912b-b15304641123"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[수량]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="29" height="15" uuid="42ae5307-22f1-4b97-aea7-5eb3ddcadfe6"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="61" uuid="4af9eb0c-28ce-4477-804f-918c0440913b">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="61" height="15" uuid="71e115c0-b05d-463d-bbd7-d9061224d247"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[단가]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" pattern="#,##0" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="61" height="15" uuid="2813ef86-fdb1-486e-8875-f7fd755d6859">
+										<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{UNIT_PRICE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:column width="69" uuid="23516bef-35d0-4e1e-9f35-439ad3d7c00a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="2">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField textAdjust="ScaleFont" pattern="#,##0">
+								<reportElement x="0" y="0" width="69" height="15" uuid="f8b00153-131b-4497-a3d4-c3f6d2ed1a2d">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{sum_amt}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="69" height="15" uuid="f71587e6-43e7-46fe-9b60-e35f41946521"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<text><![CDATA[금액]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField textAdjust="ScaleFont" pattern="#,##0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="69" height="15" uuid="d37baab5-1494-4fa9-b8aa-4dcb28c09982">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{AMT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="76" uuid="ec1deac5-aa4d-42d7-a743-b307cbdd058e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="2"/>
+						<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="76" height="15" uuid="140804cb-6ef1-442d-b6ec-e12e7ac022dd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<text><![CDATA[저장위치]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="76" height="15" uuid="a54ac683-ef0a-4ead-b4b9-4db5f67f1031"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{STORAGE_NAME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement x="10" y="19" width="533" height="45" uuid="47211f40-cfa6-4800-af76-f6f53cb1fa45">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="정비" uuid="2438c73d-3064-41e2-b5a9-a398dbc71af8">
+						<datasetParameter name="inout_doc_no">
+							<datasetParameterExpression><![CDATA[$P{inout_doc_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="390" uuid="841cd241-df50-4d5b-af75-68ed249c836e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [5]"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="390" height="15" uuid="ce4d4429-09ce-42ed-9baf-1d6337e47f12"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic"/>
+								</textElement>
+								<text><![CDATA[합    계]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:column width="29" uuid="4e31d619-aba6-490b-9a5e-e3dffef2ee8b">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="29" height="15" uuid="073d13d1-853d-4ecc-aaf5-60042b829519">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[NO.]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="29" height="15" uuid="710067a4-5a96-4981-9d5d-36082d29375e">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ROWNUM}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="111" uuid="883863fb-2b8f-4c3c-b5c6-a5b0274b746c">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="111" height="15" uuid="028c2578-1f61-4618-95ba-aa8e4bcf0109"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[부품번호]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="111" height="15" uuid="8e0350ed-faa7-44d9-b3a3-604a252d1e86"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ITEM_ID}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="160" uuid="6c60bc07-5f52-4773-873c-2d862657e4d7">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="160" height="15" uuid="66842419-4521-49c9-8add-af29120b4ecc"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[부품명]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="160" height="15" uuid="af3ebcc7-0ddf-4fbc-8cdf-becf3c66a343"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ITEM_NAME}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="29" uuid="5a518ee9-48cd-451b-8dc8-afb4e160b2e9">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="29" height="15" uuid="a865133d-2200-48ab-bc2d-ef986c47d707"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[수량]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="29" height="15" uuid="4539400a-fd4d-4749-91a5-92fc57c5f65e"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="61" uuid="c044d820-e216-438e-911f-447ef441f368">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="61" height="15" uuid="10059da9-a7f7-42fd-b00b-f5c704985b89"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[단가]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" pattern="#,##0" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="61" height="15" uuid="aac89192-bbb6-427e-a5ff-7aedeba9e701">
+										<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{UNIT_PRICE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:column width="69" uuid="0a88e3c9-44e4-44bb-84de-20dade70b129">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="2">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField pattern="#,##0">
+								<reportElement x="0" y="0" width="69" height="15" uuid="3361fab3-b5d3-417e-8bf2-3825950a3fd1">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{sum_amt}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="69" height="15" uuid="6afd488c-456c-40eb-8368-b029d638338c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<text><![CDATA[금액]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField textAdjust="ScaleFont" pattern="#,##0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="69" height="15" uuid="a2ed895a-add1-4110-b3b3-0b19db8248f9">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{AMT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="76" uuid="62e9a0cf-a465-496a-a325-45675942b239">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="2"/>
+						<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="76" height="15" uuid="45069a5a-dc14-4396-9c89-8bf9615fba9a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<text><![CDATA[저장위치]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="76" height="15" uuid="3f0857a4-8220-4de1-8073-683f80221059"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{STORAGE_NAME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement x="10" y="19" width="533" height="45" uuid="61647247-9235-4330-9eed-a14898360865">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="렌탈" uuid="0ede11ec-9b8c-4ae8-8d56-5fc34eacd031">
+						<datasetParameter name="inout_doc_no">
+							<datasetParameterExpression><![CDATA[$P{inout_doc_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:columnGroup width="390" uuid="46687863-e9eb-4f2f-bc42-c754a7fcc94d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [5]"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="390" height="15" uuid="b41e8f5f-0399-4862-ae07-623f57a61910"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic"/>
+								</textElement>
+								<text><![CDATA[합    계]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:column width="29" uuid="9f2905c7-b82f-422d-898c-e498e0f4da1a">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="29" height="15" uuid="d6425b0a-bb25-4b1a-8b47-e8bbfa07da29">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[NO.]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="29" height="15" uuid="871dbf02-11c7-4c23-8ac4-edc05194c256">
+										<property name="com.jaspersoft.studio.unit.width" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ROWNUM}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="111" uuid="a33788bc-c925-4fb2-bb34-f377e4599a7c">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="111" height="15" uuid="43c6beae-8143-40c4-9069-5f1d5f610693"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[부품번호]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="111" height="15" uuid="ce502d92-49f3-42c5-ab9a-16b14324e835"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ITEM_ID}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="160" uuid="aa51bfd1-339f-45a2-8bdd-e84cde85a888">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="160" height="15" uuid="a7d7cdc2-355e-435d-ae69-90067cef919a"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[부품명]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="160" height="15" uuid="268556a3-0a5d-4ac5-8e21-a67cd6c967b3"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ITEM_NAME}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="29" uuid="dd6c6ae0-0f7b-4b69-bc6c-5d9d5318f08e">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="29" height="15" uuid="0fbbfcc8-fc8b-4813-816d-f98ed12fbc57"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[수량]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="29" height="15" uuid="4e268164-a9fb-4de3-858f-0bc780cf5995"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="61" uuid="fb9dc4ee-19aa-46fe-bdf4-a0cf83613889">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+							<jr:tableFooter style="Table_TH" height="0" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</jr:tableFooter>
+							<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<staticText>
+									<reportElement x="0" y="0" width="61" height="15" uuid="19b3ce34-1f3b-4f8a-9f18-35410218288e"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+									</textElement>
+									<text><![CDATA[단가]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table_TD" height="15">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="ScaleFont" pattern="#,##0" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="61" height="15" uuid="51b88e30-4204-42ab-9c45-7bcb2df547e1">
+										<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="NanumGothic" size="10"/>
+										<paragraph rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{UNIT_PRICE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:column width="69" uuid="e8a85310-1abf-479d-8aeb-52d64e80235b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="2">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField textAdjust="ScaleFont" pattern="#,##0">
+								<reportElement x="0" y="0" width="69" height="15" uuid="247d0f50-6fbb-416d-8faa-3f51e60e0e97">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{sum_amt}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="69" height="15" uuid="00287845-42b7-4609-84a1-96821c954b41"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<text><![CDATA[금액]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField textAdjust="ScaleFont" pattern="#,##0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="69" height="15" uuid="3a80f581-0cca-46c4-82ef-e2796b8c0639">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{AMT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="76" uuid="f1748f98-5dff-4a10-ab97-a75cb5d7be2c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:tableFooter style="Table_TH" height="15" rowSpan="2"/>
+						<jr:columnHeader style="Table_CH" height="15" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="76" height="15" uuid="7e8b6b90-30b6-4e52-90fd-e1f36db7d712"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<text><![CDATA[저장위치]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="76" height="15" uuid="710e6511-7e12-489a-a7a7-67221c2d3306"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{STORAGE_NAME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="part_sale_yn" x="10" y="0" width="88" height="15" uuid="cbbdeb24-9526-48cd-af68-01a40d7b3d6b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="NanumGothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[부품내역]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="part_sale_yn" mode="Transparent" x="428" y="0" width="112" height="15" forecolor="#FF0905" uuid="6127911a-f09f-48e8-92ab-155d038e238a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+					<font fontName="NanumGothic" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VIP_MSG}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement style="part_sale_yn" x="10" y="0" width="530" height="15" uuid="1dd5eed2-52ec-443f-8d7d-63aa228229d7"/>
+			</frame>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="201" splitType="Stretch">
+			<frame>
+				<reportElement x="12" y="30" width="533" height="62" uuid="7f109239-4250-4644-9133-2046befd6d5b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="86" height="21" uuid="8eba0b9a-54f7-4c5d-87e3-58eb3805e315">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[합  계]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="21" width="86" height="21" uuid="b878c966-57f2-460e-b89c-941beafa4c97">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[부가세]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="42" width="86" height="20" uuid="1ed182e3-1178-4ee1-b996-2cdaf5952ae4">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[총  계]]></text>
+				</staticText>
+				<textField pattern="#,##0">
+					<reportElement x="86" y="0" width="85" height="21" uuid="86f2b670-51e6-4a9b-be20-274586506752">
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="10"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DOC_AMT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="86" y="21" width="85" height="21" uuid="e1e5c69e-eca7-4492-a8a3-43f7a1e34d87">
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="10"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VAT_AMT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="86" y="42" width="85" height="20" uuid="7d82e4f8-4b40-4cd0-92b9-f5167710604a">
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="10"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TOTAL_AMT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="171" y="0" width="59" height="21" uuid="279292cd-6610-4885-a8ce-20532e46408d">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[할 인 액]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="171" y="21" width="59" height="21" uuid="9e7c595d-07bb-4796-b324-037ba79547e7">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[미 수 금]]></text>
+				</staticText>
+				<textField pattern="#,##0">
+					<reportElement x="230" y="0" width="81" height="21" uuid="5e1eb2c8-3c32-4f84-b129-f4b64b79bd48">
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="10"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DISCOUNT_AMT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="230" y="21" width="81" height="21" uuid="7b52a83d-3543-44e4-b5ef-3bddb5eba16a">
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="NanumGothic" size="10"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MISU_AMT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="171" y="42" width="140" height="20" uuid="6e1e94c2-c0f5-41f1-a9a1-6640e982c83c">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="311" y="0" width="222" height="62" uuid="085ff63b-5e28-4b84-80ec-a861731560d0">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement x="12" y="101" width="533" height="78" uuid="a0eba6d2-b47a-4928-9a0a-aae5fa7b5974"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="54" width="533" height="24" backcolor="#CFCFCF" uuid="eac000d8-4cec-4c69-a762-5c4bdd1366cf">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic" isBold="true"/>
+					</textElement>
+					<text><![CDATA[입 금 계 좌  : 농협   041-01-161731  /  예금주: ㈜와이케이건기]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="38" height="54" uuid="eb18cd1a-adbb-4eeb-abdc-b610da1e6415">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+					</textElement>
+					<text><![CDATA[비고]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="38" y="0" width="495" height="54" uuid="59a65ec8-beff-4b1f-b173-d44f369e4c87">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="NanumGothic"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{BIGO_TEXT}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+</jasperReport>

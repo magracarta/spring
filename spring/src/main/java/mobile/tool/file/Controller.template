@@ -1,0 +1,67 @@
+package <%= controllerPackagePath %>;
+
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import <%= servicePackagePath %>.<%= serviceName %>;
+import sunnyyk.erp.web.core.spring.DefaultController;
+import mobile.factory.RequestDataSet;
+import mobile.factory.util.ResponseUtil;
+
+/**
+ * <pre>
+ * 이클래스는 <%= menuDepthName %> Controller
+ * </pre>
+ *
+ * @author 담당자이름을 넣어주세요.
+ * @date <%= date %> 
+ * @time <%= time %>
+ */
+@Controller(value = "<%= controllerMemberName %>")
+@RequestMapping(value = "<%= rootUrl %>")
+public class <%= controllerName %> extends DefaultController {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
+	<%= serviceName %> <%= serviceMemberName %>;
+	
+	/**
+	 * 단순페이지 이동
+	 * @param dataSet
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "<%= subUrl %>", method = RequestMethod.GET)
+	public ModelAndView staticPage(RequestDataSet dataSet) throws Exception {
+		ModelAndView mav = new ModelAndView("<%= rootUrl %><%= subUrl %>");
+		
+		setPageBtnAuth(dataSet, mav);
+		
+		return mav;
+	}
+	<% methodList.each { %>
+	/**
+	 * <%= it %> 
+	 * @param dataSet
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "<%= subUrl %>/<%= it %>", method = RequestMethod.GET)
+	public ModelAndView <%= it %>(RequestDataSet dataSet) throws Exception {
+		String[] notBlankField = new String[] {};	
+		dataSet.requiredFieldCheck(notBlankField);
+		
+		Map<String, Object> result = ResponseUtil.successResult();
+		
+		// :TODO 처리작업 기술
+		
+		return dataSet.resultToJSON(result);
+	} <% } %>
+} //:)--

@@ -1,0 +1,2315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="tax_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27ba3b15-f287-4cc7-913d-6083720a975b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<topPen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<leftPen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<rightPen lineWidth="0.5" lineColor="#4D4DFF"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<topPen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<leftPen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<rightPen lineWidth="0.5" lineColor="#4D4DFF"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<topPen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<leftPen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#4D4DFF"/>
+			<rightPen lineWidth="0.5" lineColor="#4D4DFF"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="c8c9a736-45ce-4542-b22f-fe885b35760b">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="yk_erp_new"/>
+		<parameter name="inout_doc_no" class="java.lang.String">
+			<defaultValueExpression><![CDATA["IN20230912-032"]]></defaultValueExpression>
+		</parameter>
+		<queryString language="SQL">
+			<![CDATA[select 
+ 	a.inout_doc_no -- 전표번호 
+ 	, case when a.taxbill_no is null then regexp_substr(a.acnt_taxbill_no,'[^-]+', 1, 2) else regexp_substr(a.taxbill_no,'[^-]+', 1, 2) end as taxbill_no --세금계산서번호 
+ 	, b.item_id -- 품목ID 
+ 	, b.item_name -- 품명 
+ 	, case when c.desc_text is null then b.desc_text else c.desc_text end as desc_text -- 규격 
+ 	, b.unit -- 단위 
+ 	, b.qty -- 수량  
+ 	, b.in_price -- 매입원가 
+ 	, b.unit_price -- 단가 
+ 	, b.amt -- 금액 
+ 	, b.cost_yn -- 유상여부 
+ 	, b.scan_qty -- 스캔수량 
+ 	, c.taxbill_dt	--발행날짜 
+ 	, to_char(to_date(c.taxbill_dt, 'yyyymmdd'), 'yyyy') as yyyy	--발행년도
+ 	, to_char(to_date(c.taxbill_dt, 'yyyymmdd'), 'mm') as mm	--발행월 
+ 	, to_char(to_date(c.taxbill_dt, 'yyyymmdd'), 'dd') as dd	--발행일자
+ 	, c.cust_no	--고객번호 
+ 	, c.cust_name	--고객명 
+ 	, c.cust_hp_no	--고객휴대전화 
+ 	, c.cust_fax_no	--고객팩스번호 
+ 	, c.breg_seq	--사업자일련번호 
+ 	, a.breg_no	--사업자번호 
+ 	, a.breg_name	--상호 
+ 	, a.breg_rep_name	--대표자명 
+ 	, a.breg_cor_type	--업태 
+ 	, a.breg_cor_part	--업종 
+ 	, a.biz_post_no	--사업장우편번호 
+ 	, a.biz_addr1	--사업장주소1 
+ 	, a.biz_addr2	--사업장주소2 
+ 	, a.biz_addr1 || ' ' || a.biz_addr2 as addr
+ 	, a.count_remark	--품목외 건수 
+ 	, c.issue_type_io	--발행타입 
+ 	, c.remark	--비고 
+ 	, c.taxbill_amt	--물품대 
+ 	, c.vat_amt	--부가세 
+ 	, c.taxbill_amt + c.vat_amt as total_amt
+ 	, (select code_name from t_code where group_code = 'TAXBILL_TYPE' and code = c.taxbill_type_cd) as taxbill_type_name 
+ 	, 11 - length(c.taxbill_amt) as empty -- 공란수
+ 	, case when length(c.taxbill_amt) - 10 > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 10, 1) else '' end as tax_amt_11
+ 	, case when length(c.taxbill_amt) - 9  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 9 , 1) else '' end as tax_amt_10
+ 	, case when length(c.taxbill_amt) - 8  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 8 , 1) else '' end as tax_amt_9
+ 	, case when length(c.taxbill_amt) - 7  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 7 , 1) else '' end as tax_amt_8
+ 	, case when length(c.taxbill_amt) - 6  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 6 , 1) else '' end as tax_amt_7
+ 	, case when length(c.taxbill_amt) - 5  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 5 , 1) else '' end as tax_amt_6
+ 	, case when length(c.taxbill_amt) - 4  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 4 , 1) else '' end as tax_amt_5
+ 	, case when length(c.taxbill_amt) - 3  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 3 , 1) else '' end as tax_amt_4
+ 	, case when length(c.taxbill_amt) - 2  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 2 , 1) else '' end as tax_amt_3
+ 	, case when length(c.taxbill_amt) - 1  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 1 , 1) else '' end as tax_amt_2
+ 	, case when length(c.taxbill_amt)      > 0 then substr(c.taxbill_amt, length(c.taxbill_amt),      1) else '' end as tax_amt_1
+ 	, case when length(c.vat_amt) - 9  > 0 then substr(c.vat_amt, length(c.vat_amt) - 9 , 1) else '' end as vat_amt_10
+ 	, case when length(c.vat_amt) - 8  > 0 then substr(c.vat_amt, length(c.vat_amt) - 8 , 1) else '' end as vat_amt_9
+ 	, case when length(c.vat_amt) - 7  > 0 then substr(c.vat_amt, length(c.vat_amt) - 7 , 1) else '' end as vat_amt_8
+ 	, case when length(c.vat_amt) - 6  > 0 then substr(c.vat_amt, length(c.vat_amt) - 6 , 1) else '' end as vat_amt_7
+ 	, case when length(c.vat_amt) - 5  > 0 then substr(c.vat_amt, length(c.vat_amt) - 5 , 1) else '' end as vat_amt_6
+ 	, case when length(c.vat_amt) - 4  > 0 then substr(c.vat_amt, length(c.vat_amt) - 4 , 1) else '' end as vat_amt_5
+ 	, case when length(c.vat_amt) - 3  > 0 then substr(c.vat_amt, length(c.vat_amt) - 3 , 1) else '' end as vat_amt_4
+ 	, case when length(c.vat_amt) - 2  > 0 then substr(c.vat_amt, length(c.vat_amt) - 2 , 1) else '' end as vat_amt_3
+ 	, case when length(c.vat_amt) - 1  > 0 then substr(c.vat_amt, length(c.vat_amt) - 1 , 1) else '' end as vat_amt_2
+ 	, case when length(c.vat_amt)      > 0 then substr(c.vat_amt, length(c.vat_amt),      1) else '' end as vat_amt_1
+ 	, c.taxbill_type_cd	--전자세금계산서타입코드 
+ 	, c.taxbill_issue_cd	--전자세금계산서발행구분코드 
+ 	, c.report_yn	--보고완료여부 
+ 	, c.taxbill_send_cd	--전자세금계산서전송코드 
+ 	, c.taxbill_control_no	--발급번호 
+ 	, c.email	--이메일 
+ 	, c.issu_seqno	--국세청연동번호 
+ 	, c.duzon_trans_yn	--더존전송여부 
+ 	, c.duzon_trans_seq	--더존일련번호 
+ 	, c.duzon_trans_date	--더존전송일시 
+ 	, to_char(sysdate, 'mm/dd/') as print_date
+ from v_inout_doc a 
+ left outer join t_inout_doc_dtl b 
+ on a.inout_doc_no = b.inout_doc_no  
+ left join v_taxbill c 
+ on a.taxbill_no = c.taxbill_no 
+ where 1 = 1 
+ and a.temp_yn <> 'Y' 
+ and a.inout_doc_no =  $P{inout_doc_no} 
+ and rownum=1
+ order by b.seq_no]]>
+		</queryString>
+		<field name="INOUT_DOC_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="INOUT_DOC_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="INOUT_DOC_NO"/>
+		</field>
+		<field name="TAXBILL_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAXBILL_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAXBILL_NO"/>
+		</field>
+		<field name="ITEM_ID" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ITEM_ID"/>
+			<property name="com.jaspersoft.studio.field.label" value="ITEM_ID"/>
+		</field>
+		<field name="ITEM_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ITEM_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="ITEM_NAME"/>
+		</field>
+		<field name="DESC_TEXT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="DESC_TEXT"/>
+			<property name="com.jaspersoft.studio.field.label" value="DESC_TEXT"/>
+		</field>
+		<field name="UNIT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="UNIT"/>
+			<property name="com.jaspersoft.studio.field.label" value="UNIT"/>
+		</field>
+		<field name="QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="QTY"/>
+		</field>
+		<field name="IN_PRICE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="IN_PRICE"/>
+			<property name="com.jaspersoft.studio.field.label" value="IN_PRICE"/>
+		</field>
+		<field name="UNIT_PRICE" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="UNIT_PRICE"/>
+			<property name="com.jaspersoft.studio.field.label" value="UNIT_PRICE"/>
+		</field>
+		<field name="AMT" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="AMT"/>
+			<property name="com.jaspersoft.studio.field.label" value="AMT"/>
+		</field>
+		<field name="COST_YN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="COST_YN"/>
+			<property name="com.jaspersoft.studio.field.label" value="COST_YN"/>
+		</field>
+		<field name="SCAN_QTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="SCAN_QTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="SCAN_QTY"/>
+		</field>
+		<field name="TAXBILL_DT" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAXBILL_DT"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAXBILL_DT"/>
+		</field>
+		<field name="YYYY" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="YYYY"/>
+			<property name="com.jaspersoft.studio.field.label" value="YYYY"/>
+		</field>
+		<field name="MM" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="MM"/>
+			<property name="com.jaspersoft.studio.field.label" value="MM"/>
+		</field>
+		<field name="DD" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="DD"/>
+			<property name="com.jaspersoft.studio.field.label" value="DD"/>
+		</field>
+		<field name="CUST_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="CUST_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="CUST_NO"/>
+		</field>
+		<field name="CUST_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="CUST_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="CUST_NAME"/>
+		</field>
+		<field name="CUST_HP_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="CUST_HP_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="CUST_HP_NO"/>
+		</field>
+		<field name="CUST_FAX_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="CUST_FAX_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="CUST_FAX_NO"/>
+		</field>
+		<field name="BREG_SEQ" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="BREG_SEQ"/>
+			<property name="com.jaspersoft.studio.field.label" value="BREG_SEQ"/>
+		</field>
+		<field name="BREG_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="BREG_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="BREG_NO"/>
+		</field>
+		<field name="BREG_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="BREG_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="BREG_NAME"/>
+		</field>
+		<field name="BREG_REP_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="BREG_REP_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="BREG_REP_NAME"/>
+		</field>
+		<field name="BREG_COR_TYPE" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="BREG_COR_TYPE"/>
+			<property name="com.jaspersoft.studio.field.label" value="BREG_COR_TYPE"/>
+		</field>
+		<field name="BREG_COR_PART" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="BREG_COR_PART"/>
+			<property name="com.jaspersoft.studio.field.label" value="BREG_COR_PART"/>
+		</field>
+		<field name="BIZ_POST_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="BIZ_POST_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="BIZ_POST_NO"/>
+		</field>
+		<field name="BIZ_ADDR1" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="BIZ_ADDR1"/>
+			<property name="com.jaspersoft.studio.field.label" value="BIZ_ADDR1"/>
+		</field>
+		<field name="BIZ_ADDR2" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="BIZ_ADDR2"/>
+			<property name="com.jaspersoft.studio.field.label" value="BIZ_ADDR2"/>
+		</field>
+		<field name="ADDR" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ADDR"/>
+			<property name="com.jaspersoft.studio.field.label" value="ADDR"/>
+		</field>
+		<field name="COUNT_REMARK" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="COUNT_REMARK"/>
+			<property name="com.jaspersoft.studio.field.label" value="COUNT_REMARK"/>
+		</field>
+		<field name="ISSUE_TYPE_IO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ISSUE_TYPE_IO"/>
+			<property name="com.jaspersoft.studio.field.label" value="ISSUE_TYPE_IO"/>
+		</field>
+		<field name="COLUMN_33" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="DESC_TEXT"/>
+			<property name="com.jaspersoft.studio.field.label" value="DESC_TEXT"/>
+		</field>
+		<field name="REMARK" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="REMARK"/>
+			<property name="com.jaspersoft.studio.field.label" value="REMARK"/>
+		</field>
+		<field name="TAXBILL_AMT" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="TAXBILL_AMT"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAXBILL_AMT"/>
+		</field>
+		<field name="VAT_AMT" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT"/>
+		</field>
+		<field name="TOTAL_AMT" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="TOTAL_AMT"/>
+			<property name="com.jaspersoft.studio.field.label" value="TOTAL_AMT"/>
+		</field>
+		<field name="TAXBILL_TYPE_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAXBILL_TYPE_NAME"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAXBILL_TYPE_NAME"/>
+		</field>
+		<field name="EMPTY" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="EMPTY"/>
+			<property name="com.jaspersoft.studio.field.label" value="EMPTY"/>
+		</field>
+		<field name="TAX_AMT_11" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_11"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_11"/>
+		</field>
+		<field name="TAX_AMT_10" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_10"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_10"/>
+		</field>
+		<field name="TAX_AMT_9" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_9"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_9"/>
+		</field>
+		<field name="TAX_AMT_8" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_8"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_8"/>
+		</field>
+		<field name="TAX_AMT_7" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_7"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_7"/>
+		</field>
+		<field name="TAX_AMT_6" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_6"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_6"/>
+		</field>
+		<field name="TAX_AMT_5" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_5"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_5"/>
+		</field>
+		<field name="TAX_AMT_4" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_4"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_4"/>
+		</field>
+		<field name="TAX_AMT_3" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_3"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_3"/>
+		</field>
+		<field name="TAX_AMT_2" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_2"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_2"/>
+		</field>
+		<field name="TAX_AMT_1" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_1"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_1"/>
+		</field>
+		<field name="VAT_AMT_10" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_10"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_10"/>
+		</field>
+		<field name="VAT_AMT_9" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_9"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_9"/>
+		</field>
+		<field name="VAT_AMT_8" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_8"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_8"/>
+		</field>
+		<field name="VAT_AMT_7" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_7"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_7"/>
+		</field>
+		<field name="VAT_AMT_6" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_6"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_6"/>
+		</field>
+		<field name="VAT_AMT_5" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_5"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_5"/>
+		</field>
+		<field name="VAT_AMT_4" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_4"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_4"/>
+		</field>
+		<field name="VAT_AMT_3" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_3"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_3"/>
+		</field>
+		<field name="VAT_AMT_2" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_2"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_2"/>
+		</field>
+		<field name="VAT_AMT_1" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_1"/>
+			<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_1"/>
+		</field>
+		<field name="TAXBILL_TYPE_CD" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAXBILL_TYPE_CD"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAXBILL_TYPE_CD"/>
+		</field>
+		<field name="TAXBILL_ISSUE_CD" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAXBILL_ISSUE_CD"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAXBILL_ISSUE_CD"/>
+		</field>
+		<field name="REPORT_YN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="REPORT_YN"/>
+			<property name="com.jaspersoft.studio.field.label" value="REPORT_YN"/>
+		</field>
+		<field name="TAXBILL_SEND_CD" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAXBILL_SEND_CD"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAXBILL_SEND_CD"/>
+		</field>
+		<field name="TAXBILL_CONTROL_NO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TAXBILL_CONTROL_NO"/>
+			<property name="com.jaspersoft.studio.field.label" value="TAXBILL_CONTROL_NO"/>
+		</field>
+		<field name="EMAIL" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="EMAIL"/>
+			<property name="com.jaspersoft.studio.field.label" value="EMAIL"/>
+		</field>
+		<field name="ISSU_SEQNO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ISSU_SEQNO"/>
+			<property name="com.jaspersoft.studio.field.label" value="ISSU_SEQNO"/>
+		</field>
+		<field name="DUZON_TRANS_YN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="DUZON_TRANS_YN"/>
+			<property name="com.jaspersoft.studio.field.label" value="DUZON_TRANS_YN"/>
+		</field>
+		<field name="DUZON_TRANS_SEQ" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="DUZON_TRANS_SEQ"/>
+			<property name="com.jaspersoft.studio.field.label" value="DUZON_TRANS_SEQ"/>
+		</field>
+		<field name="DUZON_TRANS_DATE" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.name" value="DUZON_TRANS_DATE"/>
+			<property name="com.jaspersoft.studio.field.label" value="DUZON_TRANS_DATE"/>
+		</field>
+		<field name="PRINT_DATE" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PRINT_DATE"/>
+			<property name="com.jaspersoft.studio.field.label" value="PRINT_DATE"/>
+		</field>
+	</subDataset>
+	<parameter name="inout_doc_no" class="java.lang.String">
+		<defaultValueExpression><![CDATA["IN20230912-032"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="stamp_image" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/Users/82107/JaspersoftWorkspace/MyReports/image/yk도장.png"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select 
+ 	a.inout_doc_no -- 전표번호 
+ 	, case when a.taxbill_no is null then regexp_substr(a.acnt_taxbill_no,'[^-]+', 1, 2) else regexp_substr(a.taxbill_no,'[^-]+', 1, 2) end as taxbill_no --세금계산서번호 
+ 	, case when c.desc_text is null then b.desc_text else c.desc_text end as desc_text -- 규격 
+ 	, b.item_id -- 품목ID 
+ 	, b.item_name -- 품명 
+ 	, b.unit -- 단위 
+ 	, b.qty -- 수량  
+ 	, b.in_price -- 매입원가 
+ 	, b.unit_price -- 단가 
+ 	, b.amt -- 금액 
+ 	, b.cost_yn -- 유상여부 
+ 	, b.scan_qty -- 스캔수량 
+ 	, c.taxbill_dt	--발행날짜 
+ 	, to_char(to_date(c.taxbill_dt, 'yyyymmdd'), 'yyyy') as yyyy	--발행년도
+ 	, to_char(to_date(c.taxbill_dt, 'yyyymmdd'), 'mm') as mm	--발행월 
+ 	, to_char(to_date(c.taxbill_dt, 'yyyymmdd'), 'dd') as dd	--발행일자
+ 	, c.cust_no	--고객번호 
+ 	, c.cust_name	--고객명 
+ 	, c.cust_hp_no	--고객휴대전화 
+ 	, c.cust_fax_no	--고객팩스번호 
+ 	, c.breg_seq	--사업자일련번호 
+    , case when length(a.breg_no) = 10 then substr(a.breg_no, 1, 3) || '-' || substr(a.breg_no, 4, 2) || '-' || substr(a.breg_no, 6, 5)
+             when length(a.breg_no) = 13 then substr(a.breg_no, 1, 6) || '-' || rpad(substr(a.breg_no, 7, 1), 7, '*') else a.breg_no end as breg_no
+ 	, a.breg_name	--상호 
+ 	, a.breg_rep_name	--대표자명 
+ 	, a.breg_cor_type	--업태 
+ 	, a.breg_cor_part	--업종 
+ 	, a.biz_post_no	--사업장우편번호 
+ 	, a.biz_addr1	--사업장주소1 
+ 	, a.biz_addr2	--사업장주소2 
+ 	, a.biz_addr1 || ' ' || a.biz_addr2 as addr
+ 	, a.count_remark	--품목외 건수 
+ 	, c.issue_type_io	--발행타입 
+ 	, c.remark	--비고 
+ 	, c.taxbill_amt	--물품대 
+ 	, c.vat_amt	--부가세 
+ 	, c.taxbill_amt + c.vat_amt as total_amt
+ 	, (select code_name from t_code where group_code = 'TAXBILL_TYPE' and code = c.taxbill_type_cd) as taxbill_type_name 
+ 	, 11 - length(c.taxbill_amt) as empty -- 공란수
+ 	, case when length(c.taxbill_amt) - 10 > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 10, 1) else '' end as tax_amt_11
+ 	, case when length(c.taxbill_amt) - 9  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 9 , 1) else '' end as tax_amt_10
+ 	, case when length(c.taxbill_amt) - 8  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 8 , 1) else '' end as tax_amt_9
+ 	, case when length(c.taxbill_amt) - 7  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 7 , 1) else '' end as tax_amt_8
+ 	, case when length(c.taxbill_amt) - 6  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 6 , 1) else '' end as tax_amt_7
+ 	, case when length(c.taxbill_amt) - 5  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 5 , 1) else '' end as tax_amt_6
+ 	, case when length(c.taxbill_amt) - 4  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 4 , 1) else '' end as tax_amt_5
+ 	, case when length(c.taxbill_amt) - 3  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 3 , 1) else '' end as tax_amt_4
+ 	, case when length(c.taxbill_amt) - 2  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 2 , 1) else '' end as tax_amt_3
+ 	, case when length(c.taxbill_amt) - 1  > 0 then substr(c.taxbill_amt, length(c.taxbill_amt) - 1 , 1) else '' end as tax_amt_2
+ 	, case when length(c.taxbill_amt)      > 0 then substr(c.taxbill_amt, length(c.taxbill_amt),      1) else '' end as tax_amt_1
+ 	, case when length(c.vat_amt) - 9  > 0 then substr(c.vat_amt, length(c.vat_amt) - 9 , 1) else '' end as vat_amt_10
+ 	, case when length(c.vat_amt) - 8  > 0 then substr(c.vat_amt, length(c.vat_amt) - 8 , 1) else '' end as vat_amt_9
+ 	, case when length(c.vat_amt) - 7  > 0 then substr(c.vat_amt, length(c.vat_amt) - 7 , 1) else '' end as vat_amt_8
+ 	, case when length(c.vat_amt) - 6  > 0 then substr(c.vat_amt, length(c.vat_amt) - 6 , 1) else '' end as vat_amt_7
+ 	, case when length(c.vat_amt) - 5  > 0 then substr(c.vat_amt, length(c.vat_amt) - 5 , 1) else '' end as vat_amt_6
+ 	, case when length(c.vat_amt) - 4  > 0 then substr(c.vat_amt, length(c.vat_amt) - 4 , 1) else '' end as vat_amt_5
+ 	, case when length(c.vat_amt) - 3  > 0 then substr(c.vat_amt, length(c.vat_amt) - 3 , 1) else '' end as vat_amt_4
+ 	, case when length(c.vat_amt) - 2  > 0 then substr(c.vat_amt, length(c.vat_amt) - 2 , 1) else '' end as vat_amt_3
+ 	, case when length(c.vat_amt) - 1  > 0 then substr(c.vat_amt, length(c.vat_amt) - 1 , 1) else '' end as vat_amt_2
+ 	, case when length(c.vat_amt)      > 0 then substr(c.vat_amt, length(c.vat_amt),      1) else '' end as vat_amt_1
+ 	, c.taxbill_type_cd	--전자세금계산서타입코드 
+ 	, c.taxbill_issue_cd	--전자세금계산서발행구분코드 
+ 	, c.report_yn	--보고완료여부 
+ 	, c.taxbill_send_cd	--전자세금계산서전송코드 
+ 	, c.taxbill_control_no	--발급번호 
+ 	, c.email	--이메일 
+ 	, c.issu_seqno	--국세청연동번호 
+ 	, c.duzon_trans_yn	--더존전송여부 
+ 	, c.duzon_trans_seq	--더존일련번호 
+ 	, c.duzon_trans_date	--더존전송일시 
+ 	, to_char(sysdate, 'mm/dd/yyyy') as print_date
+ from v_inout_doc a 
+ left outer join t_inout_doc_dtl b 
+ on a.inout_doc_no = b.inout_doc_no  
+ left join v_taxbill c 
+ on a.taxbill_no = c.taxbill_no 
+ where 1 = 1 
+ and a.temp_yn <> 'Y' 
+ and a.inout_doc_no =  $P{inout_doc_no} 
+ and rownum=1
+ order by b.seq_no]]>
+	</queryString>
+	<field name="INOUT_DOC_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="INOUT_DOC_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="INOUT_DOC_NO"/>
+	</field>
+	<field name="TAXBILL_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL_NO"/>
+	</field>
+	<field name="ITEM_ID" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ITEM_ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ITEM_ID"/>
+	</field>
+	<field name="ITEM_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ITEM_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="ITEM_NAME"/>
+	</field>
+	<field name="DESC_TEXT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESC_TEXT"/>
+		<property name="com.jaspersoft.studio.field.label" value="DESC_TEXT"/>
+	</field>
+	<field name="UNIT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="UNIT"/>
+		<property name="com.jaspersoft.studio.field.label" value="UNIT"/>
+	</field>
+	<field name="QTY" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="QTY"/>
+		<property name="com.jaspersoft.studio.field.label" value="QTY"/>
+	</field>
+	<field name="IN_PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="IN_PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="IN_PRICE"/>
+	</field>
+	<field name="UNIT_PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="UNIT_PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="UNIT_PRICE"/>
+	</field>
+	<field name="AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="AMT"/>
+	</field>
+	<field name="COST_YN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="COST_YN"/>
+		<property name="com.jaspersoft.studio.field.label" value="COST_YN"/>
+	</field>
+	<field name="SCAN_QTY" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SCAN_QTY"/>
+		<property name="com.jaspersoft.studio.field.label" value="SCAN_QTY"/>
+	</field>
+	<field name="TAXBILL_DT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL_DT"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL_DT"/>
+	</field>
+	<field name="YYYY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="YYYY"/>
+		<property name="com.jaspersoft.studio.field.label" value="YYYY"/>
+	</field>
+	<field name="MM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MM"/>
+		<property name="com.jaspersoft.studio.field.label" value="MM"/>
+	</field>
+	<field name="DD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DD"/>
+		<property name="com.jaspersoft.studio.field.label" value="DD"/>
+	</field>
+	<field name="CUST_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUST_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUST_NO"/>
+	</field>
+	<field name="CUST_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUST_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUST_NAME"/>
+	</field>
+	<field name="CUST_HP_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUST_HP_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUST_HP_NO"/>
+	</field>
+	<field name="CUST_FAX_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUST_FAX_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUST_FAX_NO"/>
+	</field>
+	<field name="BREG_SEQ" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="BREG_SEQ"/>
+		<property name="com.jaspersoft.studio.field.label" value="BREG_SEQ"/>
+	</field>
+	<field name="BREG_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BREG_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="BREG_NO"/>
+	</field>
+	<field name="BREG_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BREG_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="BREG_NAME"/>
+	</field>
+	<field name="BREG_REP_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BREG_REP_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="BREG_REP_NAME"/>
+	</field>
+	<field name="BREG_COR_TYPE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BREG_COR_TYPE"/>
+		<property name="com.jaspersoft.studio.field.label" value="BREG_COR_TYPE"/>
+	</field>
+	<field name="BREG_COR_PART" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BREG_COR_PART"/>
+		<property name="com.jaspersoft.studio.field.label" value="BREG_COR_PART"/>
+	</field>
+	<field name="BIZ_POST_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BIZ_POST_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="BIZ_POST_NO"/>
+	</field>
+	<field name="BIZ_ADDR1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BIZ_ADDR1"/>
+		<property name="com.jaspersoft.studio.field.label" value="BIZ_ADDR1"/>
+	</field>
+	<field name="BIZ_ADDR2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BIZ_ADDR2"/>
+		<property name="com.jaspersoft.studio.field.label" value="BIZ_ADDR2"/>
+	</field>
+	<field name="ADDR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ADDR"/>
+		<property name="com.jaspersoft.studio.field.label" value="ADDR"/>
+	</field>
+	<field name="COUNT_REMARK" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="COUNT_REMARK"/>
+		<property name="com.jaspersoft.studio.field.label" value="COUNT_REMARK"/>
+	</field>
+	<field name="ISSUE_TYPE_IO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ISSUE_TYPE_IO"/>
+		<property name="com.jaspersoft.studio.field.label" value="ISSUE_TYPE_IO"/>
+	</field>
+	<field name="COLUMN_33" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESC_TEXT"/>
+		<property name="com.jaspersoft.studio.field.label" value="DESC_TEXT"/>
+	</field>
+	<field name="REMARK" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="REMARK"/>
+		<property name="com.jaspersoft.studio.field.label" value="REMARK"/>
+	</field>
+	<field name="TAXBILL_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL_AMT"/>
+	</field>
+	<field name="VAT_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT"/>
+	</field>
+	<field name="TOTAL_AMT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL_AMT"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_AMT"/>
+	</field>
+	<field name="TAXBILL_TYPE_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL_TYPE_NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL_TYPE_NAME"/>
+	</field>
+	<field name="EMPTY" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="EMPTY"/>
+		<property name="com.jaspersoft.studio.field.label" value="EMPTY"/>
+	</field>
+	<field name="TAX_AMT_11" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_11"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_11"/>
+	</field>
+	<field name="TAX_AMT_10" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_10"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_10"/>
+	</field>
+	<field name="TAX_AMT_9" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_9"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_9"/>
+	</field>
+	<field name="TAX_AMT_8" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_8"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_8"/>
+	</field>
+	<field name="TAX_AMT_7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_7"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_7"/>
+	</field>
+	<field name="TAX_AMT_6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_6"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_6"/>
+	</field>
+	<field name="TAX_AMT_5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_5"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_5"/>
+	</field>
+	<field name="TAX_AMT_4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_4"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_4"/>
+	</field>
+	<field name="TAX_AMT_3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_3"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_3"/>
+	</field>
+	<field name="TAX_AMT_2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_2"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_2"/>
+	</field>
+	<field name="TAX_AMT_1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAX_AMT_1"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAX_AMT_1"/>
+	</field>
+	<field name="VAT_AMT_10" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_10"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_10"/>
+	</field>
+	<field name="VAT_AMT_9" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_9"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_9"/>
+	</field>
+	<field name="VAT_AMT_8" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_8"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_8"/>
+	</field>
+	<field name="VAT_AMT_7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_7"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_7"/>
+	</field>
+	<field name="VAT_AMT_6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_6"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_6"/>
+	</field>
+	<field name="VAT_AMT_5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_5"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_5"/>
+	</field>
+	<field name="VAT_AMT_4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_4"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_4"/>
+	</field>
+	<field name="VAT_AMT_3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_3"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_3"/>
+	</field>
+	<field name="VAT_AMT_2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_2"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_2"/>
+	</field>
+	<field name="VAT_AMT_1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VAT_AMT_1"/>
+		<property name="com.jaspersoft.studio.field.label" value="VAT_AMT_1"/>
+	</field>
+	<field name="TAXBILL_TYPE_CD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL_TYPE_CD"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL_TYPE_CD"/>
+	</field>
+	<field name="TAXBILL_ISSUE_CD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL_ISSUE_CD"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL_ISSUE_CD"/>
+	</field>
+	<field name="REPORT_YN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="REPORT_YN"/>
+		<property name="com.jaspersoft.studio.field.label" value="REPORT_YN"/>
+	</field>
+	<field name="TAXBILL_SEND_CD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL_SEND_CD"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL_SEND_CD"/>
+	</field>
+	<field name="TAXBILL_CONTROL_NO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAXBILL_CONTROL_NO"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAXBILL_CONTROL_NO"/>
+	</field>
+	<field name="EMAIL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="EMAIL"/>
+		<property name="com.jaspersoft.studio.field.label" value="EMAIL"/>
+	</field>
+	<field name="ISSU_SEQNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ISSU_SEQNO"/>
+		<property name="com.jaspersoft.studio.field.label" value="ISSU_SEQNO"/>
+	</field>
+	<field name="DUZON_TRANS_YN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DUZON_TRANS_YN"/>
+		<property name="com.jaspersoft.studio.field.label" value="DUZON_TRANS_YN"/>
+	</field>
+	<field name="DUZON_TRANS_SEQ" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="DUZON_TRANS_SEQ"/>
+		<property name="com.jaspersoft.studio.field.label" value="DUZON_TRANS_SEQ"/>
+	</field>
+	<field name="DUZON_TRANS_DATE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="DUZON_TRANS_DATE"/>
+		<property name="com.jaspersoft.studio.field.label" value="DUZON_TRANS_DATE"/>
+	</field>
+	<field name="PRINT_DATE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="PRINT_DATE"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRINT_DATE"/>
+	</field>
+	<title>
+		<band height="279" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="12" y="211" width="526" height="63" uuid="f43e1e7e-71a7-4f8f-85e3-ccab62649b8b"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="12" y="109" width="526" height="102" uuid="b22f4520-cc72-4ec1-bfb3-2229c23c103b"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="328" y="109" width="210" height="25" uuid="f08aebc6-5753-42c8-a47f-cc789b4be902">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BREG_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="328" y="134" width="97" height="26" uuid="6483c82c-2955-4a5a-82e1-ffe9273244a9">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BREG_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="134" width="95" height="26" uuid="57bec4af-0e08-4fdf-9c05-6b041d87e49d">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BREG_REP_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="328" y="186" width="97" height="25" uuid="68dfb9a5-c9af-454e-840c-25e8dfbac8df">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BREG_COR_TYPE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="443" y="186" width="95" height="25" uuid="f2d62cfc-6c33-41f4-9efb-6f6254ea53cb">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BREG_COR_PART}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="328" y="159" width="210" height="27" uuid="397a7a5b-0a64-4841-a27a-3b41bc283fbf">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADDR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="77" width="526" height="32" uuid="5747fc54-659a-45b3-a408-1ce04cf2b3a9">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="14" isBold="true"/>
+					<paragraph rightIndent="170"/>
+				</textElement>
+				<text><![CDATA[전자세금계산서]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="77" width="100" height="28" uuid="652840ea-6628-414d-95b3-f4bf3ae0166b">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[(별지 제11호 서식)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="77" width="100" height="32" uuid="ee0c847c-d7f0-4ba9-af14-e51f2e3a1308"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<text><![CDATA[공급받는자
+보관용]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="77" width="100" height="32" uuid="5b04ae63-a027-4bf0-95ac-b16d61b51cd4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
+				</textElement>
+				<text><![CDATA[(                         )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="77" width="79" height="32" uuid="482b861c-9579-498f-b524-8414a1924194">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="3"/>
+				</textElement>
+				<text><![CDATA[책 번 호
+일련번호]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="459" y="77" width="79" height="16" uuid="ac31f722-5a4e-4bdc-874b-6723eece0c2b">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="3"/>
+				</textElement>
+				<text><![CDATA[권                 호]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="459" y="93" width="79" height="16" uuid="9c32ac29-1d75-4835-9127-58de694f8013"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAXBILL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="109" width="17" height="102" uuid="ecce11c4-dcb1-4caa-bc7c-99dfcebebe72">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[공
+
+급
+
+자]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="109" width="35" height="25" uuid="b8af3c61-2384-4c9f-9764-e57decb911cc">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[등록
+번호]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="134" width="97" height="26" uuid="da088070-40c3-41c8-8bb1-b919b3a21997">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" leftIndent="5" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[주식회사 와이케이건기]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="160" width="209" height="26" uuid="9f3dbdc5-93f9-4b19-aaf6-2c14d5323cd6">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" leftIndent="5" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[경기도 안양시 만안구경수대로 1357 (석수동)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="186" width="97" height="25" uuid="475f1575-6ef4-49ca-a13b-22f7ce6aa755">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" leftIndent="5" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[도소매]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="134" width="18" height="26" uuid="5cf18d53-30ac-4c73-8706-a0b6db389adb">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[성
+명]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="134" width="94" height="26" uuid="8c91913f-0929-4233-acec-d30731e0f80f">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" leftIndent="5" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[채호선      (인)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="186" width="94" height="25" uuid="0e9f687d-9299-4f77-9323-7a2bad3497a2">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" leftIndent="5" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[무역,산업용재화업]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="186" width="18" height="25" uuid="4c9a33e7-e78c-4efe-bac9-7fe49bf9c9da">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[종
+목]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="109" width="209" height="25" uuid="850f1dfa-555b-4a39-9dd8-92b20c11b29e">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" leftIndent="5" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[119-81-30845]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="109" width="18" height="102" uuid="6d8da88d-083e-4112-917e-e460e5788cd6">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[공
+급
+받
+는
+자]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="211" width="95" height="20" uuid="6752080d-57c7-4708-9b4a-ec1cdf0312b7">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[작성]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="231" width="43" height="17" uuid="0ba1abbb-92dc-4b45-b986-b0c72c02a725">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[년]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="231" width="26" height="17" uuid="32f40d53-106e-45d2-b01b-de0f6a1d0805">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[월]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="231" width="26" height="17" uuid="e7453c1c-f088-4fc8-a44b-3882c0d19eb7">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[일]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="231" width="50" height="17" uuid="caa0bb1b-a38d-4079-b004-03d1f460d7da">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[공란수]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="211" width="226" height="20" uuid="09ed2c80-17e6-4905-8a09-87e22d557c67">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[공급가액]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="231" width="16" height="17" uuid="3038cec7-7218-4bd9-aeea-79723c794004">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[백]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="173" y="231" width="16" height="17" uuid="3fa97620-8319-4845-ad6d-e15f8114c846">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[십]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="231" width="16" height="17" uuid="e7ec6499-086b-4931-a0d0-39456997447d">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[천]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="231" width="16" height="17" uuid="dbf1ca45-84ef-4402-98c2-2bb8d050a704">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[억]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="231" width="16" height="17" uuid="31b0ad61-ac8f-4a9b-a394-42ead42b2638">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[만]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="231" width="16" height="17" uuid="221a0db3-a46e-44de-908b-dd0851fbae6d">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[천]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="237" y="231" width="16" height="17" uuid="85445ee9-6686-46c8-87b2-db512951f140">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[십]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="231" width="16" height="17" uuid="c83f2b9f-e0aa-445d-b981-e1c466f08ff7">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[백]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="231" width="16" height="17" uuid="8f888869-64a7-47cd-b411-1564030a9ae5">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[백]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="231" width="16" height="17" uuid="52cf51d6-4d45-48ec-8c5e-fd23d443b9a4">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[일]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="231" width="16" height="17" uuid="a7811604-6a65-4a66-9b9f-16f49cd96b0d">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[억]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="231" width="16" height="17" uuid="ba7bbd3c-9988-4a31-9411-ca113daaf1bf">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[천]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="231" width="16" height="17" uuid="a9d9595e-2d88-4eab-b58b-318144dfa128">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[십]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="231" width="16" height="17" uuid="3feb4705-a0e1-4905-95cc-1b5cf8de59dc">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[십]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="231" width="16" height="17" uuid="db20b080-b3de-4c78-9d56-1cda270aa5fd">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[십]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="231" width="16" height="17" uuid="5b9d39e9-11bb-4578-81ba-a51b3ff4685a">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[백]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="231" width="16" height="17" uuid="f9362c2c-d3d2-4206-b1cc-ee10743553a3">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[백]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="231" width="16" height="17" uuid="0f6fc11d-7d86-476f-bb8d-102363fb557e">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[만]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="231" width="16" height="17" uuid="e0d4b1f2-fb8d-41ba-a430-e6fb3e4b3dba">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[일]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="231" width="16" height="17" uuid="2912bd75-895e-435a-94d6-7709f0d356c2">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[천]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="231" width="16" height="17" uuid="31f0ce7a-8e62-4fbc-90b9-d9feb78ab07c">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[십]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="211" width="160" height="20" uuid="d0de82cf-3972-4a26-82cd-1634ede3f9a1">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[세액]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="211" width="45" height="20" uuid="a93a0962-7327-41f9-8173-1039bcb2e61f">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[비고]]></text>
+			</staticText>
+			<textField pattern="yyyy">
+				<reportElement x="12" y="248" width="43" height="26" uuid="e62e0e1f-a3a9-43ae-ac0e-8f7b9f963001"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{YYYY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="248" width="26" height="26" uuid="5a2b4def-818d-4b8c-8fb1-fd1b37127a62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="81" y="248" width="26" height="26" uuid="6035daba-b9fb-4e01-9c09-8c8ccbcb9a30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="248" width="50" height="26" uuid="4d1a38c1-8da4-4502-be61-a43909e404ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPTY}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="157" y="248" width="16" height="26" uuid="683e427e-f7b6-4539-9a10-2b28362f198e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_11}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="173" y="248" width="16" height="26" uuid="1aeb3d43-1cc3-4171-b814-9cb6de14f982"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_10}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="189" y="248" width="16" height="26" uuid="ad2ebaab-b098-430d-8568-ba37f77e3618"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_9}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="205" y="248" width="16" height="26" uuid="f6c72bf5-e85c-45f4-8eb5-e87cbbc9454d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_8}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="221" y="248" width="16" height="26" uuid="5732e25f-f9e7-4ea1-94d4-b39b46ac3e92"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_7}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="237" y="248" width="16" height="26" uuid="a62f6b4c-aa54-4cd4-9089-68224bf42f3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="253" y="248" width="16" height="26" uuid="8e2a5e41-39ec-440f-88fb-bd537e4c9acb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="269" y="248" width="16" height="26" uuid="7c4edb4d-c6bc-4281-a09a-bdcfea9974bd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="381" y="248" width="16" height="26" uuid="700dc322-0946-40cd-bb6c-222d8d0db98f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAT_AMT_7}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="285" y="248" width="16" height="26" uuid="257aaa9c-93d9-4bbc-a28e-22a8f59f1f01"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="365" y="248" width="16" height="26" uuid="b36e398e-ce2e-4045-be64-6447284459f2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAT_AMT_8}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="349" y="248" width="16" height="26" uuid="7ecc86e3-2849-403a-be4f-5b1ca716ade9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAT_AMT_9}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="301" y="248" width="16" height="26" uuid="7f08587b-2d1f-4926-882a-93f84c07f763"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="317" y="248" width="16" height="26" uuid="f82ff13b-6bbc-4afa-bb0c-80265da4a43d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="397" y="248" width="16" height="26" uuid="5660cde5-e25e-486a-b185-57ad7e7d51f5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAT_AMT_6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="333" y="248" width="16" height="26" uuid="1c8ac76c-5aff-4fa8-b7bd-b687ddbc80d8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAT_AMT_10}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="445" y="248" width="16" height="26" uuid="a13524ac-56bf-4490-8592-97e3aaf0e48e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAT_AMT_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="429" y="248" width="16" height="26" uuid="6e49e5a7-f7f9-4fb6-831e-9bb69d91eb64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAT_AMT_4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="461" y="248" width="16" height="26" uuid="0d822082-d08a-46ac-a2d9-750fd842a378"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAT_AMT_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="477" y="248" width="16" height="26" uuid="6fcf3328-2224-45bd-b34a-06030338ff85"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAT_AMT_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="413" y="248" width="16" height="26" uuid="9b5fab80-dfc5-4683-a712-888a94bbbaaa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VAT_AMT_5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="18" width="524" height="20" uuid="38cdb734-25b0-4440-9854-b486e2036294">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="3"/>
+				</textElement>
+				<text><![CDATA[전자세금계산서 출력]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="12" y="18" width="108" height="20" uuid="9ffd9a41-08fb-4f83-8667-52e90e1e4905"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRINT_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="134" width="35" height="26" uuid="a8895a1c-0196-4043-91c9-f505001f87cd">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[상호
+법인명]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="160" width="35" height="26" uuid="758f445f-2298-4570-b3d1-48bbc4d47f65">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[사업장
+주소]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="186" width="35" height="25" uuid="f7848054-0d07-4e48-afbf-3fabea4a906b">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[업태]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="134" width="37" height="26" uuid="4508e80d-39c7-4075-abd3-5059e086431b">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[상호
+법인명]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="160" width="37" height="26" uuid="5fc79ff4-e1c1-4f76-9408-2cab0244f31b">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[사업장
+주소]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="109" width="37" height="25" uuid="0b9e14e9-581f-4f6f-9dea-14f844afcb5d">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[등록
+번호]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="186" width="37" height="25" uuid="2c173bde-f854-4d5c-8822-14ddad043137">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[업태]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="134" width="18" height="26" uuid="06cfb760-cb54-46cf-ab6f-c662a251f5c6">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[성
+명]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="186" width="18" height="25" uuid="2a1b3ed8-2faf-4819-bbac-4a98a76ad5fc">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[종
+목]]></text>
+			</staticText>
+			<line>
+				<reportElement x="459" y="77" width="1" height="32" uuid="d90e10ca-c6f1-4593-a540-4c6bb2749680"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="500" y="77" width="1" height="16" uuid="41d82388-4fb0-45ae-a988-dd2e60defb46"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="29" y="109" width="1" height="102" uuid="e041d906-a2cf-4bc5-a456-6f68626c2385"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="64" y="109" width="1" height="102" uuid="24b941f7-3f73-4862-9777-849a06daa828"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="273" y="109" width="1" height="102" uuid="dca947f5-e8f6-4967-8e01-fd0bbb136dc1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="291" y="109" width="1" height="102" uuid="8d366d26-b033-4f61-ad57-3bd6c8611abd"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="328" y="109" width="1" height="102" uuid="e14d06fb-7e6f-4b9f-89a9-523357388c99"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="161" y="134" width="1" height="26" uuid="450778f9-3799-4bf5-bc43-abd98daa7084"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="179" y="134" width="1" height="26" uuid="f80caa6a-34a2-47bd-be35-a087f6f1eb9b"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="179" y="186" width="1" height="25" uuid="7803627d-fc09-447d-8804-047e691b7b82"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="161" y="186" width="1" height="25" uuid="241615c9-d309-4d08-ad6f-e7536d58c326"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="443" y="186" width="1" height="25" uuid="6b38b644-a8b2-44d3-be4c-d62873ec174a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="425" y="186" width="1" height="25" uuid="3006f811-5b80-46b6-a280-ce42bb91ef9c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="425" y="134" width="1" height="26" uuid="bad18d89-ef13-4e35-b9ae-2e49ad990cb6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="443" y="134" width="1" height="26" uuid="fb162740-0bbe-4a57-a4cb-3d028a7f2d56"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="55" y="231" width="1" height="43" uuid="51b1522d-fbad-4c90-a36b-dfc979445113"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="81" y="231" width="1" height="43" uuid="c05e72fd-2a8a-4d2f-8346-54fcfbba3186"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="107" y="211" width="1" height="63" uuid="fda795b9-8dd6-4df7-b6b9-0dedbc48b057"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="157" y="231" width="1" height="43" uuid="a5263a9a-736d-41d1-a694-c3941917d999"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="173" y="231" width="1" height="43" uuid="41b0a372-615f-4758-a6f6-a42147a233f9"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="189" y="231" width="1" height="43" uuid="5709357a-7d44-4eca-a79b-b5b2d80ad036"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="205" y="231" width="1" height="43" uuid="4f336e87-fe34-471e-9c5a-3c062717006f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="220" y="231" width="1" height="43" uuid="548624f1-6373-47a6-a4d9-f9fae05613a0"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="236" y="231" width="1" height="43" uuid="e6a6d33b-c3bf-4a15-81a0-99911b6e024a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="252" y="231" width="1" height="43" uuid="0ebf99c8-08b7-48b6-999b-a997ce070b55"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="268" y="231" width="1" height="43" uuid="ef20eb65-9cc1-4642-8d50-e189c1bc4d70"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="285" y="231" width="1" height="43" uuid="33262a97-c78e-4544-848b-ac213a3c0c2a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="301" y="231" width="1" height="43" uuid="1f997394-5dbb-49d3-a234-1d04b4775c94"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="317" y="231" width="1" height="43" uuid="f89c9446-317f-4510-b550-ce549593bf6a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="333" y="211" width="1" height="63" uuid="97cd2a25-b704-4b65-a5ad-5588048c36d5"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="349" y="231" width="1" height="43" uuid="f3e96886-6616-4332-bcea-e1ce4fafa743"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="365" y="231" width="1" height="43" uuid="08ed6945-3cf8-4899-8596-0c2c58a04b53"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="381" y="231" width="1" height="43" uuid="32966695-27ed-4dfe-b5a1-af9d460eae08"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="397" y="231" width="1" height="43" uuid="e5d327d3-f7fa-4719-a15d-c7ae8f7d2d73"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="413" y="231" width="1" height="43" uuid="4f1e2ad0-0605-41ec-98ee-4187e6ebc8da"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="429" y="231" width="1" height="43" uuid="13ed2080-37e5-4788-866a-2ef2e562bfeb"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="445" y="231" width="1" height="43" uuid="f4e78c0b-567b-4cfb-b3a7-3060f18ca26d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="461" y="231" width="1" height="43" uuid="d6e633f1-e172-4755-8aa2-0ebe115c98b1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="477" y="231" width="1" height="43" uuid="75716660-21a5-4155-9b3e-7d6f58fe59f6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="493" y="211" width="1" height="63" uuid="8fe2a910-1e59-4d72-a521-660613e1a630"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="30" y="134" width="243" height="1" uuid="058e3911-d746-4458-822e-f04a54951f1f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#CFCFCF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="30" y="160" width="243" height="1" uuid="fb7ad1ae-62bf-4e53-af5c-ffa1e2392e0f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#CFCFCF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="30" y="186" width="243" height="1" uuid="d2aada20-53c2-4386-8dbe-c26c829238ae"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#CFCFCF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="292" y="134" width="246" height="1" uuid="a2124b0d-64d9-47c8-ad85-02e11d48d8c2"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#CFCFCF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="292" y="160" width="246" height="1" uuid="122c3b12-7268-4969-833a-8a4d7ef2b877"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#CFCFCF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="292" y="186" width="246" height="1" uuid="1767e1d7-f178-44c6-928c-edb9359f5be7"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#CFCFCF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="231" width="526" height="1" uuid="46e9c2a0-cb2f-45f5-9172-e8d6c0cda188"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#CFCFCF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="248" width="482" height="1" uuid="d9bbbefd-4622-400c-8a8e-f6587555b4ff"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#CFCFCF"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="208" y="124" width="56" height="48" uuid="0691e324-f343-41ac-a72c-86f048617cb6"/>
+				<imageExpression><![CDATA[$P{stamp_image}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="459" y="93" width="79" height="1" uuid="a73820fb-62d5-442c-8479-defc4e42b1d3"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#CFCFCF"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<componentElement>
+				<reportElement x="12" y="0" width="526" height="39" uuid="a79df170-7fb6-4627-af2f-954e4b6baa92">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="Dataset1" uuid="e23c075c-1c96-4abf-b962-d88f82e41f29">
+						<datasetParameter name="inout_doc_no">
+							<datasetParameterExpression><![CDATA[$P{inout_doc_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="39" uuid="a0912e3e-9b98-42fc-9b64-5d43934a3c17">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement style="Table_TD" x="0" y="0" width="39" height="20" uuid="cc9033c6-4be3-497d-ab3e-d45d408ae6a3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<text><![CDATA[월 일]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="39" height="20" uuid="fbd8710d-638f-4852-9c22-5c61ac4315d3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{MM} + "." +$F{DD}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="95" uuid="9aee3542-6f40-4e3c-838a-4049627b06a8">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement style="Table_TD" x="0" y="0" width="95" height="20" uuid="9477243d-49a9-4479-8159-eba2580b4903"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<text><![CDATA[품목/규격]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="95" height="20" uuid="31382332-bf1c-422e-a081-1f3f2ab99567"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DESC_TEXT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="443a0d25-02ff-40e4-9dc3-1f21b655595b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement style="Table_TD" x="0" y="0" width="40" height="20" uuid="814f91a2-fcec-438f-a603-157e4d30283f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<text><![CDATA[단위]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="40" height="20" uuid="7f0bbc14-fa5a-4cde-96c7-565d192edbb8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[""]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="470009b6-adf1-4b9e-a8ad-ca7cf71e16b8">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement style="Table_TD" x="0" y="0" width="40" height="20" uuid="690df1fa-a0c3-4214-b15a-b186b4e15b02"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<text><![CDATA[수량]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="40" height="20" uuid="ab37d5ae-7ef3-41cc-8232-681df48e1ac2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[1]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="105" uuid="270b1b2c-f26e-4bc1-854f-072cc8380669">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement style="Table_TD" x="0" y="0" width="105" height="20" uuid="1ae4ac32-25ac-4279-8434-bf2e6b63c2fa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<text><![CDATA[단가]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField pattern="#,##0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="105" height="20" uuid="fcfee486-5e10-44f2-a02c-de8e64af0bd4">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{TAXBILL_AMT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="111" uuid="b693e10b-ed94-42e4-94b8-098597d57f51">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement style="Table_TD" x="0" y="0" width="111" height="20" uuid="c62f1465-572e-4fcc-901a-0a1ba983cdfc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<text><![CDATA[공급가액]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField pattern="#,##0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="111" height="20" uuid="49d53bc9-5e0c-4b63-8c44-597df2b4784e">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{TAXBILL_AMT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="96" uuid="ef3a6410-f9f2-4730-965b-8848d9ce5fee">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement style="Table_TD" x="0" y="0" width="96" height="20" uuid="ce87ffa2-c573-43d1-93f2-6696432a45f6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+								</textElement>
+								<text><![CDATA[세 액]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField pattern="#,##0" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="96" height="20" uuid="f9c5d1f5-ffba-4a1e-80a0-880d8afcc23c">
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="NanumGothic" size="8"/>
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{VAT_AMT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="48">
+			<rectangle>
+				<reportElement mode="Transparent" x="12" y="0" width="526" height="43" uuid="dc0502c3-6fa1-4db6-a896-c00cf5f37af7"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="0" width="118" height="20" uuid="b99a09cf-a3c9-4d39-a454-a6807081c553">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[합 계 금 액]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="0" width="47" height="20" uuid="89ef45a7-fa36-4e4a-b430-365cc588933b">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[현 금]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="177" y="0" width="46" height="20" uuid="eb89e5de-be11-4277-9fbe-d847c5ed1a93">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[수 표]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="0" width="44" height="20" uuid="64382229-2c15-4e8a-b065-00760afe77bd">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[어 음]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="0" width="94" height="20" uuid="56c3e1eb-b285-4e64-b4f7-5950d2676f42">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" rightIndent="0"/>
+				</textElement>
+				<text><![CDATA[외상미수금]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="361" y="0" width="177" height="43" uuid="775f3daf-202c-4fa4-b3f8-51032be047d9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["이 금액을 " + $F{TAXBILL_TYPE_NAME} + " 함."]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="12" y="20" width="118" height="23" uuid="85ab60ab-db98-46b7-834a-1dee33f32c96"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="NanumGothic" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_AMT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="130" y="0" width="1" height="43" uuid="e2762d63-740b-440e-b520-4f75acec929b"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="177" y="0" width="1" height="43" uuid="70fb7344-1858-4a20-b054-56f47ebb0beb"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="223" y="0" width="1" height="43" uuid="93542304-735d-4cb4-839e-908c1fbcf5b0"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="267" y="0" width="1" height="43" uuid="60a4ee95-0a86-403a-a5d0-00032fa064cf"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="361" y="0" width="1" height="43" uuid="b7977702-5eca-4a24-805a-2c31282d4fb6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="13" y="20" width="349" height="1" uuid="f7a96aa3-5ec7-473f-91cc-655fcfa94007"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#4D4DFF"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>
