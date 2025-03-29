@@ -4,10 +4,8 @@ import hello.core2.AppConfig;
 import hello.core2.Order.Order;
 import hello.core2.Order.OrderService;
 import hello.core2.Order.OrderServiceImpl;
-import hello.core2.member.Grade;
-import hello.core2.member.Member;
-import hello.core2.member.MemberService;
-import hello.core2.member.MemberServiceImpl;
+import hello.core2.discount.FixDiscountPolicy;
+import hello.core2.member.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,4 +31,8 @@ public class OrderServiceTest {
         Assertions.assertThat(order.getDiscountPrice()).isEqualTo(2000);
 
     }
-}
+
+    @Test
+    void fieldInjectionTest(){
+
+    }}
