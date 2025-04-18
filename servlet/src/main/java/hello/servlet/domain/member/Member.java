@@ -14,6 +14,8 @@ public class Member {
     private String username;
     private int age;
 
-    public Member(String member1, int i) {
+    public Member(String member, int i) {
+        this.username = member;
+        this.age = i;
     }
 }
