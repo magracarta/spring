@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<included>
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>[%d{yy-MM-dd} %d{HH:mm:ss.SSS}] [%thread] %highlight([%-5level]) %logger{36} - %msg%n</pattern>
-            <charset>utf8</charset>
-        </encoder>
-    </appender>
-</included>
