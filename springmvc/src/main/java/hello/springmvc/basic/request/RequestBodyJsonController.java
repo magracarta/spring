@@ -6,6 +6,7 @@ import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,4 +54,21 @@ public class RequestBodyJsonController {
         log.info("username={} , age={}", helloData.getUsername(), helloData.getAge());
         return "ok";
     }
+
+    @ResponseBody
+    @RequestMapping("/request-body-json-v4")
+    public String requestBodyJsonV4(HttpEntity<HelloData> entity) throws IOException {
+        HelloData helloData = entity.getBody();
+        log.info("username={} , age={}", helloData.getUsername(), helloData.getAge());
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/request-body-json-v5")
+    public HelloData requestBodyJsonV5(@RequestBody HelloData helloData) throws IOException {
+        log.info("username={} , age={}", helloData.getUsername(), helloData.getAge());
+        return helloData;
+    }
+
+
 }
