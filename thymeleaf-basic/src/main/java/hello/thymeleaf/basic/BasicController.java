@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/basic")
@@ -85,6 +82,32 @@ public class BasicController {
     public String literal(Model model) {
      model.addAttribute("data", "Spring");
      return "basic/literal";
+    }
+
+    @GetMapping("/operation")
+    public String operation(Model model) {
+        model.addAttribute("nullData", null);
+        model.addAttribute("data", "Spring!");
+        return "basic/operation";
+    }
+
+    @GetMapping("/attribute")
+    public String attribute(Model model) {
+        return "basic/attribute";
+    }
+
+    @GetMapping("/each")
+    public String each(Model model){
+        addUser(model);
+        return "basic/each";
+    }
+
+    private void addUser(Model model){
+        List<User> list = new ArrayList<>();
+        list.add(new User("UserA",10));
+        list.add(new User("UserB",10));
+        list.add(new User("UserC",10));
+        model.addAttribute("users",list);
     }
 
     @Data
