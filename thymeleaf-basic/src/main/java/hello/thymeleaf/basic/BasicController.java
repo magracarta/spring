@@ -102,13 +102,39 @@ public class BasicController {
         return "basic/each";
     }
 
+    @GetMapping("/condition")
+    public String condition(Model model) {
+        addUser(model);
+        return "basic/condition";
+    }
+
+    @GetMapping("/comments")
+    public String comments(Model model) {
+        model.addAttribute("data", "Spring!");
+        return "basic/comments";
+    }
+
+    @GetMapping("/block")
+    public String block(Model model){
+        addUser(model);
+        return "basic/block";
+    }
+
+    @GetMapping("/javascript")
+    public String javascript(Model model) {
+        model.addAttribute("user\"A\"", new User("userA",10));
+        addUser(model);
+        return "basic/javascript";
+    }
+
     private void addUser(Model model){
         List<User> list = new ArrayList<>();
         list.add(new User("UserA",10));
-        list.add(new User("UserB",10));
-        list.add(new User("UserC",10));
+        list.add(new User("UserB",20));
+        list.add(new User("UserC",30));
         model.addAttribute("users",list);
     }
+
 
     @Data
     static class User {
