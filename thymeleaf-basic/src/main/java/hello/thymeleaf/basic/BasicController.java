@@ -123,9 +123,12 @@ public class BasicController {
     @GetMapping("/javascript")
     public String javascript(Model model) {
         model.addAttribute("user\"A\"", new User("userA",10));
+
+        model.addAttribute("user", new User("user",20));
         addUser(model);
         return "basic/javascript";
     }
+
 
     private void addUser(Model model){
         List<User> list = new ArrayList<>();
