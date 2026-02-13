@@ -114,7 +114,7 @@ public class MappingController {
      * Accept 헤더 기반 Media Type
      * produces = "text/html"
      * produces = "!text/html"
-     * produces = "text/*" 
+     * produces = "text/*"
      * produces = "*\/*"
      */
     @PostMapping(value = "/mapping-produce", produces = MediaType.TEXT_HTML_VALUE)
